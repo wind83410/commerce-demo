@@ -1,0 +1,22 @@
+
+.bill-title {
+  color: $dark-color;
+  &::after {
+    content: '';
+    display: block;
+    width: 30px;
+    height: 2px;
+    margin: 10px auto;
+    background-color: $main-color;
+  }
+}
+.bill-detail {
+  td {
+    padding: 0.25rem;
+    &:last-child { text-align: right }
+  }
+  tfoot td {
+    padding-top: 0.75rem;
+    border-top: 1px solid $dark-color;
+  }
+}

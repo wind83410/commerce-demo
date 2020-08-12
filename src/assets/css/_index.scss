@@ -1,0 +1,180 @@
+/****
+ * REUSEABLE PART
+ ****/
+
+.section {
+    padding: 40px 0;
+}
+
+.section-title {
+    text-align: center;
+    margin-bottom: 45px;
+    color: $dark-color;
+    &::after {
+        content: '';
+        display: block;        
+        width: 50px;
+        height: 2px;
+        margin-right: auto;
+        margin-left: auto;
+        margin-top: 20px;
+        background-color: $main-color;
+    }
+}
+
+.w-90 {width: 90% !important;}
+
+.icons {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    @include media-breakpoint-up(md) {
+        right: 10px;
+        top: 10px;
+    }
+    & > li {
+        display: flex;
+        justify-content: center;
+        margin-bottom: 8px;
+    }
+    .icon-btn {
+        color: $highlight-color;
+        &:focus {box-shadow: 0 0 0 $input-btn-focus-width rgba($highlight-color, 0.25)} // record it into bootstrap variables
+    }
+}
+
+.product-brand {
+    color: darken($main-color, 20%);
+    font-size: 0.9rem;
+    @include media-breakpoint-up(md) {
+        font-size: 1rem
+    }
+}
+.product-collection {
+    font-size: 1.5rem;
+    color: $dark-color;
+    line-height: 1.2;
+    @include media-breakpoint-up(md) {
+        font-size: 1.2rem;
+    }    
+}
+
+.product-price {
+    color: darken($highlight-color, 2%);
+    font-weight: bold;
+    font-size: 1.5rem;
+    @include media-breakpoint-up(md) {
+        font-size: 1.3rem;
+    }
+}
+
+/*****
+ * BANNER
+ ****/
+
+.banner-cover {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    .banner-slogan {
+        background-color: rgba($main-color, .4);
+    }
+}
+
+.carousel-img {height: 100vh;}
+
+
+/****
+ * COPYWRITING
+ ****/
+
+.features {
+    margin: 0 auto;
+    & > li {
+        margin-bottom: 15px;
+        @include media-breakpoint-up(md) {
+            margin-bottom: 0;
+        }
+    }
+}
+
+/***
+ * LIST OF NEW ITEMS
+ ***/
+ 
+.section-new-items {
+    background-color: $light-color;
+    padding: 20px 0;
+}
+
+.slide-left, .slide-right {
+    width: 60px;
+    height: 60px;
+    color: $white;
+    background-color: rgba($main-color, 0.6);
+    border-radius: 50%;
+    z-index: 1;
+    border: none;
+    &:focus {outline: $main-color;}
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    margin: auto 0;
+}
+.slide-left {
+    left: -10px;
+}
+.slide-right {
+    right: -10px
+}
+
+/* altered style of tiny slider */
+.tns-nav {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+    [data-nav] {
+        border-radius: 50%;
+        width: 0;
+        height: 0;
+        border: 0;
+        &:focus {outline: none}
+        background-color: #bfbfbf;
+        padding: 5px;
+        transition: background-color 0.4s;
+        margin: 0 5px;
+    }
+    .tns-nav-active {
+        background: $main-color;
+    }
+}
+
+/******
+ * RECOMMANDATION
+ ******/
+
+.section-recommand {
+    background: rgba($dark, .7) url('/images/index_comments.jpg') center center fixed;
+    background-size: cover;
+    background-blend-mode: multiply;
+    .section-title {color: $light-color}
+    .blockquote {
+        position: relative;
+        margin-bottom: 40px;
+        @include media-breakpoint-up(md) {
+            margin-bottom: 0;
+        }
+        &::before {
+            content: '❝';
+            display: block;
+            position: absolute;
+            top: -80px;
+            z-index: 1;
+            color: rgba($white, .3);
+            font-size: 8rem;
+        }
+    }
+    .blockquote-footer {color: $gray-400}
+}

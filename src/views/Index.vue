@@ -1,0 +1,156 @@
+<template>
+    <div>
+        <header class="banner
+         position-relative"> <!-- Banner -->
+            <ul class="list-unstyled my-slider mb-0">
+                <li><div class="w-100 carousel-img" style="background: url('/images/index_banner_carousel_3.jpg') 20% center/cover;"></div></li>
+                <li><div class="w-100 carousel-img" style="background: url('/images/index_banner_carousel_1.jpg') 20% center/cover;"></div></li>
+                <li><div class="w-100 carousel-img" style="background: url('/images/index_banner_carousel_2.jpg') 20% center/cover;"></div></li>
+            </ul>
+            <div class="container banner-cover position-absolute d-flex align-items-center">
+                <div class="banner-slogan p-3 pr-5 text-white">
+                    <h2 class="display-4">貓咪開心<br>人也開心</h2>
+                    <p class="h3 mt-3">一起開心過相處的每一天</p>
+                </div>
+            </div>
+        </header>
+        <section class="section section-copywriting"> <!-- copywriting -->
+            <div class="container">
+                <h3 class="section-title">喵屋，貓奴的百寶箱</h3>
+                <ul class="list-unstyled row features w-90">
+                    <li class="col-md-4">
+                        <div class="mb-2"><font-awesome-icon :icon="['fas','fish']" size="5x" :style="{'color': '#FFA500'}" /></div>
+                        <p>不同食材製成的各色零食，有肉泥有乾飼料，幫奴才抓住貓咪的胃；針對特定營養需求的主食，讓貓咪吃得開心也兼顧健康。</p>
+                    </li>
+                    <li class="col-md-4">
+                        <div class="mb-2"><font-awesome-icon :icon="['fas','couch']" size="5x" :style="{'color': '#FFA500'}" /></div>
+                        <p>色彩和樣式多樣的貓咪家具和玩具，和貓奴們一起找出貓咪的喜好。小到逗貓棒，大到貓跳台，硬板軟墊各式材質五顏六色任君挑選。</p>
+                    </li>
+                    <li class="col-md-4">
+                        <div class="mb-2"><font-awesome-icon :icon="['fas','home']" size="5x" :style="{'color': '#FFA500'}" /></div>
+                        <p>居家友善的貓咪照護用品，讓貓住得舒服貓奴也方便照顧。防噴砂的貓砂盆、一剪即斷的指甲刀、定時自動餵食機等。</p>
+                    </li>
+                </ul>
+            </div>
+        </section>
+        <section class="section section-new-items">
+            <div class="container">
+                <div class="mx-auto">
+                    <h4>新商品搶先看</h4>
+                    <nav class="position-relative">
+                      <div class="slide-control">
+                        <button class="slide-left"><font-awesome-icon :icon="['fas','chevron-left']" size="3x" /></button>
+                        <button class="slide-right"><font-awesome-icon :icon="['fas','chevron-right']" size="3x" /></button>
+                      </div>
+                      <ul v-if="recomProd.length" class="list-unstyled new-item-list d-flex">
+                          <li v-for="prod in recomProd" :key="prod.id">
+                              <div class="card position-relative border border-primary h-100">
+                                <img :src="prod.imageUrl" class="card-img-top w-75 mx-auto" alt="">
+                                <div class="icons">
+                                  <button class="btn p-0 rounded-circle icon-btn"><font-awesome-icon class="d-block" :icon="['fas','info-circle']" size="2x" :style="{'color': '#15D16D'}" /></button>
+                                </div>
+                                <div class="card-body px-3 pb-3 pt-1 d-flex flex-column justify-content-between">
+                                  <div>
+                                    <div class="product-brand">{{prod.title.brand}}</div>
+                                    <div class="product-collection mb-0">{{prod.title.collection}}</div>
+                                    <div class="product-type text-muted">{{prod.title.type}}</div>
+                                  </div>
+                                  <em class="product-price">${{prod.price}}</em>
+                                </div>
+                              </div>
+                          </li>
+                      </ul>
+                    </nav>
+                </div>
+            </div>
+        </section>
+        <section class="section section-recommand text-white"> <!-- Recommandation from customers -->
+            <div class="container">
+                <h3 class="section-title">來自貓奴們的推薦</h3>
+                <ul class="row list-unstyled">
+                    <li class="col-md-4">
+                        <blockquote class="blockquote">
+                            <p>喵屋推薦的貓咪用品是真的好用！尤其是快剪指甲刀讓我下刀快狠準，再也不必煩惱貓咪扭來扭去了。</p>
+                            <footer class="blockquote-footer text-right">Some customer</footer>
+                        </blockquote>
+                    </li>
+                    <li class="col-md-4">
+                        <blockquote class="blockquote">
+                            <p>家裡的貓咪年事已高，吃不能再像以前一樣不忌口了。幸好在貓屋找到低鈉高鈣主食罐，讓貓咪吃的開心健康也不用擔心。</p>
+                            <footer class="blockquote-footer text-right">Some customer</footer>
+                        </blockquote>
+                    </li>
+                    <li class="col-md-4">
+                        <blockquote class="blockquote">
+                            <p>最近養的三隻小貓活力充沛，三不五時就央求我陪牠們玩，所以買過的逗貓棒都很短命，但喵屋賣的飛天鳥逗貓棒用了三個月還很耐用！是目前最長壽的！</p>
+                            <footer class="blockquote-footer text-right">Some customer</footer>
+                        </blockquote>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </div>
+</template>
+
+<script>
+import { tns } from 'tiny-slider/src/tiny-slider'
+import 'tiny-slider/dist/tiny-slider.css'
+
+export default {
+  props: ['products'],
+  data () {
+    return {
+      recomProd: []
+    }
+  },
+  methods: {
+    randomRecom (prodArr) {
+      if (prodArr.length > 0) {
+        for (let i = 0; i < 8; i++) {
+          const selInd = Math.floor(Math.random() * prodArr.length)
+          this.recomProd.push(prodArr.splice(selInd, 1)[0])
+        }
+        this.$nextTick(function () {
+          tns({
+            container: '.new-item-list',
+            items: 1,
+            gutter: 15,
+            controlsContainer: '.slide-control',
+            navPosition: 'bottom',
+            responsive: {
+              768: {
+                items: 3
+              },
+              992: {
+                items: 4
+              }
+            }
+          })
+        })
+      }
+    }
+  },
+  watch: {
+    products () {
+      const arr = [...this.products]
+      this.randomRecom(arr)
+    }
+  },
+  mounted () {
+    if (this.products) {
+      const arr = [...this.products]
+      this.randomRecom(arr)
+    }
+    tns({
+      container: '.my-slider',
+      mode: 'gallery',
+      autoplay: true,
+      items: 1,
+      speed: 1000,
+      controls: false,
+      nav: false,
+      autoplayButtonOutput: false
+    })
+  }
+}
+</script>
