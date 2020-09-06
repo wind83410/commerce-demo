@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="p-nav">
     <img src="/images/products_banner.jpg" class="img-fluid d-block" alt="">
     <nav aria-label="breadcrumb" class="product--breadcrumb">
       <div class="container">
@@ -36,11 +36,6 @@
                   <img :src="prod.imageUrl" class="card-img-top w-75 mx-auto" alt="">
                   <ul class="icons list-unstyled d-flex flex-column">
                     <li>
-                      <button class="btn p-0 rounded-circle icon-btn text-primary">
-                        <font-awesome-icon class="d-block" :icon="['fas','info-circle']" size="2x" />
-                      </button>
-                    </li>
-                    <li>
                       <button class="btn p-0 icon-btn text-primary" @click="addToCart(prod.id)">
                         <font-awesome-icon class="d-block" icon="cart-plus" size="2x" />
                       </button>
@@ -65,15 +60,20 @@
 </template>
 
 <script>
-import { twEngTable, addToCart } from '../assets/js/mixins'
+import { twEngTable } from '../assets/js/mixins'
+import { mapState } from 'vuex'
 export default {
-  props: ['products'],
   data () {
     return {
       focusBrand: 'all'
     }
   },
-  mixins: [twEngTable, addToCart],
+  mixins: [twEngTable],
+  methods: {
+    addToCart (productId, qty = 1) {
+      this.$store.dispatch('addCartItem', { productId, qty })
+    }
+  },
   computed: {
     categorize () {
       const obj = this.linkMap('list', this.$route.params.category, this.$route.params.type)
@@ -95,7 +95,8 @@ export default {
         }
       })
       return brands
-    }
+    },
+    ...mapState(['products'])
   },
   watch: {
     $route () {

@@ -23,10 +23,32 @@ const routes = [
       },
       {
         path: 'check',
-        name: 'Check',
-        components: {
-          check: () => import('../views/Check.vue')
-        }
+        component: () => import('../components/Register.vue'),
+        children: [
+          {
+            path: '',
+            name: 'Check',
+            component: () => import('../views/Check.vue')
+          },
+          {
+            path: 'recipient',
+            name: 'Recipient',
+            component: () => import('../views/Recipient.vue'),
+            meta: {
+              requireAuth: true,
+              pathFrom: '/check'
+            }
+          },
+          {
+            path: 'clinch/:orderId',
+            name: 'Deal clinched',
+            component: () => import('../views/OrderCode.vue'),
+            meta: {
+              pathFrom: '/check/recipient',
+              orderSentCheck: true
+            }
+          }
+        ]
       }
     ]
   }

@@ -1,0 +1,16 @@
+{
+  "validations":{
+    "messages": {
+      "email": "請輸入有效的{_field_}",
+      "tel": "請輸入有效{_field_}",
+      "required": "{_field_}必填"
+    }
+  },
+  "fields": {
+    "full name": "姓名",
+    "email": "電子郵件",
+    "tel": "連絡電話",
+    "message": "留言",
+    "address": "地址"
+  }
+}

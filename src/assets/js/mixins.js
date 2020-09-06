@@ -1,38 +1,3 @@
-export const getProducts = {
-  methods: {
-    getProducts () {
-      const api = `${process.env.VUE_APP_API_PATH}/api/${process.env.VUE_APP_CUSTOM_PATH}/products/all`
-      const vm = this
-      return new Promise(function (resolve, reject) {
-        vm.$http.get(api).then(response => {
-          if (response.data.success) {
-            resolve(response.data.products)
-          } else {
-            reject(Error('unable to get product list from server'))
-          }
-        })
-      })
-    }
-  }
-}
-
-export const getCart = {
-  methods: {
-    getCart () {
-      const api = `${process.env.VUE_APP_API_PATH}/api/${process.env.VUE_APP_CUSTOM_PATH}/cart`
-      const vm = this
-      return new Promise(function (resolve, reject) {
-        vm.$http.get(api).then(response => {
-          if (response.data.success) {
-            resolve(response.data.data)
-          } else {
-            reject(Error('unable to get cart from server'))
-          }
-        })
-      })
-    }
-  }
-}
 
 export const addToCart = {
   methods: {
@@ -49,21 +14,22 @@ export const addToCart = {
   }
 }
 
-export const removeCart = {
+export const getOrder = {
   methods: {
-    removeCart (productId) {
-      const api = `${process.env.VUE_APP_API_PATH}/api/${process.env.VUE_APP_CUSTOM_PATH}/cart/${productId}`
-      const vm = this
-      return new Promise(function (resolve, reject) {
-        vm.$http.delete(api).then(response => {
-          if (response.data.success) {
-            vm.$emit('cart-edited')
-            resolve(response.data)
-          } else {
-            reject(Error(response.data.message))
-          }
+    getOrder (orderId = '') {
+      if (orderId !== '') {
+        const api = `${process.env.VUE_APP_API_PATH}/api/${process.env.VUE_APP_CUSTOM_PATH}/order/${orderId}`
+        const vm = this
+        return new Promise(function (resolve, reject) {
+          vm.$http.get(api).then(response => {
+            if (response.data.success) {
+              resolve(response.data.order)
+            } else {
+              reject(Error(response.data.message))
+            }
+          })
         })
-      })
+      }
     }
   }
 }

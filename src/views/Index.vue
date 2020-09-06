@@ -43,22 +43,22 @@
                         <button class="slide-right"><font-awesome-icon :icon="['fas','chevron-right']" size="3x" /></button>
                       </div>
                       <ul v-if="recomProd.length" class="list-unstyled new-item-list d-flex">
-                          <li v-for="prod in recomProd" :key="prod.id">
-                              <div class="card position-relative border border-primary h-100">
-                                <img :src="prod.imageUrl" class="card-img-top w-75 mx-auto" alt="">
-                                <div class="icons">
-                                  <button class="btn p-0 rounded-circle icon-btn"><font-awesome-icon class="d-block" :icon="['fas','info-circle']" size="2x" :style="{'color': '#15D16D'}" /></button>
-                                </div>
-                                <div class="card-body px-3 pb-3 pt-1 d-flex flex-column justify-content-between">
-                                  <div>
-                                    <div class="product-brand">{{prod.title.brand}}</div>
-                                    <div class="product-collection mb-0">{{prod.title.collection}}</div>
-                                    <div class="product-type text-muted">{{prod.title.type}}</div>
-                                  </div>
-                                  <em class="product-price">${{prod.price}}</em>
-                                </div>
+                        <li v-for="prod in recomProd" :key="prod.id">
+                            <div class="card position-relative border border-primary h-100">
+                              <img :src="prod.imageUrl" class="card-img-top w-75 mx-auto" alt="">
+                              <div class="icons">
+                                <button class="btn p-0 icon-btn" @click="addToCart(prod.id)"><font-awesome-icon class="d-block" icon="cart-plus" size="2x" /></button>
                               </div>
-                          </li>
+                              <div class="card-body px-3 pb-3 pt-1 d-flex flex-column justify-content-between">
+                                <div>
+                                  <div class="product-brand">{{prod.title.brand}}</div>
+                                  <div class="product-collection mb-0">{{prod.title.collection}}</div>
+                                  <div class="product-type text-muted">{{prod.title.type}}</div>
+                                </div>
+                                <em class="product-price">${{prod.price}}</em>
+                              </div>
+                            </div>
+                        </li>
                       </ul>
                     </nav>
                 </div>
@@ -89,15 +89,32 @@
                 </ul>
             </div>
         </section>
+        <section class="coupon-evt bg-light">
+          <div class="container coupon-evt__info">
+            <div class="row">
+              <div class="col-md-6">
+                <img class="img-fluid" src="/images/coupon_sideImg.jpg" alt="">
+              </div>
+              <div class="col-md-6">
+                <div class="h-100 py-4 d-flex flex-column justify-content-center text-center">
+                  <div class="mb-4 align-self-center coupon-evt__info--title">一同建立人貓生活</div>
+                  <p>貓屋邀請您一起合作，讓貓咪逐漸融入飼主的生活，享受那些可愛又可憎的大小事。
+                    現在起只要輸入期間限定優惠碼 <strong>MayCatsBeWithYou</strong>，即可享有九折優惠。</p>
+                  <router-link to="/products/treats/all" class="btn btn-primary btn-lg align-self-center">開始探索</router-link>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
     </div>
 </template>
 
 <script>
 import { tns } from 'tiny-slider/src/tiny-slider'
 import 'tiny-slider/dist/tiny-slider.css'
+import { mapState } from 'vuex'
 
 export default {
-  props: ['products'],
   data () {
     return {
       recomProd: []
@@ -113,7 +130,6 @@ export default {
         this.$nextTick(function () {
           tns({
             container: '.new-item-list',
-            items: 1,
             gutter: 15,
             controlsContainer: '.slide-control',
             navPosition: 'bottom',
@@ -128,8 +144,12 @@ export default {
           })
         })
       }
+    },
+    addToCart (productId, qty = 1) {
+      this.$store.dispatch('addCartItem', { productId, qty })
     }
   },
+  computed: mapState(['products']),
   watch: {
     products () {
       const arr = [...this.products]
@@ -137,7 +157,7 @@ export default {
     }
   },
   mounted () {
-    if (this.products) {
+    if (this.products.length) {
       const arr = [...this.products]
       this.randomRecom(arr)
     }
@@ -145,7 +165,6 @@ export default {
       container: '.my-slider',
       mode: 'gallery',
       autoplay: true,
-      items: 1,
       speed: 1000,
       controls: false,
       nav: false,
