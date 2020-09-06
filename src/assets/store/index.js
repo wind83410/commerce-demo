@@ -7,6 +7,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
   strict: true,
   state: {
+    isLoading: false,
     isLogined: false,
     cart: {
       carts: [],
@@ -70,6 +71,9 @@ export default new Vuex.Store({
     sign ({ commit }, status) {
       commit('ISLOGINED', status)
     },
+    await ({ commit }, status) {
+      commit('ISLOADING', status)
+    },
     recordOrderId ({ commit }, orderId) {
       commit('ORDERIDSENT_RECORD', orderId)
     },
@@ -91,6 +95,9 @@ export default new Vuex.Store({
     },
     ISLOGINED (state, status) {
       state.isLogined = status
+    },
+    ISLOADING (state, status) {
+      state.isLoading = status
     },
     ORDERIDSENT_RECORD (state, orderId) {
       state.orderIdSent = orderId

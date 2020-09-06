@@ -41,10 +41,7 @@
 </template>
 
 <script>
-import { getOrder } from '../assets/js/mixins'
-
 export default {
-  mixins: [getOrder],
   data () {
     return {
       order: {
@@ -64,6 +61,23 @@ export default {
       return this.$store.state.isLogined
     }
   },
+  methods: {
+    getOrder (orderId = '') {
+      if (orderId !== '') {
+        const api = `${process.env.VUE_APP_API_PATH}/api/${process.env.VUE_APP_CUSTOM_PATH}/order/${orderId}`
+        const vm = this
+        return new Promise(function (resolve, reject) {
+          vm.$http.get(api).then(response => {
+            if (response.data.success) {
+              resolve(response.data.order)
+            } else {
+              reject(Error(response.data.message))
+            }
+          })
+        })
+      }
+    }
+  },
   watch: {
     isLogined () {
       this.$router.push('/')
@@ -71,7 +85,9 @@ export default {
   },
   mounted () {
     const vm = this
+    this.$store.dispatch('await', true)
     this.getOrder(this.$store.state.orderIdSent).then(order => {
+      vm.$store.dispatch('await', false)
       vm.order = order
     })
   }

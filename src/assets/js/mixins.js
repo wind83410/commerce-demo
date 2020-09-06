@@ -1,39 +1,3 @@
-
-export const addToCart = {
-  methods: {
-    addToCart (productsId, qty = 1) {
-      const api = `${process.env.VUE_APP_API_PATH}/api/${process.env.VUE_APP_CUSTOM_PATH}/cart`
-      const data = { product_id: productsId, qty }
-      const vm = this
-      this.$http.post(api, { data }).then(response => {
-        if (response.data.success) {
-          vm.$emit('cart-edited')
-        }
-      })
-    }
-  }
-}
-
-export const getOrder = {
-  methods: {
-    getOrder (orderId = '') {
-      if (orderId !== '') {
-        const api = `${process.env.VUE_APP_API_PATH}/api/${process.env.VUE_APP_CUSTOM_PATH}/order/${orderId}`
-        const vm = this
-        return new Promise(function (resolve, reject) {
-          vm.$http.get(api).then(response => {
-            if (response.data.success) {
-              resolve(response.data.order)
-            } else {
-              reject(Error(response.data.message))
-            }
-          })
-        })
-      }
-    }
-  }
-}
-
 export const twEngTable = {
   data () {
     return {

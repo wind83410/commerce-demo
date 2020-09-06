@@ -1,5 +1,6 @@
 <template>
     <div class="d-flex flex-column" style="height: 100vh">
+        <loading :active.sync="isLoading"></loading>
         <div class="layout-nav-mobile bg-white d-md-none position-fixed px-3">
           <div class="member mb-3 d-flex align-items-center">
             <button v-if="!isLogined" class="btn btn-outline-primary btn-login-mobile" data-toggle="modal" data-target="#login-modal">
@@ -138,11 +139,14 @@
 import $ from 'jquery'
 import { twEngTable } from '../assets/js/mixins'
 import alerts from './Alerts'
+import loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/vue-loading.css'
 
 export default {
   name: 'index',
   components: {
-    alerts
+    alerts,
+    loading
   },
   data () {
     return {
@@ -163,23 +167,35 @@ export default {
   },
   methods: {
     removeItem (productId) {
-      this.$store.dispatch('rmCartItem', productId)
+      const vm = this
+      vm.$store.dispatch('await', true)
+      this.$store.dispatch('rmCartItem', productId).then(() => vm.$store.dispatch('await', false))
     },
     login () {
       const vm = this
       const api = `${process.env.VUE_APP_API_PATH}/admin/signIn`
       this.$http.post(api, this.userData).then(response => {
-        console.log(response)
         if (response.data.success) {
           vm.$store.dispatch('sign', true)
           vm.userData.account = vm.userData.password = ''
           $('#login-modal').modal('hide')
+        } else {
+          vm.$store.dispatch('addInfo', {
+            msg: response.data.message,
+            status: 'danger',
+            timeStamp: Math.floor(new Date())
+          })
         }
-      })
+      }).catch(() => vm.$store.dispatch('addInfo', {
+        msg: '連線失敗',
+        status: 'danger',
+        timeStamp: Math.floor(new Date())
+      }))
     },
     logout () {
       const vm = this
       const api = `${process.env.VUE_APP_API_PATH}/logout`
+      this.$store.dispatch('await', true)
       this.$http.post(api).then(response => {
         if (response.data.success) {
           vm.$store.dispatch('sign', false)
@@ -189,6 +205,14 @@ export default {
             timeStamp: Math.floor(new Date() / 1000)
           })
         }
+        this.$store.dispatch('await', false)
+      }).catch(() => {
+        vm.$store.dispatch('addInfo', {
+          msg: '連線失敗',
+          status: 'danger',
+          timeStamp: Math.floor(new Date() / 1000)
+        })
+        vm.$store.dispatch('await', false)
       })
     },
     cartSlide () {
@@ -238,6 +262,9 @@ export default {
     },
     isLogined () {
       return this.$store.state.isLogined
+    },
+    isLoading () {
+      return this.$store.state.isLoading
     }
   },
   mounted () {

@@ -39,7 +39,7 @@
         <section class="card my-3 my-md-0">
           <div class="card-header d-flex justify-content-between align-items-center">
             <span>預計購入商品</span>
-            <span class="text-primary h4">{{`NT$ ${cart.final_total}`}}</span>
+            <span class="text-primary h4">{{`NT$ ${cart.final_total.toFixed(0)}`}}</span>
           </div>
           <div class="card-body">
             <div class="d-flex justify-content-between" v-for="item in cart.carts" :key="item.id">
@@ -103,12 +103,28 @@ export default {
     sendOrder () {
       const api = `${process.env.VUE_APP_API_PATH}/api/${process.env.VUE_APP_CUSTOM_PATH}/order`
       const vm = this
+      this.$store.dispatch('await', true)
       this.$http.post(api, { data: this.data }).then(response => {
         if (response.data.success) {
           vm.$store.dispatch('recordOrderId', response.data.orderId)
           vm.$store.dispatch('getCart')
+          this.$store.dispatch('await', false)
           vm.$router.push({ path: `/check/clinch/${response.data.orderId}` })
+        } else {
+          this.$store.dispatch('await', false)
+          this.$store.dispatch('addInfo', {
+            msg: response.data.message,
+            status: 'danger',
+            timeStamp: Math.floor(new Date())
+          })
         }
+      }).catch(() => {
+        this.$store.dispatch('await', false)
+        vm.$store.dispatch('addInfo', {
+          msg: '連線失敗',
+          status: 'danger',
+          timeStamp: Math.floor(new Date())
+        })
       })
     }
   },

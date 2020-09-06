@@ -71,7 +71,11 @@ export default {
   mixins: [twEngTable],
   methods: {
     addToCart (productId, qty = 1) {
-      this.$store.dispatch('addCartItem', { productId, qty })
+      const vm = this
+      this.$store.dispatch('await', true)
+      this.$store.dispatch('addCartItem', { productId, qty }).then(() => {
+        vm.$store.dispatch('await', false)
+      })
     }
   },
   computed: {

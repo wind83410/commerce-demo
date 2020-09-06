@@ -146,7 +146,11 @@ export default {
       }
     },
     addToCart (productId, qty = 1) {
-      this.$store.dispatch('addCartItem', { productId, qty })
+      const vm = this
+      this.$store.dispatch('await', true)
+      this.$store.dispatch('addCartItem', { productId, qty }).then(() => {
+        vm.$store.dispatch('await', false)
+      })
     }
   },
   computed: mapState(['products']),
@@ -154,12 +158,15 @@ export default {
     products () {
       const arr = [...this.products]
       this.randomRecom(arr)
+      this.$store.dispatch('await', false)
     }
   },
   mounted () {
+    this.$store.dispatch('await', true)
     if (this.products.length) {
       const arr = [...this.products]
       this.randomRecom(arr)
+      this.$store.dispatch('await', false)
     }
     tns({
       container: '.my-slider',

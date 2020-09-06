@@ -16,7 +16,7 @@
           </thead>
           <tbody>
             <tr v-for="item in cart.carts" :key="item.id">
-              <td><button class="btn btn-sm btn-outline-primary" @click="rmCartItem"><font-awesome-icon icon="trash-alt" /></button></td>
+              <td><button class="btn btn-sm btn-outline-primary" @click="rmCartItem(item.id)"><font-awesome-icon icon="trash-alt" /></button></td>
               <td class="d-none d-sm-table-cell">
                 <img :src="item.product.imageUrl" width="60">
               </td>
@@ -28,7 +28,7 @@
               <td>
                 {{item.qty}}
               </td>
-              <td class="text-right">{{item.final_total | round}}</td>
+              <td class="text-right">{{item.final_total.toFixed(1)}}</td>
             </tr>
           </tbody>
         </table>
@@ -46,15 +46,14 @@
                 <tr>
                   <td>折扣</td>
                   <td>
-                    <span v-if="cart.cart">{{cart.total - (cart.final_total | round)}}</span>
-                    <span v-else>0</span>
+                    {{cart.total - cart.final_total.toFixed(0)}}
                   </td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <td>實付</td>
-                  <td>{{(cart.final_total | round)}}</td>
+                  <td>{{(cart.final_total.toFixed(0))}}</td>
                 </tr>
               </tfoot>
             </table>
@@ -86,11 +85,6 @@ export default {
       couponCode: ''
     }
   },
-  filters: {
-    round (num, digits = 1) {
-      return num.toFixed(digits)
-    }
-  },
   computed: {
     cart () {
       return this.$store.state.cart
@@ -108,6 +102,7 @@ export default {
       const COUPON = { code: this.couponCode }
       const API = `${process.env.VUE_APP_API_PATH}/api/${process.env.VUE_APP_CUSTOM_PATH}/coupon`
       const vm = this
+      this.$store.dispatch('await', true)
       this.$http.post(API, { data: COUPON }).then(response => {
         vm.$store.dispatch('addInfo', {
           msg: response.data.message,
@@ -118,10 +113,15 @@ export default {
           vm.$store.dispatch('getCart')
           vm.couponCode = ''
         }
+        vm.$store.dispatch('await', false)
       })
     },
     rmCartItem (prodId) {
-      this.$store.dispatch('rmCartItem', prodId)
+      const vm = this
+      this.$store.dispatch('await', true)
+      this.$store.dispatch('rmCartItem', prodId).then(() => {
+        vm.$store.dispatch('await', false)
+      })
     }
   }
 }
