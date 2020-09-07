@@ -156,7 +156,7 @@
  ******/
 
 .section-recommand {
-    background: rgba($dark, .7) url('/images/index_comments.jpg') center center fixed;
+    background: rgba($dark, .7) url('./assets/images/index_comments.jpg') center center fixed;
     background-size: cover;
     background-blend-mode: multiply;
     .section-title {color: $light-color}

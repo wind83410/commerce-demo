@@ -1,6 +1,6 @@
 <template>
   <div class="p-nav">
-    <img src="./images/products_banner.jpg" class="img-fluid d-block" alt="">
+    <img src="~@/assets/images/products_banner.jpg" class="img-fluid d-block" alt="">
     <nav aria-label="breadcrumb" class="product--breadcrumb">
       <div class="container">
         <ol class="breadcrumb bg-transparent px-0 mb-0">

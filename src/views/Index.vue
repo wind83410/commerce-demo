@@ -3,9 +3,9 @@
         <header class="banner
          position-relative"> <!-- Banner -->
             <ul class="list-unstyled my-slider mb-0">
-                <li><div class="w-100 carousel-img" style="background: url('./images/index_banner_carousel_3.jpg') 20% center/cover;"></div></li>
-                <li><div class="w-100 carousel-img" style="background: url('./images/index_banner_carousel_1.jpg') 20% center/cover;"></div></li>
-                <li><div class="w-100 carousel-img" style="background: url('./images/index_banner_carousel_2.jpg') 20% center/cover;"></div></li>
+                <li><div class="w-100 carousel-img" style="background: url('./assets/images/index_banner_carousel_3.jpg') 20% center/cover;"></div></li>
+                <li><div class="w-100 carousel-img" style="background: url('./assets/images/index_banner_carousel_1.jpg') 20% center/cover;"></div></li>
+                <li><div class="w-100 carousel-img" style="background: url('./assets/images/index_banner_carousel_2.jpg') 20% center/cover;"></div></li>
             </ul>
             <div class="container banner-cover position-absolute d-flex align-items-center">
                 <div class="banner-slogan p-3 pr-5 text-white">
@@ -93,7 +93,7 @@
           <div class="container coupon-evt__info">
             <div class="row">
               <div class="col-md-6">
-                <img class="img-fluid" src="/images/coupon_sideImg.jpg" alt="">
+                <img class="img-fluid" src="~@/assets/images/coupon_sideImg.jpg" alt="">
               </div>
               <div class="col-md-6">
                 <div class="h-100 py-4 d-flex flex-column justify-content-center text-center">
