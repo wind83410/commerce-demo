@@ -83,7 +83,13 @@
     }
 }
 
-.carousel-img {height: 100vh;}
+.carousel-img {
+    height: 100vh;
+    &:nth-child(1) {background: url('./assets/images/index_banner_carousel_1.jpg') 20% center/cover;}
+    &:nth-child(2) {background: url('./assets/images/index_banner_carousel_2.jpg') 20% center/cover;}
+    &:nth-child(3) {background: url('./assets/images/index_banner_carousel_3.jpg') 20% center/cover;}
+}
+
 
 
 /****
