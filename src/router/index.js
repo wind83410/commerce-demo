@@ -18,8 +18,19 @@ const routes = [
       },
       {
         path: 'products/:category/:type',
-        name: 'Products',
-        component: () => import('../views/Products.vue')
+        component: () => import('../components/ProductsLayout.vue'),
+        children: [
+          {
+            path: '',
+            name: 'Products',
+            component: () => import('../views/Products.vue')
+          },
+          {
+            path: ':itemId',
+            name: 'Product detail',
+            component: () => import('../views/ProductDetail.vue')
+          }
+        ]
       },
       {
         path: 'check',

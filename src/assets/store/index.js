@@ -62,10 +62,15 @@ export default new Vuex.Store({
       const api = `${process.env.VUE_APP_API_PATH}/api/${process.env.VUE_APP_CUSTOM_PATH}/cart`
       const key = 'product_id'
       const data = { [key]: productId, qty }
-      axios.post(api, { data }).then(response => {
-        if (response.data.success) {
-          context.dispatch('getCart')
-        }
+      return new Promise(function (resolve, reject) {
+        axios.post(api, { data }).then(response => {
+          if (response.data.success) {
+            context.dispatch('getCart')
+            resolve()
+          } else {
+            reject(Error(response.data.message))
+          }
+        })
       })
     },
     sign ({ commit }, status) {
