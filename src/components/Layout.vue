@@ -33,7 +33,7 @@
             </div>
           </template>
         </div>
-        <nav class="layout-nav navbar navbar-expand-md navbar-light w-100 position-fixed" :class="{'bg-white': !isNailed}">
+        <nav class="layout-nav navbar navbar-expand-md navbar-light w-100 position-fixed" :class="{'bg-white': !isIndex}">
             <div class="container">
                 <div class="d-flex align-items-center">
                   <router-link class="navbar-brand" to="/">喵屋</router-link>
@@ -43,13 +43,11 @@
                   </div>
                   <div class="d-none d-md-block">
                     <button v-if="!isLogined" class="btn btn-nav btn-nav__icon" data-toggle="modal" data-target="#login-modal"><font-awesome-icon icon="user" size="lg" /></button>
-                    <div v-else class="btn-group">
-                      <button type="button" class="btn btn-nav" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <font-awesome-icon icon="user-circle" size="lg" />管理員
+                    <div v-else class="d-flex align-items-center">
+                      <font-awesome-icon icon="user-circle" size="lg" />管理員
+                      <button class="btn btn-nav btn-nav__icon" @click="logout">
+                        <font-awesome-icon icon="sign-out-alt" size="lg" />
                       </button>
-                      <div class="dropdown-menu">
-                        <button class="btn btn-primary" @click="logout">登出</button>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -73,13 +71,18 @@
         </nav>
         <alerts />
         <router-view class="flex-grow-1" />
-        <footer class="container py-2 d-flex justify-content-center">
+        <footer class="container py-2 d-flex justify-content-center" id="anouncement">
             <p class="px-2 mb-0 text-center border border-top-0 border-bottom-0">此商店純屬杜撰，所有素材皆擷取自網路</p>
         </footer>
+        <button class="btn btn-primary back-to-top js-fade-out" @click="scrollToTop">
+          <font-awesome-icon icon="arrow-up" size="lg" />
+        </button>
         <section class="cart-list d-flex flex-column position-fixed bg-light">
           <div class="d-flex m-1">
             <router-link to="/check" class="btn btn-primary w-100">去結帳</router-link>
-            <button class="btn cart-list-trigger"><font-awesome-icon icon="angle-left" size="lg" /></button>
+            <button class="btn cart-list-trigger">
+              <font-awesome-icon icon="angle-left" size="lg" />
+            </button>
           </div>
           <div class="table-wrap">
             <table class="table table-sm" v-if="cart.carts.length">
@@ -114,6 +117,9 @@
           <div class="modal-dialog">
             <div class="modal-content p-3">
               <div class="h3 text-center">喵屋會員</div>
+              <div class="alert alert-danger" v-if="loginAlert">
+                {{ loginAlert }}
+              </div>
               <form @submit.prevent="login">
                 <div class="form-group">
                   <label for="account">帳號</label>
@@ -150,13 +156,12 @@ export default {
   },
   data () {
     return {
-      isNailed: true,
-      lastScrollTop: 0,
-      vpw: 0,
+      isIndex: true,
       userData: {
         username: '',
         password: ''
-      }
+      },
+      loginAlert: ''
     }
   },
   mixins: [twEngTable],
@@ -180,15 +185,11 @@ export default {
           vm.userData.account = vm.userData.password = ''
           $('#login-modal').modal('hide')
         } else {
-          vm.$store.dispatch('addInfo', {
-            msg: response.data.message,
-            status: 'danger'
-          })
+          vm.loginAlert = response.data.message
         }
-      }).catch(() => vm.$store.dispatch('addInfo', {
-        msg: '連線失敗',
-        status: 'danger'
-      }))
+      }).catch(() => {
+        vm.loginAlert = '無法和伺服器連線，請稍後再試'
+      })
     },
     logout () {
       const vm = this
@@ -204,10 +205,7 @@ export default {
         }
         this.$store.dispatch('await', false)
       }).catch(() => {
-        vm.$store.dispatch('addInfo', {
-          msg: '連線失敗',
-          status: 'danger'
-        })
+        vm.loginAlert = '無法和伺服器連線，請稍後再試'
         vm.$store.dispatch('await', false)
       })
     },
@@ -222,18 +220,32 @@ export default {
       })
     },
     colorSwitch () {
-      const vm = this
-      $(window).scroll(function () {
-        const vp = this
-        const scrollTop = $(vp).scrollTop()
-        const navHeight = $('.layout-nav').height()
-        if (scrollTop > vm.lastScrollTop && scrollTop > navHeight) { // scrolling down
-          $('.layout-nav').addClass('bg-white')
-        } else if (scrollTop < vm.lastScrollTop && scrollTop < navHeight) {
-          $('.layout-nav').removeClass('bg-white')
-        }
-        vm.lastScrollTop = scrollTop
-      })
+      const navHeight = $('.layout-nav').height()
+      const navTop = $('.layout-nav').offset().top
+      if (navTop + navHeight / 2 >= navHeight) {
+        $('.layout-nav').addClass('bg-white')
+      } else {
+        $('.layout-nav').removeClass('bg-white')
+      }
+    },
+    scrollToTop () {
+      $('html, body').animate({
+        scrollTop: 0
+      }, 700)
+    },
+    bottomHit () {
+      const ftTop = $('#anouncement').offset().top
+      const vpHeight = $(window).height()
+      const vpScrollTop = $(window).scrollTop()
+      if (vpHeight + vpScrollTop >= ftTop) {
+        $('.js-fade-out').fadeIn(300, function () {
+          $(this).removeClass('js-fade-out').addClass('js-fade-in')
+        })
+      } else {
+        $('.back-to-top').fadeOut(300, function () {
+          $(this).removeClass('js-fade-in').addClass('js-fade-out')
+        })
+      }
     }
   },
   computed: {
@@ -264,11 +276,15 @@ export default {
     }
   },
   mounted () {
+    const vm = this
     if (this.$route.path === '/') {
-      this.colorSwitch()
-    } else {
-      this.isNailed = false
+      $(window).on('scroll', this.colorSwitch)
     }
+    $(window).on('scroll', this.bottomHit)
+    $('#login-modal').on('hidden.bs.modal', function () {
+      vm.loginAlert = ''
+      vm.userData.username = vm.userDate.password = ''
+    })
     this.cartSlide()
     this.navSlide()
     this.$store.dispatch('getProducts')
@@ -276,12 +292,13 @@ export default {
   },
   watch: {
     $route (to) {
+      $('html, body').scrollTop(0)
       if (to.path === '/') {
-        this.isNailed = true
-        this.colorSwitch()
+        $(window).on('scroll', this.colorSwitch)
+        this.isIndex = true
       } else {
-        this.isNailed = false
-        $(window).off('scroll')
+        $(window).off('scroll', this.colorSwitch)
+        this.isIndex = false
       }
       if (to.path === '/check') { $('.cart-list').removeClass('slide-in') }
       $('.layout-nav-mobile').removeClass('slide-in')

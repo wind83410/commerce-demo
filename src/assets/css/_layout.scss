@@ -110,6 +110,21 @@ $highlight-color: #15D16D;
     justify-content: center;
   }
 
-/********
- * Login/sign-in modal
- ********/
+ /*******
+  * Back-to-top button
+  *******/
+  .back-to-top {
+    position: fixed;
+    z-index: $zindex-fixed;
+    bottom: 50px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    box-shadow: rgba(0,0,0,0.4) 0 10px 8px;
+    display: none
+  }
