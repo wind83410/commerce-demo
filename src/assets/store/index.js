@@ -27,8 +27,18 @@ export default new Vuex.Store({
             context.commit('PRODUCTS', response.data.products)
             resolve()
           } else {
-            reject(Error('failed to get product list'))
+            context.dispatch('addInfo', {
+              msg: response.data.message,
+              status: 'danger'
+            })
+            reject(Error(response.data.message))
           }
+        }).catch(() => {
+          context.dispatch('addInfo', {
+            msg: '無法和伺服器連線 (XMLHttpRequest error)',
+            status: 'danger'
+          })
+          reject(Error('無法和伺服器連線 (XMLHttpRequest error)'))
         })
       })
     },
@@ -40,8 +50,18 @@ export default new Vuex.Store({
             context.commit('CART_REFRESH', response.data.data)
             resolve()
           } else {
-            reject(Error('unable to get cart from server'))
+            context.dispatch('addInfo', {
+              msg: response.data.message,
+              status: 'danger'
+            })
+            reject(Error(response.data.message))
           }
+        }).catch(() => {
+          context.dispatch('addInfo', {
+            msg: '無法和伺服器連線 (XMLHttpRequest error)',
+            status: 'danger'
+          })
+          reject(Error('無法和伺服器連線 (XMLHttpRequest error)'))
         })
       })
     },
@@ -53,8 +73,18 @@ export default new Vuex.Store({
             context.dispatch('getCart')
             resolve()
           } else {
+            context.dispatch('addInfo', {
+              msg: response.data.message,
+              status: 'danger'
+            })
             reject(Error(response.data.message))
           }
+        }).catch(() => {
+          context.dispatch('addInfo', {
+            msg: '無法和伺服器連線 (XMLHttpRequest error)',
+            status: 'danger'
+          })
+          reject(Error('無法和伺服器連線 (XMLHttpRequest error)'))
         })
       })
     },
@@ -68,8 +98,18 @@ export default new Vuex.Store({
             context.dispatch('getCart')
             resolve()
           } else {
+            context.dispatch('addInfo', {
+              msg: response.data.message,
+              status: 'danger'
+            })
             reject(Error(response.data.message))
           }
+        }).catch(() => {
+          context.dispatch('addInfo', {
+            msg: '無法和伺服器連線 (XMLHttpRequest error)',
+            status: 'danger'
+          })
+          reject(Error('無法和伺服器連線 (XMLHttpRequest error)'))
         })
       })
     },
@@ -82,7 +122,8 @@ export default new Vuex.Store({
     recordOrderId ({ commit }, orderId) {
       commit('ORDERIDSENT_RECORD', orderId)
     },
-    addInfo ({ commit, dispatch }, { msg, status, timeStamp }) {
+    addInfo ({ commit, dispatch }, { msg, status }) {
+      const timeStamp = Math.floor(new Date() / 1000)
       const infoObj = { msg, status, timeStamp }
       commit('INFO_ADD', infoObj)
       setTimeout(() => dispatch('rmInfo', timeStamp), 5000)

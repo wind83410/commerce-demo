@@ -4,7 +4,10 @@
 
 .p-detail__name { font-size: 1.2rem; }
 .p-detail__name--brand { font-size: 1.15em; }
-.p-detail__name--collection { font-size: 1.25em; }
+.p-detail__name--collection {
+  font-size: 1.25em;
+  line-height: 1.2;
+}
 
 .p-detail__price--origin { text-decoration: line-through }
 .p-detail__price--sale {

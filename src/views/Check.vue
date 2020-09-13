@@ -106,14 +106,18 @@ export default {
       this.$http.post(API, { data: COUPON }).then(response => {
         vm.$store.dispatch('addInfo', {
           msg: response.data.message,
-          status: response.data.success ? 'info' : 'danger',
-          timeStamp: Math.floor(new Date())
+          status: response.data.success ? 'info' : 'danger'
         })
         if (response.data.success) {
           vm.$store.dispatch('getCart')
           vm.couponCode = ''
         }
         vm.$store.dispatch('await', false)
+      }).catch(() => {
+        vm.$store.dispatch('addInfo', {
+          msg: '無法和伺服器連線 (XMLHttpRequest error)',
+          status: 'danger'
+        })
       })
     },
     rmCartItem (prodId) {

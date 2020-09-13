@@ -182,14 +182,12 @@ export default {
         } else {
           vm.$store.dispatch('addInfo', {
             msg: response.data.message,
-            status: 'danger',
-            timeStamp: Math.floor(new Date())
+            status: 'danger'
           })
         }
       }).catch(() => vm.$store.dispatch('addInfo', {
         msg: '連線失敗',
-        status: 'danger',
-        timeStamp: Math.floor(new Date())
+        status: 'danger'
       }))
     },
     logout () {
@@ -201,16 +199,14 @@ export default {
           vm.$store.dispatch('sign', false)
           vm.$store.dispatch('addInfo', {
             msg: '成功登出',
-            status: 'success',
-            timeStamp: Math.floor(new Date() / 1000)
+            status: 'success'
           })
         }
         this.$store.dispatch('await', false)
       }).catch(() => {
         vm.$store.dispatch('addInfo', {
           msg: '連線失敗',
-          status: 'danger',
-          timeStamp: Math.floor(new Date() / 1000)
+          status: 'danger'
         })
         vm.$store.dispatch('await', false)
       })

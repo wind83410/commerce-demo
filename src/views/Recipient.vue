@@ -114,16 +114,14 @@ export default {
           this.$store.dispatch('await', false)
           this.$store.dispatch('addInfo', {
             msg: response.data.message,
-            status: 'danger',
-            timeStamp: Math.floor(new Date())
+            status: 'danger'
           })
         }
       }).catch(() => {
         this.$store.dispatch('await', false)
         vm.$store.dispatch('addInfo', {
-          msg: '連線失敗',
-          status: 'danger',
-          timeStamp: Math.floor(new Date())
+          msg: '無法和伺服器連線 (XMLHttpRequest error)',
+          status: 'danger'
         })
       })
     }

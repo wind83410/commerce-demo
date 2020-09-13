@@ -73,6 +73,8 @@ export default {
             } else {
               reject(Error(response.data.message))
             }
+          }).catch(() => {
+            reject(Error('無法和伺服器連線 (XMLRequest error'))
           })
         })
       }
@@ -89,6 +91,11 @@ export default {
     this.getOrder(this.$store.state.orderIdSent).then(order => {
       vm.$store.dispatch('await', false)
       vm.order = order
+    }).catch(error => {
+      vm.$store.dispatch('addInfo', {
+        msg: error.message,
+        status: 'danger'
+      })
     })
   }
 }
