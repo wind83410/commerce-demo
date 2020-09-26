@@ -1,0 +1,28 @@
+// Structure of product page
+.product--breadcrumb {
+  background-color: $gray-100;
+}
+
+// Product detail
+.p-detail__name {
+  font-size: 1.2rem;
+}
+.p-detail__name--brand {
+  font-size: 1.15em;
+}
+.p-detail__name--collection {
+  font-size: 1.25em;
+  line-height: 1.2;
+}
+
+.p-detail__price--origin {
+  text-decoration: line-through;
+}
+.p-detail__price--sale {
+  font-size: 2em;
+  color: $highlight-color;
+}
+
+.p-qty {
+  width: 150px;
+}

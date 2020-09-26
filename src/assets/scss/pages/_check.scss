@@ -2,17 +2,18 @@
  * Register.vue
  *****/
 
- .bg-order-code {
-   background: url('./assets/images/index_banner_carousel_2.jpg') center center/cover;
- }
+.bg-order-code {
+  background: url("./assets/images/index_banner_carousel_2.jpg") center
+    center/cover;
+}
 
- .progress-thin {
-   height: 3px;
-   position: fixed;
-   top: 56px;
-   width: 100%;
- }
- 
+.progress-thin {
+  height: 3px;
+  position: fixed;
+  top: 56px;
+  width: 100%;
+}
+
 /*****
  * Check.vue
  *****/
@@ -20,7 +21,7 @@
 .bill-title {
   color: $dark-color;
   &::after {
-    content: '';
+    content: "";
     display: block;
     width: 30px;
     height: 2px;
@@ -31,7 +32,9 @@
 .bill-detail {
   td {
     padding: 0.25rem;
-    &:last-child { text-align: right }
+    &:last-child {
+      text-align: right;
+    }
   }
   tfoot td {
     padding-top: 0.75rem;
@@ -43,16 +46,18 @@
  * OrderCode.vue
  *****/
 
- .table-transparent {
+.table-transparent {
   max-width: 400px;
   background: transparent;
-  & td, & th, & thead th {
+  & td,
+  & th,
+  & thead th {
     border-color: transparent;
     border-width: 3px;
     background: rgba(#fff, 0.8);
-    background-clip: padding-box
+    background-clip: padding-box;
   }
 }
 .no-break {
-  white-space: nowrap
+  white-space: nowrap;
 }
