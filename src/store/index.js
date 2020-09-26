@@ -67,24 +67,19 @@ export default new Vuex.Store({
     },
     rmCartItem (context, itemId) {
       const api = `${process.env.VUE_APP_API_PATH}/api/${process.env.VUE_APP_CUSTOM_PATH}/cart/${itemId}`
-      return new Promise(function (resolve, reject) {
-        axios.delete(api).then(response => {
-          if (response.data.success) {
-            context.dispatch('getCart')
-            resolve()
-          } else {
-            context.dispatch('addInfo', {
-              msg: response.data.message,
-              status: 'danger'
-            })
-            reject(Error(response.data.message))
-          }
-        }).catch(() => {
+      return axios.delete(api).then(response => {
+        if (response.data.success) {
+          context.dispatch('getCart')
+        } else {
           context.dispatch('addInfo', {
-            msg: '無法和伺服器連線 (XMLHttpRequest error)',
+            msg: response.data.message,
             status: 'danger'
           })
-          reject(Error('無法和伺服器連線 (XMLHttpRequest error)'))
+        }
+      }).catch(() => {
+        context.dispatch('addInfo', {
+          msg: '無法和伺服器連線 (XMLHttpRequest error)',
+          status: 'danger'
         })
       })
     },
@@ -92,24 +87,19 @@ export default new Vuex.Store({
       const api = `${process.env.VUE_APP_API_PATH}/api/${process.env.VUE_APP_CUSTOM_PATH}/cart`
       const key = 'product_id'
       const data = { [key]: productId, qty }
-      return new Promise(function (resolve, reject) {
-        axios.post(api, { data }).then(response => {
-          if (response.data.success) {
-            context.dispatch('getCart')
-            resolve()
-          } else {
-            context.dispatch('addInfo', {
-              msg: response.data.message,
-              status: 'danger'
-            })
-            reject(Error(response.data.message))
-          }
-        }).catch(() => {
+      return axios.post(api, { data }).then(response => {
+        if (response.data.success) {
+          context.dispatch('getCart')
+        } else {
           context.dispatch('addInfo', {
-            msg: '無法和伺服器連線 (XMLHttpRequest error)',
+            msg: response.data.message,
             status: 'danger'
           })
-          reject(Error('無法和伺服器連線 (XMLHttpRequest error)'))
+        }
+      }).catch(() => {
+        context.dispatch('addInfo', {
+          msg: '無法和伺服器連線 (XMLHttpRequest error)',
+          status: 'danger'
         })
       })
     },
