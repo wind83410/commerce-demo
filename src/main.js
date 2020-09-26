@@ -4,7 +4,6 @@ import App from './App.vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import router from './router'
-
 import { library } from '@fortawesome/fontawesome-svg-core'
 import {
   faFish, faCouch, faHome, faChevronLeft,
@@ -13,12 +12,10 @@ import {
   faUserCircle, faSignInAlt, faSignOutAlt, faFlag, faTimes
 } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
-
 import 'bootstrap'
-
 import i18n from './i18n'
 import { ValidationProvider, ValidationObserver, configure } from 'vee-validate'
-import store from './assets/store'
+import store from './store'
 
 Vue.component('validation-provider', ValidationProvider)
 Vue.component('validation-observer', ValidationObserver)
