@@ -22,7 +22,7 @@
               <img :src="prod.imageUrl" class="card-img-top w-75 mx-auto" alt="">
               <ul class="icons list-unstyled d-flex flex-column">
                 <li>
-                  <button class="btn p-0 icon-btn text-primary" @click="addToCart(prod.id)">
+                  <button type="button" class="btn p-0 icon-btn text-primary" @click="addToCart(prod.id)">
                     <font-awesome-icon class="d-block" icon="cart-plus" size="2x" />
                   </button>
                 </li>
@@ -34,11 +34,11 @@
               </ul>
               <div class="card-body px-3 pb-3 pt-1 d-flex flex-column justify-content-between">
                 <div>
-                  <div class="product-brand">{{prod.title.brand}}</div>
-                  <div class="product-collection mb-0">{{prod.title.collection}}</div>
-                  <div class="product-type text-muted">{{prod.title.type}}</div>
+                  <div class="product-brand">{{ prod.title.brand }}</div>
+                  <div class="product-collection mb-0">{{ prod.title.collection }}</div>
+                  <div class="product-type text-muted">{{ prod.title.type }}</div>
                 </div>
-                <em class="product-price">${{prod.price}}</em>
+                <em class="product-price">${{ prod.price }}</em>
               </div>
             </div>
           </div>
@@ -51,6 +51,7 @@
 <script>
 import { twEngTable } from '../assets/js/mixins'
 import { mapState } from 'vuex'
+
 export default {
   data () {
     return {
@@ -61,17 +62,17 @@ export default {
   methods: {
     addToCart (productId, qty = 1) {
       const vm = this
-      this.$store.dispatch('await', true)
-      this.$store.dispatch('addCartItem', { productId, qty }).then(() => {
+      vm.$store.dispatch('await', true)
+      vm.$store.dispatch('addCartItem', { productId, qty }).then(() => {
         vm.$store.dispatch('await', false)
       }).catch(() => vm.$store.dispatch('await', false))
     }
   },
   computed: {
     categorize () {
-      const obj = this.linkMap('list', this.$route.params.category, this.$route.params.type)
       const vm = this
-      return this.products.filter(function (ele) {
+      const obj = vm.linkMap('list', vm.$route.params.category, vm.$route.params.type)
+      return vm.products.filter(function (ele) {
         return ele.category.class === obj.className &&
                (obj.typeName === 'all' ? true : ele.category.type === obj.typeName) &&
                (vm.focusBrand === 'all' ? true : vm.focusBrand === ele.title.brand)

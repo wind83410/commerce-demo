@@ -1,29 +1,33 @@
 <template>
   <div class="pt-3">
-    <h3 class="text-center"><font-awesome-icon icon="flag" class="mr-2" />訂單成立</h3>
-    <div class="container d-flex flex-column align-items-center justify-content-center">
+    <h3 class="text-center">
+      <font-awesome-icon icon="flag" class="mr-2" />訂單成立
+    </h3>
+    <div
+      class="container d-flex flex-column align-items-center justify-content-center"
+    >
       <div class="pb-3">
         <table class="table table-transparent">
           <tbody>
             <tr>
               <td>訂單 ID</td>
-              <td>{{order.id}}</td>
+              <td>{{ order.id }}</td>
             </tr>
             <tr>
               <td>姓名</td>
-              <td>{{order.user.name}}</td>
+              <td>{{ order.user.name }}</td>
             </tr>
             <tr>
               <td>Email</td>
-              <td>{{order.user.email}}</td>
+              <td>{{ order.user.email }}</td>
             </tr>
             <tr>
               <td>電話</td>
-              <td>{{order.user.tel}}</td>
+              <td>{{ order.user.tel }}</td>
             </tr>
             <tr>
               <td class="no-break">應付金額</td>
-              <td>{{order.total}}</td>
+              <td>{{ order.total }}</td>
             </tr>
             <tr>
               <td class="no-break">付款狀態</td>
@@ -34,7 +38,9 @@
             </tr>
           </tbody>
         </table>
-        <router-link to="/products/treats/all" class="btn btn-primary btn-block">回去逛</router-link>
+        <router-link to="/products/treats/all" class="btn btn-primary btn-block"
+          >回去逛</router-link
+        >
       </div>
     </div>
   </div>
@@ -66,17 +72,24 @@ export default {
       if (orderId !== '') {
         const api = `${process.env.VUE_APP_API_PATH}/api/${process.env.VUE_APP_CUSTOM_PATH}/order/${orderId}`
         const vm = this
-        return new Promise(function (resolve, reject) {
-          vm.$http.get(api).then(response => {
+        return vm.$http
+          .get(api)
+          .then((response) => {
             if (response.data.success) {
-              resolve(response.data.order)
+              return response.data.order
             } else {
-              reject(Error(response.data.message))
+              vm.$store.dispatch('addInfo', {
+                msg: response.data.message,
+                status: 'danger'
+              })
             }
-          }).catch(() => {
-            reject(Error('無法和伺服器連線 (XMLRequest error'))
           })
-        })
+          .catch(() => {
+            vm.$store.dispatch('addInfo', {
+              msg: '無法和伺服器連線 (XMLRequest error',
+              status: 'danger'
+            })
+          })
       }
     }
   },
@@ -87,15 +100,10 @@ export default {
   },
   mounted () {
     const vm = this
-    this.$store.dispatch('await', true)
-    this.getOrder(this.$store.state.orderIdSent).then(order => {
+    vm.$store.dispatch('await', true)
+    vm.getOrder(vm.$store.state.orderIdSent).then((order) => {
       vm.$store.dispatch('await', false)
       vm.order = order
-    }).catch(error => {
-      vm.$store.dispatch('addInfo', {
-        msg: error.message,
-        status: 'danger'
-      })
     })
   }
 }

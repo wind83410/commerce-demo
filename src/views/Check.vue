@@ -2,7 +2,11 @@
   <div class="container pt-3">
     <div class="row">
       <div class="col-md-8 col-lg-9">
-        <h4><span class="mr-1"><font-awesome-icon icon="shopping-cart" /></span>購物車明細</h4>
+        <h4>
+          <span class="mr-1">
+            <font-awesome-icon icon="shopping-cart" />購物車明細
+          </span>
+        </h4>
         <table v-if="cart.carts.length" class="table table-sm mt-4">
           <thead>
             <tr>
@@ -16,24 +20,40 @@
           </thead>
           <tbody>
             <tr v-for="item in cart.carts" :key="item.id">
-              <td><button class="btn btn-sm btn-outline-primary" @click="rmCartItem(item.id)"><font-awesome-icon icon="trash-alt" /></button></td>
+              <td>
+                <button
+                  type="button"
+                  class="btn btn-sm btn-outline-primary"
+                  @click="rmCartItem(item.id)"
+                >
+                  <font-awesome-icon icon="trash-alt" />
+                </button>
+              </td>
               <td class="d-none d-sm-table-cell">
-                <img :src="item.product.imageUrl" width="60">
+                <img :src="item.product.imageUrl" width="60" />
               </td>
               <td>
-                {{`${item.product.title.brand} ${item.product.title.collection} ${item.product.title.type}`}}
-                <span v-if="item.coupon" class="badge badge-discount">{{`${item.coupon.percent} %`}}</span>
+                {{
+                  `${item.product.title.brand} ${item.product.title.collection} ${item.product.title.type}`
+                }}
+                <span v-if="item.coupon" class="badge badge-discount">{{
+                  `${item.coupon.percent} %`
+                }}</span>
               </td>
-              <td class="d-none d-md-table-cell">{{item.product.price}}</td>
+              <td class="d-none d-md-table-cell">{{ item.product.price }}</td>
               <td>
-                {{item.qty}}
+                {{ item.qty }}
               </td>
-              <td class="text-right">{{item.final_total.toFixed(1)}}</td>
+              <td class="text-right">{{ item.final_total.toFixed(1) }}</td>
             </tr>
           </tbody>
         </table>
         <div class="alert alert-success" v-if="cart.carts.length == 0">
-          購物車裡還沒有東西！<router-link to="/products/treats/all" class="alert-link">去逛逛吧！</router-link>
+          購物車裡還沒有東西！<router-link
+            to="/products/treats/all"
+            class="alert-link"
+            >去逛逛吧！</router-link
+          >
         </div>
       </div>
       <div class="col-md-4 col-lg-3">
@@ -44,34 +64,53 @@
               <tbody>
                 <tr>
                   <td>總計</td>
-                  <td>{{cart.total}}</td>
+                  <td>{{ cart.total }}</td>
                 </tr>
                 <tr>
                   <td>折扣</td>
                   <td>
-                    {{cart.total - cart.final_total.toFixed(0)}}
+                    {{ cart.total - cart.final_total.toFixed(0) }}
                   </td>
                 </tr>
               </tbody>
               <tfoot>
                 <tr>
                   <td>實付</td>
-                  <td>{{(cart.final_total.toFixed(0))}}</td>
+                  <td>{{ cart.final_total.toFixed(0) }}</td>
                 </tr>
               </tfoot>
             </table>
             <div class="form-group mb-0 mt-3">
               <label for="coupon">輸入優惠券</label>
               <div class="input-group">
-                <input type="text" class="form-control"  v-model="couponCode" required>
+                <input
+                  type="text"
+                  class="form-control"
+                  v-model="couponCode"
+                  required
+                />
                 <div class="input-group-append">
-                  <button class="btn btn-primary" @click="applyCoupon" :disabled="cart.carts.length == 0">送出</button>
+                  <button
+                    type="button"
+                    class="btn btn-primary"
+                    @click="applyCoupon"
+                    :disabled="cart.carts.length == 0"
+                  >
+                    送出
+                  </button>
                 </div>
               </div>
             </div>
           </div>
           <div class="card-footer bg-white border-top-0 pt-0">
-            <button @click.prevent="toRecipient" class="btn btn-primary w-100" :disabled="cart.carts.length == 0">確定結帳</button>
+            <button
+              type="button"
+              @click.prevent="toRecipient"
+              class="btn btn-primary w-100"
+              :disabled="cart.carts.length == 0"
+            >
+              確定結帳
+            </button>
           </div>
         </div>
       </div>
@@ -102,31 +141,34 @@ export default {
       }
     },
     applyCoupon () {
-      const COUPON = { code: this.couponCode }
-      const API = `${process.env.VUE_APP_API_PATH}/api/${process.env.VUE_APP_CUSTOM_PATH}/coupon`
       const vm = this
-      this.$store.dispatch('await', true)
-      this.$http.post(API, { data: COUPON }).then(response => {
-        vm.$store.dispatch('addInfo', {
-          msg: response.data.message,
-          status: response.data.success ? 'info' : 'danger'
+      const COUPON = { code: vm.couponCode }
+      const API = `${process.env.VUE_APP_API_PATH}/api/${process.env.VUE_APP_CUSTOM_PATH}/coupon`
+      vm.$store.dispatch('await', true)
+      vm.$http
+        .post(API, { data: COUPON })
+        .then((response) => {
+          vm.$store.dispatch('addInfo', {
+            msg: response.data.message,
+            status: response.data.success ? 'info' : 'danger'
+          })
+          if (response.data.success) {
+            vm.$store.dispatch('getCart')
+            vm.couponCode = ''
+          }
+          vm.$store.dispatch('await', false)
         })
-        if (response.data.success) {
-          vm.$store.dispatch('getCart')
-          vm.couponCode = ''
-        }
-        vm.$store.dispatch('await', false)
-      }).catch(() => {
-        vm.$store.dispatch('addInfo', {
-          msg: '無法和伺服器連線 (XMLHttpRequest error)',
-          status: 'danger'
+        .catch(() => {
+          vm.$store.dispatch('addInfo', {
+            msg: '無法和伺服器連線 (XMLHttpRequest error)',
+            status: 'danger'
+          })
         })
-      })
     },
     rmCartItem (prodId) {
       const vm = this
-      this.$store.dispatch('await', true)
-      this.$store.dispatch('rmCartItem', prodId).then(() => {
+      vm.$store.dispatch('await', true)
+      vm.$store.dispatch('rmCartItem', prodId).then(() => {
         vm.$store.dispatch('await', false)
       })
     }
