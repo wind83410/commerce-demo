@@ -3,9 +3,9 @@
     <header class="banner position-relative">
       <!-- Banner -->
       <ul class="list-unstyled my-slider mb-0">
-        <li><div class="w-100 carousel-img"></div></li>
-        <li><div class="w-100 carousel-img"></div></li>
-        <li><div class="w-100 carousel-img"></div></li>
+        <li><div class="w-100 carousel-img" :style="{backgroundImage: `url(\'${require('../assets/images/index_banner_carousel_1.jpg')}\')`, backgroundPosition: '20% center', backgroundSize: 'cover'}"></div></li>
+        <li><div class="w-100 carousel-img" :style="{backgroundImage: `url(\'${require('../assets/images/index_banner_carousel_2.jpg')}\')`, backgroundPosition: '20% center', backgroundSize: 'cover'}"></div></li>
+        <li><div class="w-100 carousel-img" :style="{backgroundImage: `url(\'${require('../assets/images/index_banner_carousel_3.jpg')}\')`, backgroundPosition: '20% center', backgroundSize: 'cover'}"></div></li>
       </ul>
       <div
         class="container banner-cover position-absolute d-flex align-items-center"
