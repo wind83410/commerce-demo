@@ -1,79 +1,6 @@
 <template>
   <div class="d-flex flex-column" style="height: 100vh">
     <Loading :active.sync="isLoading"></Loading>
-    <div class="layout-nav-mobile bg-white d-md-none position-fixed px-3">
-      <div class="member mb-3 d-flex align-items-center">
-        <button
-          v-if="!isLogined"
-          type="button"
-          class="btn btn-outline-primary btn-login-mobile"
-          data-toggle="modal"
-          data-target="#login-modal"
-        >
-          <font-awesome-icon icon="sign-in-alt" size="3x" />
-        </button>
-        <button
-          v-else
-          type="button"
-          class="btn btn-outline-primary btn-login-mobile"
-          @click="logout"
-        >
-          <font-awesome-icon icon="sign-out-alt" size="3x" />
-        </button>
-        <div class="member-info p-2">
-          <div v-if="!isLogined" class="h6 mb-0">
-            歡迎光臨！您還沒有登入喔！
-          </div>
-          <div v-else>管理員</div>
-        </div>
-      </div>
-      <template v-if="navTree['貓主食']">
-        <div class="accordion" id="accordionExample">
-          <div class="card" v-for="(val, key) in navTree" :key="key">
-            <div
-              class="card-header p-2"
-              :id="`heading-${linkMap('route', key).replace(/\//g, '')}`"
-            >
-              <h2 class="mb-0 d-flex">
-                <a
-                  href="#"
-                  class="btn"
-                  data-toggle="collapse"
-                  aria-expanded="true"
-                  aria-controls="collapseExample"
-                  :data-target="`#${linkMap('route', key).replace(/\//g, '')}`"
-                >
-                  <font-awesome-icon icon="plus" />
-                  <span class="sr-only">Toggle Collapse</span>
-                </a>
-                <router-link
-                  :to="`/products/${linkMap('route', key)}`"
-                  class="btn btn-link w-100 text-left"
-                  >{{ key }}</router-link
-                >
-              </h2>
-            </div>
-            <ul
-              :id="linkMap('route', key).replace(/\//g, '')"
-              class="collapse list-unstyled mb-0"
-              :aria-labelledby="`heading-${linkMap('route', key).replace(
-                /\//g,
-                ''
-              )}`"
-              data-parent="#accordionExample"
-            >
-              <li v-for="type in val" :key="key + type">
-                <router-link
-                  class="d-block px-3 py-2"
-                  :to="`/products/${linkMap('route', key, type)}`"
-                  >{{ type }}</router-link
-                >
-              </li>
-            </ul>
-          </div>
-        </div>
-      </template>
-    </div>
     <nav
       class="layout-nav navbar navbar-expand-md navbar-light w-100 position-fixed"
       :class="{ 'bg-white': !isIndex }"
@@ -85,6 +12,8 @@
             <button
               type="button"
               class="btn btn-nav btn-nav__icon cart-list-trigger"
+              data-toggle="modal"
+              data-target="#cart"
               :disabled="$route.path.includes('/check')"
             >
               <font-awesome-icon icon="shopping-cart" size="lg" />
@@ -117,40 +46,29 @@
             </div>
           </div>
         </div>
-        <div class="d-none d-md-block">
-          <template v-if="navTree['貓主食']">
-            <div class="btn-group" v-for="(val, key) in navTree" :key="key">
-              <router-link
-                :to="`/products/${linkMap('route', key)}`"
-                class="btn btn-nav btn-nav__category"
-                >{{ key }}</router-link
-              >
-              <a
-                href="#"
-                class="btn btn-nav btn-nav__icon dropdown-toggle dropdown-toggle-split"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                <span class="sr-only">Toggle Dropdown</span>
-              </a>
-              <div class="dropdown-menu">
-                <router-link
-                  class="dropdown-item"
-                  :to="`/products/${linkMap('route', key, type)}`"
-                  v-for="type in val"
-                  :key="key + type"
-                  >{{ type }}</router-link
-                >
-              </div>
-            </div>
-          </template>
-        </div>
+        <ul class="navbar-nav d-none d-md-flex">
+          <li class="nav-item">
+            <router-link to="/" class="nav-link active">主食</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/" class="nav-link">零食</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/" class="nav-link">起居用品</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/" class="nav-link">玩具</router-link>
+          </li>
+          <li class="nav-item">
+            <router-link to="/" class="nav-link">保養品</router-link>
+          </li>
+        </ul>
         <button
           type="button"
           class="navbar-toggler"
-          aria-controls="layout-nav-mobile"
-          aria-expanded="false"
+          data-toggle="modal"
+          data-target="#m-nav"
+          aria-controls="m-nav"
           aria-label="Toggle navigation"
         >
           <span class="navbar-toggler-icon"></span>
@@ -174,54 +92,97 @@
     >
       <font-awesome-icon icon="arrow-up" size="lg" />
     </button>
-    <section class="cart-list d-flex flex-column position-fixed bg-light">
-      <div class="d-flex m-1">
-        <router-link to="/check" class="btn btn-primary w-100"
-          >去結帳</router-link
-        >
-        <button type="button" class="btn cart-list-trigger">
-          <font-awesome-icon icon="angle-left" size="lg" />
-        </button>
+    <div class="modal fade" id="cart">
+      <div class="modal-dialog cart-list--modal-dialog">
+        <section class="cart-list d-flex flex-column bg-light">
+          <div class="d-flex m-1">
+            <router-link to="/check" class="btn btn-primary w-100"
+              >去結帳</router-link
+            >
+            <button type="button" class="btn cart-list-trigger" data-dismiss="modal">
+              <font-awesome-icon icon="angle-left" size="lg" />
+            </button>
+          </div>
+          <div class="table-wrap">
+            <table class="table table-sm" v-if="cart.carts.length">
+              <thead>
+                <th></th>
+                <th>名稱</th>
+                <th>#</th>
+                <th>小計</th>
+              </thead>
+              <tbody>
+                <tr v-for="item in cart.carts" :key="item.id">
+                  <td>
+                    <button
+                      type="button"
+                      class="btn btn-outline-primary"
+                      @click="removeItem(item.id)"
+                    >
+                      <font-awesome-icon icon="trash-alt" />
+                    </button>
+                  </td>
+                  <td>
+                    <div>
+                      <div class="text-muted">{{ item.product.title.brand }}</div>
+                      <div>
+                        {{ item.product.title.collection }}
+                        <span v-if="item.coupon" class="badge badge-discount">{{
+                          `${item.coupon.percent} %`
+                        }}</span>
+                      </div>
+                      <div class="text-muted">{{ item.product.title.type }}</div>
+                    </div>
+                  </td>
+                  <td>{{ item.qty }}</td>
+                  <td class="text-right">{{ item.final_total | round }}</td>
+                </tr>
+              </tbody>
+            </table>
+            <p v-else class="text-center">購物車還沒有東西，去逛逛吧！</p>
+          </div>
+        </section>
       </div>
-      <div class="table-wrap">
-        <table class="table table-sm" v-if="cart.carts.length">
-          <thead>
-            <th></th>
-            <th>名稱</th>
-            <th>#</th>
-            <th>小計</th>
-          </thead>
-          <tbody>
-            <tr v-for="item in cart.carts" :key="item.id">
-              <td>
-                <button
-                  type="button"
-                  class="btn btn-outline-primary"
-                  @click="removeItem(item.id)"
-                >
-                  <font-awesome-icon icon="trash-alt" />
-                </button>
-              </td>
-              <td>
-                <div>
-                  <div class="text-muted">{{ item.product.title.brand }}</div>
-                  <div>
-                    {{ item.product.title.collection }}
-                    <span v-if="item.coupon" class="badge badge-discount">{{
-                      `${item.coupon.percent} %`
-                    }}</span>
-                  </div>
-                  <div class="text-muted">{{ item.product.title.type }}</div>
-                </div>
-              </td>
-              <td>{{ item.qty }}</td>
-              <td class="text-right">{{ item.final_total | round }}</td>
-            </tr>
-          </tbody>
-        </table>
-        <p v-else class="text-center">購物車還沒有東西，去逛逛吧！</p>
+    </div>
+    <div class="modal fade" id="m-nav">
+      <div class="modal-dialog m-nav--modal-dialog">
+        <div class="m-nav bg-white">
+          <div class="member mb-3 px-3 d-flex align-items-center">
+            <button
+              v-if="!isLogined"
+              type="button"
+              class="btn btn-outline-primary btn-login-mobile"
+              data-toggle="modal"
+              data-target="#login-modal"
+            >
+              <font-awesome-icon icon="sign-in-alt" size="3x" />
+            </button>
+            <button
+              v-else
+              type="button"
+              class="btn btn-outline-primary btn-login-mobile"
+              @click="logout"
+            >
+              <font-awesome-icon icon="sign-out-alt" size="3x" />
+            </button>
+            <div class="member-info p-2">
+              <div v-if="!isLogined" class="h6 mb-0">
+                歡迎光臨！您還沒有登入喔！
+              </div>
+              <div v-else>管理員</div>
+            </div>
+          </div>
+          <div class="h5 px-3">商品分類</div>
+          <div class="list-group" @click="closeNavSlide">
+            <router-link to="/" class="list-group-item active">主食</router-link>
+            <router-link to="/" class="list-group-item">零食</router-link>
+            <router-link to="/" class="list-group-item">起居用品</router-link>
+            <router-link to="/" class="list-group-item">玩具</router-link>
+            <router-link to="/" class="list-group-item">保養品</router-link>
+          </div>
+        </div>
       </div>
-    </section>
+    </div>
     <div
       class="modal fade"
       id="login-modal"
@@ -346,15 +307,11 @@ export default {
           vm.$store.dispatch('await', false)
         })
     },
-    cartSlide () {
-      $('.cart-list-trigger').on('click', function () {
-        $('.cart-list').toggleClass('slide-in')
-      })
+    measureScrollbar () {
+      return window.innerWidth - document.documentElement.clientWidth
     },
-    navSlide () {
-      $('.navbar-toggler').click(function () {
-        $('.layout-nav-mobile').toggleClass('slide-in')
-      })
+    closeNavSlide () {
+      $('#m-nav').modal('hide')
     },
     colorSwitch () {
       const navHeight = $('.layout-nav').height()
@@ -425,8 +382,9 @@ export default {
       vm.loginAlert = ''
       vm.userData.username = vm.userDate.password = ''
     })
-    this.cartSlide()
-    this.navSlide()
+    $('#m-nav').on('show.bs.modal', function () {
+      $(this).find('.m-nav--modal-dialog').css('margin-right', -vm.measureScrollbar())
+    })
     this.$store.dispatch('getProducts')
     this.$store.dispatch('getCart')
   },
@@ -443,7 +401,7 @@ export default {
       if (to.path === '/check') {
         $('.cart-list').removeClass('slide-in')
       }
-      $('.layout-nav-mobile').removeClass('slide-in')
+      $('#m-nav').modal('hide')
     }
   }
 }
