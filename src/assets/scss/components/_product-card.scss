@@ -1,0 +1,24 @@
+.product-brand {
+  color: darken($primary, 20%);
+  font-size: 0.9rem;
+  @include media-breakpoint-up(md) {
+    font-size: 1rem;
+  }
+}
+.product-collection {
+  font-size: 1.5rem;
+  color: $dark;
+  line-height: 1.2;
+  @include media-breakpoint-up(md) {
+    font-size: 1.2rem;
+  }
+}
+
+.product-price {
+  color: $primary;
+  font-weight: bold;
+  font-size: 1.5rem;
+  @include media-breakpoint-up(md) {
+    font-size: 1.3rem;
+  }
+}
