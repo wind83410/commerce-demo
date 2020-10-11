@@ -1,6 +1,30 @@
 // Structure of product page
-.product--breadcrumb {
-  background-color: $gray-100;
+.p-banner {
+  background-position: center center;
+  background-size: cover;
+  background-blend-mode: overlay;
+  background-color: rgba($light, 0.7);
+  height: 150px;
+  @include media-breakpoint-up(md) { height: 200px; }
+  @include media-breakpoint-up(lg) { height: 300px; }
+}
+
+@each $category in $categories {
+  .bg-#{$category} {
+    background-image:url('./assets/images/products_#{$category}.jpg')
+  }
+}
+
+.p-banner__category, .p-banner__description {
+  color: $dark
+}
+
+.p-banner__category {
+  font-size: 2rem;
+}
+
+.p-banner__description {
+  font-size: 1.2rem;
 }
 
 // Product detail
