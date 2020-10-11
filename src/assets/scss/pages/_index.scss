@@ -47,43 +47,21 @@
   }
 }
 
-.product-brand {
-  color: darken($main-color, 20%);
-  font-size: 0.9rem;
-  @include media-breakpoint-up(md) {
-    font-size: 1rem;
-  }
-}
-.product-collection {
-  font-size: 1.5rem;
-  color: $dark-color;
-  line-height: 1.2;
-  @include media-breakpoint-up(md) {
-    font-size: 1.2rem;
-  }
-}
-
-.product-price {
-  color: darken($highlight-color, 2%);
-  font-weight: bold;
-  font-size: 1.5rem;
-  @include media-breakpoint-up(md) {
-    font-size: 1.3rem;
-  }
-}
-
 /*****
  * BANNER
  ****/
 
-.banner-cover {
+.slogan {
   top: 0;
   bottom: 0;
   left: 0;
   right: 0;
   z-index: 1;
-  .banner-slogan {
-    background-color: rgba($main-color, 0.4);
+  .slogan__content {
+    border-radius: 10px;
+    background-color: rgba($dark, 0.5);
+    padding: 1.2rem;
+    margin-bottom: 2rem;
   }
 }
 

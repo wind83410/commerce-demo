@@ -1,18 +1,19 @@
 <template>
   <div>
-    <header class="banner position-relative">
+    <header class="position-relative">
       <!-- Banner -->
       <ul class="list-unstyled my-slider mb-0">
-        <li><div class="w-100 carousel-img" :style="{backgroundImage: `url(\'${require('../assets/images/index_banner_carousel_1.jpg')}\')`, backgroundPosition: '20% center', backgroundSize: 'cover'}"></div></li>
-        <li><div class="w-100 carousel-img" :style="{backgroundImage: `url(\'${require('../assets/images/index_banner_carousel_2.jpg')}\')`, backgroundPosition: '20% center', backgroundSize: 'cover'}"></div></li>
-        <li><div class="w-100 carousel-img" :style="{backgroundImage: `url(\'${require('../assets/images/index_banner_carousel_3.jpg')}\')`, backgroundPosition: '20% center', backgroundSize: 'cover'}"></div></li>
+        <li><div class="w-100 carousel-img" :style="{background: `url(\'${require('../assets/images/index_banner_carousel_1.jpg')}\') 30% center/cover`}"></div></li>
+        <li><div class="w-100 carousel-img" :style="{background: `url(\'${require('../assets/images/index_banner_carousel_2.jpg')}\') 30% center/cover`}"></div></li>
+        <li><div class="w-100 carousel-img" :style="{background: `url(\'${require('../assets/images/index_banner_carousel_3.jpg')}\') 30% center/cover`}"></div></li>
       </ul>
       <div
-        class="container banner-cover position-absolute d-flex align-items-center"
+        class="slogan container position-absolute d-flex align-items-center"
       >
-        <div class="banner-slogan p-3 pr-5 text-white">
-          <h2 class="display-4">貓咪開心<br />人也開心</h2>
-          <p class="h3 mt-3">一起開心過相處的每一天</p>
+        <div class="slogan__content">
+          <h2 class="display-4 text-white">貓好，人好</h2>
+          <p class="h4 mb-4 text-white">和貓咪一起生活</p>
+          <router-link to="/" class="btn btn-lg btn-primary">開始探索</router-link>
         </div>
       </div>
     </header>
@@ -20,13 +21,12 @@
       <!-- copywriting -->
       <div class="container">
         <h3 class="section-title">喵屋，貓奴的百寶箱</h3>
-        <ul class="list-unstyled row features w-90">
+        <ul class="list-unstyled row features">
           <li class="col-md-4">
-            <div class="mb-2">
+            <div class="mb-2 text-primary">
               <font-awesome-icon
                 :icon="['fas', 'fish']"
                 size="5x"
-                :style="{ color: '#FFA500' }"
               />
             </div>
             <p>
@@ -34,11 +34,10 @@
             </p>
           </li>
           <li class="col-md-4">
-            <div class="mb-2">
+            <div class="mb-2 text-primary">
               <font-awesome-icon
                 :icon="['fas', 'couch']"
                 size="5x"
-                :style="{ color: '#FFA500' }"
               />
             </div>
             <p>
@@ -46,11 +45,10 @@
             </p>
           </li>
           <li class="col-md-4">
-            <div class="mb-2">
+            <div class="mb-2 text-primary">
               <font-awesome-icon
                 :icon="['fas', 'home']"
                 size="5x"
-                :style="{ color: '#FFA500' }"
               />
             </div>
             <p>
@@ -193,7 +191,6 @@
 
 <script>
 import { tns } from 'tiny-slider/src/tiny-slider'
-// import "tiny-slider/dist/tiny-slider.css";
 import { mapState } from 'vuex'
 
 export default {
