@@ -1,34 +1,9 @@
 <template>
   <div class="p-nav">
-    <img
-      src="~@/assets/images/products_banner.jpg"
-      class="img-fluid d-block"
-      alt=""
-    />
-    <nav aria-label="breadcrumb" class="product--breadcrumb">
-      <div class="container">
-        <ol class="breadcrumb bg-transparent px-0 mb-0">
-          <li class="breadcrumb-item">
-            <router-link to="/">首頁</router-link>
-          </li>
-          <li
-            class="breadcrumb-item"
-            :class="{ active: node.last }"
-            v-for="(node, ind) in linkMap(
-              'breadcrumb',
-              this.$route.params.category,
-              this.$route.params.type
-            )"
-            :key="ind"
-          >
-            <router-link v-if="!node.last" :to="node.path">{{
-              node.name
-            }}</router-link>
-            <span v-else>{{ node.name }}</span>
-          </li>
-        </ol>
-      </div>
-    </nav>
+    <header class="container py-3 p-banner" :class="bannerBg">
+      <div class="p-banner__category">{{ sign.category }}</div>
+      <div class="p-banner__description">{{ sign.description }}</div>
+    </header>
     <section class="bg-light">
       <router-view />
     </section>
@@ -36,9 +11,33 @@
 </template>
 
 <script>
-import { twEngTable } from '../assets/js/mixins'
+import { signs } from '../assets/js/mixins'
 
 export default {
-  mixins: [twEngTable]
+  mixins: [signs],
+  computed: {
+    bannerBg () {
+      if (!this.sign) {
+        return ''
+      } else {
+        return `bg-${this.$route.params.category}`
+      }
+    },
+    sign () {
+      const vm = this
+      return this.signs.find(el => el.route === vm.$route.params.category)
+    }
+  },
+  mounted () {
+    const vm = this
+    const sign = this.signs.find(el => el.route === vm.$route.params.category)
+    if (!sign) {
+      vm.$router.push('/')
+      vm.$store.dispatch('addInfo', {
+        msg: '找不到此分類',
+        status: 'info'
+      })
+    }
+  }
 }
 </script>
