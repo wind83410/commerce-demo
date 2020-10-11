@@ -85,8 +85,31 @@ export default new Vuex.Store({
     },
     addCartItem (context, { productId, qty = 1 }) {
       const api = `${process.env.VUE_APP_API_PATH}/api/${process.env.VUE_APP_CUSTOM_PATH}/cart`
+      const duplicate = context.getters.GET_DUPLICATED_PROD(productId)
       const key = 'product_id'
       const data = { [key]: productId, qty }
+      if (duplicate) {
+        let isFailed = false
+        axios.delete(api + `/${duplicate.id}`).then(response => {
+          if (!response.data.success) {
+            context.dispatch('addInfo', {
+              msg: response.data.message,
+              status: 'danger'
+            })
+            isFailed = true
+          }
+        }).catch(() => {
+          context.dispatch('addInfo', {
+            msg: '無法和伺服器連線 (XMLHttpRequest error)',
+            status: 'danger'
+          })
+          isFailed = true
+        })
+        if (isFailed) {
+          return 0
+        }
+        data.qty += duplicate.qty
+      }
       return axios.post(api, { data }).then(response => {
         if (response.data.success) {
           context.dispatch('getCart')
@@ -147,5 +170,8 @@ export default new Vuex.Store({
     INFO_ADD (state, infoObj) {
       state.popUpInfo.push(infoObj)
     }
+  },
+  getters: {
+    GET_DUPLICATED_PROD: state => id => state.cart.carts.find(el => el.product_id === id)
   }
 })
