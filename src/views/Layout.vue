@@ -47,20 +47,8 @@
           </div>
         </div>
         <ul class="navbar-nav d-none d-md-flex">
-          <li class="nav-item">
-            <router-link to="/" class="nav-link active">主食</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/" class="nav-link">零食</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/" class="nav-link">起居用品</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/" class="nav-link">玩具</router-link>
-          </li>
-          <li class="nav-item">
-            <router-link to="/" class="nav-link">保養品</router-link>
+          <li class="nav-item" v-for="(sign, ind) in signs" :key="`${ind}-${sign.route}`">
+            <router-link :to="`/products/${sign.route}`" class="nav-link" :class="{'active': $route.path === `/products/${sign.route}`}">{{ sign.category }}</router-link>
           </li>
         </ul>
         <button
@@ -174,11 +162,7 @@
           </div>
           <div class="h5 px-3">商品分類</div>
           <div class="list-group" @click="closeNavSlide">
-            <router-link to="/" class="list-group-item active">主食</router-link>
-            <router-link to="/" class="list-group-item">零食</router-link>
-            <router-link to="/" class="list-group-item">起居用品</router-link>
-            <router-link to="/" class="list-group-item">玩具</router-link>
-            <router-link to="/" class="list-group-item">保養品</router-link>
+            <router-link v-for="sign in signs" :key="sign.route" :to="`/products/${sign.route}`" class="list-group-item" :class="{'active':$route.path === `/products/${sign.route}`}">{{ sign.category }}</router-link>
           </div>
         </div>
       </div>
@@ -229,10 +213,9 @@
 
 <script>
 import $ from 'jquery'
-import { twEngTable } from '../assets/js/mixins'
 import Alerts from '../components/Alerts'
 import Loading from 'vue-loading-overlay'
-// import "vue-loading-overlay/dist/vue-loading.css";
+import { signs } from '../assets/js/mixins'
 
 export default {
   name: 'index',
@@ -250,7 +233,7 @@ export default {
       loginAlert: ''
     }
   },
-  mixins: [twEngTable],
+  mixins: [signs],
   filters: {
     round (num, digits = 1) {
       return num.toFixed(digits)
