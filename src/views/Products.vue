@@ -49,55 +49,7 @@
             class="col-lg-4 col-md-6 d-flex"
             :key="prod.id"
           >
-            <div class="card m-2 position-relative border border-primary">
-              <img
-                :src="prod.imageUrl"
-                class="card-img-top w-75 mx-auto"
-                alt=""
-              />
-              <ul class="icons list-unstyled d-flex flex-column">
-                <li>
-                  <button
-                    type="button"
-                    class="btn p-0 icon-btn text-primary"
-                    @click="addToCart(prod.id)"
-                  >
-                    <font-awesome-icon
-                      class="d-block"
-                      icon="cart-plus"
-                      size="2x"
-                    />
-                  </button>
-                </li>
-                <li>
-                  <router-link
-                    class="btn p-0 icon-btn text-primary"
-                    :to="prod.id"
-                    append
-                  >
-                    <font-awesome-icon
-                      class="d-block"
-                      icon="info-circle"
-                      size="2x"
-                    />
-                  </router-link>
-                </li>
-              </ul>
-              <div
-                class="card-body px-3 pb-3 pt-1 d-flex flex-column justify-content-between"
-              >
-                <div>
-                  <div class="product-brand">{{ prod.title.brand }}</div>
-                  <div class="product-collection mb-0">
-                    {{ prod.title.collection }}
-                  </div>
-                  <div class="product-type text-muted">
-                    {{ prod.title.type }}
-                  </div>
-                </div>
-                <em class="product-price">${{ prod.price }}</em>
-              </div>
-            </div>
+            <ProductCard :prod="prod" :category-route="categoryToRoute(prod.category.class)" />
           </div>
         </section>
       </div>
@@ -108,6 +60,7 @@
 <script>
 import { signs } from '../assets/js/mixins'
 import { mapState } from 'vuex'
+import ProductCard from '../components/ProductCard'
 
 export default {
   data () {
@@ -118,18 +71,11 @@ export default {
   },
   mixins: [signs],
   methods: {
-    addToCart (productId, qty = 1) {
-      const vm = this
-      vm.$store.dispatch('await', true)
-      vm.$store
-        .dispatch('addCartItem', { productId, qty })
-        .then(() => {
-          vm.$store.dispatch('await', false)
-        })
-        .catch(() => vm.$store.dispatch('await', false))
-    },
     routeToCategory (route) {
       return this.signs.find((el) => el.route === route).category
+    },
+    categoryToRoute (category) {
+      return this.signs.find(el => el.category === category).route
     }
   },
   computed: {
@@ -181,6 +127,9 @@ export default {
     $route () {
       this.focusBrand = this.type = 'all'
     }
+  },
+  components: {
+    ProductCard
   }
 }
 </script>
