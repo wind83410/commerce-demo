@@ -6,7 +6,7 @@
         <div class="mt-3">
           <div class="p-detail__name">
             <div
-              class="p-detail__name--brand text-primary"
+              class="p-detail__name--brand"
               v-text="product.title.brand"
             ></div>
             <div
