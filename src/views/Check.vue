@@ -48,9 +48,9 @@
             </tr>
           </tbody>
         </table>
-        <div class="alert alert-success" v-if="cart.carts.length == 0">
+        <div class="alert alert-info" v-if="cart.carts.length == 0">
           購物車裡還沒有東西！<router-link
-            to="/products/treats/all"
+            to="/products/staple-food"
             class="alert-link"
             >去逛逛吧！</router-link
           >
