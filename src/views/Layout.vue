@@ -47,8 +47,17 @@
           </div>
         </div>
         <ul class="navbar-nav d-none d-md-flex">
-          <li class="nav-item" v-for="(sign, ind) in signs" :key="`${ind}-${sign.route}`">
-            <router-link :to="`/products/${sign.route}`" class="nav-link" :class="{'active': $route.path === `/products/${sign.route}`}">{{ sign.category }}</router-link>
+          <li
+            class="nav-item"
+            v-for="(sign, ind) in signs"
+            :key="`${ind}-${sign.route}`"
+          >
+            <router-link
+              :to="`/products/${sign.route}`"
+              class="nav-link"
+              :class="{ active: $route.path === `/products/${sign.route}` }"
+              >{{ sign.category }}</router-link
+            >
           </li>
         </ul>
         <button
@@ -84,10 +93,18 @@
       <div class="modal-dialog cart-list--modal-dialog">
         <section class="cart-list d-flex flex-column bg-light">
           <div class="d-flex m-1">
-            <router-link to="/check" class="btn btn-primary w-100"
+            <router-link
+              tag="button"
+              to="/check"
+              class="btn btn-primary w-100"
+              :disabled="!cart.carts.length"
               >去結帳</router-link
             >
-            <button type="button" class="btn cart-list-trigger" data-dismiss="modal">
+            <button
+              type="button"
+              class="btn cart-list-trigger"
+              data-dismiss="modal"
+            >
               <font-awesome-icon icon="angle-left" size="lg" />
             </button>
           </div>
@@ -112,14 +129,18 @@
                   </td>
                   <td>
                     <div>
-                      <div class="text-muted">{{ item.product.title.brand }}</div>
+                      <div class="text-muted">
+                        {{ item.product.title.brand }}
+                      </div>
                       <div>
                         {{ item.product.title.collection }}
                         <span v-if="item.coupon" class="badge badge-discount">{{
                           `${item.coupon.percent} %`
                         }}</span>
                       </div>
-                      <div class="text-muted">{{ item.product.title.type }}</div>
+                      <div class="text-muted">
+                        {{ item.product.title.type }}
+                      </div>
                     </div>
                   </td>
                   <td>{{ item.qty }}</td>
@@ -127,7 +148,9 @@
                 </tr>
               </tbody>
             </table>
-            <p v-else class="text-center">購物車還沒有東西，去逛逛吧！</p>
+            <p v-else class="text-center">購物車還沒有東西，去逛逛吧！
+              <router-link to="/products/staple-food">看看賣場</router-link>
+            </p>
           </div>
         </section>
       </div>
@@ -162,7 +185,14 @@
           </div>
           <div class="h5 px-3">商品分類</div>
           <div class="list-group" @click="closeNavSlide">
-            <router-link v-for="sign in signs" :key="sign.route" :to="`/products/${sign.route}`" class="list-group-item" :class="{'active':$route.path === `/products/${sign.route}`}">{{ sign.category }}</router-link>
+            <router-link
+              v-for="sign in signs"
+              :key="sign.route"
+              :to="`/products/${sign.route}`"
+              class="list-group-item"
+              :class="{ active: $route.path === `/products/${sign.route}` }"
+              >{{ sign.category }}</router-link
+            >
           </div>
         </div>
       </div>
@@ -366,7 +396,9 @@ export default {
       vm.userData.username = vm.userDate.password = ''
     })
     $('#m-nav').on('show.bs.modal', function () {
-      $(this).find('.m-nav--modal-dialog').css('margin-right', -vm.measureScrollbar())
+      $(this)
+        .find('.m-nav--modal-dialog')
+        .css('margin-right', -vm.measureScrollbar())
     })
     this.$store.dispatch('getProducts')
     this.$store.dispatch('getCart')
@@ -381,9 +413,7 @@ export default {
         $(window).off('scroll', this.colorSwitch)
         this.isIndex = false
       }
-      if (to.path === '/check') {
-        $('.cart-list').removeClass('slide-in')
-      }
+      $('#cart').modal('hide')
       $('#m-nav').modal('hide')
     }
   }
