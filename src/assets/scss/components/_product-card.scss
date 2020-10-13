@@ -1,11 +1,25 @@
-.product-brand {
+.product-card:hover {
+  box-shadow: 0 6px 5px rgba($dark, 0.5)
+}
+
+.product-link {
+  overflow: hidden;
+  & .product-link__img {
+    transition: transform .5s
+  }
+  &:hover .product-link__img {
+    transform: scale(1.3)
+  }
+}
+
+.product-info__brand {
   color: darken($primary, 20%);
   font-size: 0.9rem;
   @include media-breakpoint-up(md) {
     font-size: 1rem;
   }
 }
-.product-collection {
+.product-info__collection {
   font-size: 1.5rem;
   color: $dark;
   line-height: 1.2;
@@ -14,7 +28,7 @@
   }
 }
 
-.product-price {
+.product-info__price {
   color: $primary;
   font-weight: bold;
   font-size: 1.5rem;
