@@ -11,6 +11,7 @@ import {
   faShoppingCart, faTrashAlt, faPlus, faUser, faArrowUp,
   faUserCircle, faSignInAlt, faSignOutAlt, faFlag, faTimes
 } from '@fortawesome/free-solid-svg-icons'
+import { faInstagram, faFacebookF, faTwitter } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import 'bootstrap'
 import i18n from './i18n'
@@ -35,7 +36,8 @@ library.add(
   faFish, faCouch, faHome, faChevronLeft,
   faChevronRight, faInfoCircle, faCartPlus, faAngleLeft,
   faShoppingCart, faTrashAlt, faPlus, faUser, faArrowUp,
-  faUserCircle, faSignInAlt, faSignOutAlt, faFlag, faTimes
+  faUserCircle, faSignInAlt, faSignOutAlt, faFlag, faTimes,
+  faInstagram, faFacebookF, faTwitter
 )
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
