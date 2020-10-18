@@ -83,14 +83,14 @@ export default new Vuex.Store({
         })
       })
     },
-    addCartItem (context, { productId, qty = 1 }) {
+    async addCartItem (context, { productId, qty = 1, acc = false }) {
       const api = `${process.env.VUE_APP_API_PATH}/api/${process.env.VUE_APP_CUSTOM_PATH}/cart`
       const duplicate = context.getters.GET_DUPLICATED_PROD(productId)
       const key = 'product_id'
       const data = { [key]: productId, qty }
       if (duplicate) {
         let isFailed = false
-        axios.delete(api + `/${duplicate.id}`).then(response => {
+        await axios.delete(api + `/${duplicate.id}`).then(response => {
           if (!response.data.success) {
             context.dispatch('addInfo', {
               msg: response.data.message,
@@ -108,7 +108,7 @@ export default new Vuex.Store({
         if (isFailed) {
           return 0
         }
-        data.qty += duplicate.qty
+        data.qty = acc ? data.qty + duplicate.qty : data.qty
       }
       return axios.post(api, { data }).then(response => {
         if (response.data.success) {

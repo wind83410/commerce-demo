@@ -1,5 +1,5 @@
 <template>
-  <div class="product-card card m-2 position-relative border border-primary">
+  <div class="product-card card position-relative border border-primary">
     <router-link class="product-link" :to="`/products/${categoryRoute}/${prod.id}`">
       <img
         :src="prod.imageUrl"
@@ -45,9 +45,10 @@ export default {
   methods: {
     addToCart (productId, qty = 1) {
       const vm = this
+      const acc = true
       vm.$store.dispatch('await', true)
       vm.$store
-        .dispatch('addCartItem', { productId, qty })
+        .dispatch('addCartItem', { productId, qty, acc })
         .then(() => {
           vm.$store.dispatch('await', false)
         })

@@ -88,7 +88,8 @@ export default {
       const vm = this
       const data = {
         productId: vm.$route.params.itemId,
-        qty: vm.qty
+        qty: vm.qty,
+        acc: true
       }
       vm.$store.dispatch('await', true)
       vm.$store
