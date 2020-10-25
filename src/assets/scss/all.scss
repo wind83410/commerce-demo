@@ -7,12 +7,14 @@
   './vendors/vue-loading';
 
 @import // Layout
+  './layout/about-us',
   './layout/cart',
   './layout/navbar';
 
 @import // Components
   './components/alerts',
   './components/back-to-top',
+  './components/product-card-mini',
   './components/product-card';
 
 @import // Pages
