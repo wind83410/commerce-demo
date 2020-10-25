@@ -10,42 +10,42 @@ const routes = [
   },
   {
     path: '/',
-    component: () => import('../views/Layout.vue'),
+    component: () => import('../views/frontend/Layout.vue'),
     children: [
       {
         path: '',
         name: 'Index',
-        component: () => import('../views/Index.vue')
+        component: () => import('../views/frontend/Index.vue')
       },
       {
         path: 'products/:category/',
-        component: () => import('../components/ProductsLayout.vue'),
+        component: () => import('../views/frontend/ProductsLayout.vue'),
         children: [
           {
             path: '',
             name: 'Products',
-            component: () => import('../views/Products.vue')
+            component: () => import('../views/frontend/Products.vue')
           },
           {
             path: ':itemId',
             name: 'Product detail',
-            component: () => import('../views/ProductDetail.vue')
+            component: () => import('../views/frontend/ProductDetail.vue')
           }
         ]
       },
       {
         path: 'check',
-        component: () => import('../components/Register.vue'),
+        component: () => import('../views/frontend/Register.vue'),
         children: [
           {
             path: '',
             name: 'Check',
-            component: () => import('../views/Check.vue')
+            component: () => import('../views/frontend/Check.vue')
           },
           {
             path: 'recipient',
             name: 'Recipient',
-            component: () => import('../views/Recipient.vue'),
+            component: () => import('../views/frontend/Recipient.vue'),
             meta: {
               requireAuth: true,
               pathFrom: '/check'
@@ -54,7 +54,7 @@ const routes = [
           {
             path: 'clinch/:orderId',
             name: 'Deal clinched',
-            component: () => import('../views/OrderCode.vue'),
+            component: () => import('../views/frontend/OrderCode.vue'),
             meta: {
               pathFrom: '/check/recipient',
               orderSentCheck: true
