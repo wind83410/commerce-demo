@@ -42,7 +42,11 @@
               </td>
               <td class="d-none d-md-table-cell">{{ item.product.price }}</td>
               <td>
-                {{ item.qty }}
+                <div class="adjust-qty d-flex flex-column">
+                  <button type="button" class="adjust-qty__add btn btn-primary" @click="buffer(item.product.id, '+')">+</button>
+                  <input type="number" class="adjust-qty__input form-control" :id="item.product.id" min=1 :value="item.qty" @input="buffer(item.product.id)" @blur="modify">
+                  <button type="button" class="adjust-qty__subtract btn btn-secondary" @click="buffer(item.product.id, '-')">-</button>
+                </div>
               </td>
               <td class="text-right">{{ item.final_total.toFixed(1) }}</td>
             </tr>
@@ -124,7 +128,11 @@ import $ from 'jquery'
 export default {
   data () {
     return {
-      couponCode: ''
+      couponCode: '',
+      tempQty: {
+        qty: 0,
+        productId: ''
+      }
     }
   },
   computed: {
@@ -171,6 +179,39 @@ export default {
       vm.$store.dispatch('rmCartItem', prodId).then(() => {
         vm.$store.dispatch('await', false)
       })
+    },
+    modify () {
+      const vm = this
+      vm.$store.dispatch('await', true)
+      vm.$store.dispatch('addCartItem', {
+        productId: this.tempQty.productId,
+        qty: this.tempQty.qty
+      }).then(() => {
+        vm.$store.dispatch('await', false)
+        vm.tempQty.qty = 0
+        vm.tempQty.productId = ''
+      })
+    },
+    buffer (productId, mode) {
+      const input = $(`#${productId}`)[0]
+      this.tempQty.productId = productId
+      switch (mode) {
+        case '+':
+          this.tempQty.qty = input.valueAsNumber + 1
+          input.value = this.tempQty.qty
+          this.modify()
+          break
+        case '-':
+          if (input.valueAsNumber - 1 > 0) {
+            this.tempQty.qty = input.valueAsNumber - 1
+            input.value = this.tempQty.qty
+            this.modify()
+          }
+          break
+        default:
+          this.tempQty.qty = input.valueAsNumber
+          break
+      }
     }
   }
 }

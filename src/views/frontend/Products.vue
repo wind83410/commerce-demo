@@ -49,7 +49,7 @@
             class="col-lg-4 col-md-6 d-flex"
             :key="prod.id"
           >
-            <ProductCard :prod="prod" :category-route="categoryToRoute(prod.category.class)" />
+            <ProductCard :prod="prod" :category-route="categoryToRoute(prod.category.class)" class="m-2" />
           </div>
         </section>
       </div>

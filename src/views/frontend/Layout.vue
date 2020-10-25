@@ -3,7 +3,7 @@
     <Loading :active.sync="isLoading"></Loading>
     <nav
       class="layout-nav navbar navbar-expand-md navbar-light w-100 position-fixed"
-      :class="{ 'bg-white': !isIndex }"
+      :class="{ 'bg-nav-white': !isIndex }"
     >
       <div class="container">
         <div class="d-flex align-items-center">
@@ -55,7 +55,7 @@
             <router-link
               :to="`/products/${sign.route}`"
               class="nav-link"
-              :class="{ active: $route.path === `/products/${sign.route}` }"
+              :class="{ active: routeMatch(`/products/${sign.route}`) }"
               >{{ sign.category }}</router-link
             >
           </li>
@@ -75,12 +75,29 @@
     <Alerts />
     <router-view class="flex-grow-1" />
     <footer
-      class="container py-2 d-flex justify-content-center"
-      id="anouncement"
+      class="about-us py-4 d-flex justify-content-center bg-dark"
     >
-      <p class="px-2 mb-0 text-center border border-top-0 border-bottom-0">
-        此商店純屬杜撰，所有素材皆擷取自網路
-      </p>
+      <div class="container d-flex justify-content-between">
+        <div>
+          <h4>喵屋</h4>
+          <ul class="list-unstyled">
+            <li>喵屋股份有限公司</li>
+            <li>(05)223-5978</li>
+            <li>SINCE 2015</li>
+          </ul>
+        </div>
+        <nav class="d-flex">
+          <a href="#" class="about-us__ext-links">
+            <font-awesome-icon :icon="['fab','instagram']" size="2x" />
+          </a>
+          <a href="#" class="about-us__ext-links">
+            <font-awesome-icon :icon="['fab','facebook-f']" size="2x" />
+          </a>
+          <a href="#" class="about-us__ext-links">
+            <font-awesome-icon :icon="['fab','twitter']" size="2x" />
+          </a>
+        </nav>
+      </div>
     </footer>
     <button
       type="button"
@@ -190,7 +207,7 @@
               :key="sign.route"
               :to="`/products/${sign.route}`"
               class="list-group-item"
-              :class="{ active: $route.path === `/products/${sign.route}` }"
+              :class="{ active: routeMatch(`/products/${sign.route}`) }"
               >{{ sign.category }}</router-link
             >
           </div>
@@ -330,9 +347,9 @@ export default {
       const navHeight = $('.layout-nav').height()
       const navTop = $('.layout-nav').offset().top
       if (navTop + navHeight / 2 >= navHeight) {
-        $('.layout-nav').addClass('bg-white')
+        $('.layout-nav').addClass('bg-nav-white')
       } else {
-        $('.layout-nav').removeClass('bg-white')
+        $('.layout-nav').removeClass('bg-nav-white')
       }
     },
     scrollToTop () {
@@ -344,7 +361,7 @@ export default {
       )
     },
     bottomHit () {
-      const ftTop = $('#anouncement').offset().top
+      const ftTop = $('.about-us').offset().top
       const vpHeight = $(window).height()
       const vpScrollTop = $(window).scrollTop()
       if (vpHeight + vpScrollTop >= ftTop) {
@@ -356,6 +373,10 @@ export default {
           $(this).removeClass('js-fade-in').addClass('js-fade-out')
         })
       }
+    },
+    routeMatch (pathToMatch) {
+      const reg = new RegExp(String.raw`${pathToMatch}`)
+      return reg.test(this.$route.path)
     }
   },
   computed: {
@@ -389,6 +410,8 @@ export default {
     const vm = this
     if (this.$route.path === '/') {
       $(window).on('scroll', this.colorSwitch)
+    } else {
+      this.isIndex = false
     }
     $(window).on('scroll', this.bottomHit)
     $('#login-modal').on('hidden.bs.modal', function () {

@@ -13,7 +13,7 @@
         <div class="slogan__content">
           <h2 class="display-4 text-white">貓好，人好</h2>
           <p class="h4 mb-4 text-white">和貓咪一起生活</p>
-          <router-link to="/" class="btn btn-lg btn-primary">開始探索</router-link>
+          <router-link to="/products/staple-food" class="btn btn-lg btn-primary">開始探索</router-link>
         </div>
       </div>
     </header>
@@ -61,55 +61,24 @@
     <section class="section section-new-items">
       <div class="container">
         <div class="mx-auto">
-          <h4>新商品搶先看</h4>
-          <nav class="position-relative">
+          <div class="mb-2 d-flex justify-content-between">
+            <h4>新商品搶先看</h4>
             <div class="slide-control">
-              <button type="button" class="slide-left">
-                <font-awesome-icon :icon="['fas', 'chevron-left']" size="3x" />
+              <button type="button" class="slide-left btn btn-outline-primary mr-2">
+                <font-awesome-icon :icon="['fas', 'chevron-left']" size="lg" />
               </button>
-              <button type="button" class="slide-right">
-                <font-awesome-icon :icon="['fas', 'chevron-right']" size="3x" />
+              <button type="button" class="slide-right btn btn-outline-primary">
+                <font-awesome-icon :icon="['fas', 'chevron-right']" size="lg" />
               </button>
             </div>
+          </div>
+          <nav class="position-relative">
             <ul
               v-if="recomProd.length"
               class="list-unstyled new-item-list d-flex"
             >
               <li v-for="prod in recomProd" :key="prod.id">
-                <div class="card position-relative border border-primary h-100">
-                  <img
-                    :src="prod.imageUrl"
-                    class="card-img-top w-75 mx-auto"
-                    alt=""
-                  />
-                  <div class="icons">
-                    <button
-                      type="button"
-                      class="btn p-0 icon-btn"
-                      @click="addToCart(prod.id)"
-                    >
-                      <font-awesome-icon
-                        class="d-block"
-                        icon="cart-plus"
-                        size="2x"
-                      />
-                    </button>
-                  </div>
-                  <div
-                    class="card-body px-3 pb-3 pt-1 d-flex flex-column justify-content-between"
-                  >
-                    <div>
-                      <div class="product-brand">{{ prod.title.brand }}</div>
-                      <div class="product-collection mb-0">
-                        {{ prod.title.collection }}
-                      </div>
-                      <div class="product-type text-muted">
-                        {{ prod.title.type }}
-                      </div>
-                    </div>
-                    <em class="product-price">${{ prod.price }}</em>
-                  </div>
-                </div>
+                <ProductCard :prod="prod" :category-route="categoryToRoute(prod.category.class)" class="h-100" />
               </li>
             </ul>
           </nav>
@@ -155,11 +124,11 @@
       </div>
     </section>
     <section class="coupon-evt bg-light">
-      <div class="container coupon-evt__info">
+      <div class="container">
         <div class="row">
           <div class="col-md-6">
             <img
-              class="img-fluid"
+              class="img-fluid coupon-evt__img"
               src="~@/assets/images/coupon_sideImg.jpg"
               alt=""
             />
@@ -177,7 +146,7 @@
                 <strong>MayCatsBeWithYou</strong>，即可享有九折優惠。
               </p>
               <router-link
-                to="/products/treats/all"
+                to="/products/treats"
                 class="btn btn-primary btn-lg align-self-center"
                 >開始探索</router-link
               >
@@ -190,6 +159,8 @@
 </template>
 
 <script>
+import ProductCard from '../components/ProductCard'
+import { signs } from '../assets/js/mixins'
 import { tns } from 'tiny-slider/src/tiny-slider'
 import { mapState } from 'vuex'
 
@@ -199,6 +170,7 @@ export default {
       recomProd: []
     }
   },
+  mixins: [signs],
   methods: {
     randomRecom (prodArr) {
       if (prodArr.length > 0) {
@@ -233,6 +205,9 @@ export default {
           vm.$store.dispatch('await', false)
         })
         .catch(() => vm.$store.dispatch('await', false))
+    },
+    categoryToRoute (category) {
+      return this.signs.find(el => el.category === category).route
     }
   },
   computed: mapState(['products']),
@@ -259,6 +234,9 @@ export default {
       nav: false,
       autoplayButtonOutput: false
     })
+  },
+  components: {
+    ProductCard
   }
 }
 </script>
