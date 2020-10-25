@@ -1,0 +1,8 @@
+.about-us {
+  color: color-yiq($dark);
+  .about-us__ext-links {
+    color: inherit;
+    margin: 0 7px;
+    &:hover { color: $primary }
+  }
+}
