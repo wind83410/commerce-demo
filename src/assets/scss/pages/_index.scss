@@ -9,7 +9,7 @@
 .section-title {
   text-align: center;
   margin-bottom: 45px;
-  color: $dark-color;
+  color: darken($primary, 35%);
   &::after {
     content: "";
     display: block;
@@ -18,7 +18,7 @@
     margin-right: auto;
     margin-left: auto;
     margin-top: 20px;
-    background-color: $main-color;
+    background-color: lighten($primary, 25%);
   }
 }
 
@@ -38,12 +38,6 @@
     display: flex;
     justify-content: center;
     margin-bottom: 8px;
-  }
-  .icon-btn {
-    color: $highlight-color;
-    &:focus {
-      box-shadow: 0 0 0 $input-btn-focus-width rgba($highlight-color, 0.25);
-    } // record it into bootstrap variables
   }
 }
 
@@ -88,32 +82,14 @@
  ***/
 
 .section-new-items {
-  background-color: $gray-100;
+  background-color: rgba($dark, 0.1);
   padding: 20px 0;
 }
 
-.slide-left,
-.slide-right {
-  width: 60px;
-  height: 60px;
-  color: $white;
-  background-color: rgba($main-color, 0.6);
+.slide-left, .slide-right {
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  z-index: 1;
-  border: none;
-  &:focus {
-    outline: $main-color;
-  }
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  margin: auto 0;
-}
-.slide-left {
-  left: -10px;
-}
-.slide-right {
-  right: -10px;
 }
 
 /* altered style of tiny slider */
@@ -129,13 +105,13 @@
     &:focus {
       outline: none;
     }
-    background-color: #bfbfbf;
+    background-color: $dark;
     padding: 5px;
     transition: background-color 0.4s;
     margin: 0 5px;
   }
   .tns-nav-active {
-    background: $main-color;
+    background: $primary;
   }
 }
 
@@ -149,7 +125,7 @@
   background-size: cover;
   background-blend-mode: multiply;
   .section-title {
-    color: $light-color;
+    color: lighten($primary, 45%);
   }
   .blockquote {
     position: relative;
@@ -176,9 +152,16 @@
  * COUPON
  ******/
 
+.coupon-evt__img {
+  margin-top: 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 9px 3px $primary;
+  @include media-breakpoint-up(md) { margin: 30px 0; }
+}
+
 .coupon-evt__info--title {
   position: relative;
-  color: $dark-color;
+  color: darken($primary, 35%);
   z-index: 2;
   font-size: 2rem;
   @include media-breakpoint-up(sm) {
@@ -195,7 +178,7 @@
     display: block;
     height: 40%;
     width: 100%;
-    background-color: rgba($primary, 0.7);
+    background-color: rgba($primary, 0.3);
     position: absolute;
     bottom: 0;
     z-index: -1;
