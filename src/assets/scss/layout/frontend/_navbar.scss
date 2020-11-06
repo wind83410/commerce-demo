@@ -16,9 +16,9 @@
 }
 
 .m-nav { // navigation for mobiles
-  width: 100%;
   height: 100%;
   max-width: 350px;
+  min-width: 320px;
   padding-top: 60px;
   pointer-events: auto;
 }

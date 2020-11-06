@@ -7,9 +7,9 @@
   './vendors/vue-loading';
 
 @import // Layout
-  './layout/about-us',
-  './layout/cart',
-  './layout/navbar';
+  './layout/frontend/about-us',
+  './layout/frontend/cart',
+  './layout/frontend/navbar';
 
 @import // Components
   './components/alerts',
@@ -18,6 +18,6 @@
   './components/product-card';
 
 @import // Pages
-  './pages/index',
-  './pages/product',
-  './pages/check';
+  './pages/frontend/index',
+  './pages/frontend/product',
+  './pages/frontend/check';
