@@ -90,8 +90,8 @@
 
 <script>
 import showdown from 'showdown'
-import { signs } from '../assets/js/mixins'
-import ProductCardMini from '../components/ProductCardMini'
+import { signs } from '@/assets/js/mixins'
+import ProductCardMini from '@/components/ProductCardMini'
 
 const classMap = {
   table: 'table'
@@ -161,7 +161,7 @@ export default {
       })
       const similarItems = []
       if (copy.length) {
-        for (let i = 0; i < 4; i++) {
+        for (let i = 0; i < 4 && copy.length !== 0; i++) {
           const selInd = Math.floor(Math.random() * copy.length)
           similarItems.push(copy.splice(selInd, 1)[0])
         }
