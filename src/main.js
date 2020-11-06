@@ -9,7 +9,8 @@ import {
   faFish, faCouch, faHome, faChevronLeft,
   faChevronRight, faInfoCircle, faCartPlus, faAngleLeft,
   faShoppingCart, faTrashAlt, faPlus, faUser, faArrowUp,
-  faUserCircle, faSignInAlt, faSignOutAlt, faFlag, faTimes
+  faUserCircle, faSignInAlt, faSignOutAlt, faFlag, faTimes,
+  faCheckSquare, faTags
 } from '@fortawesome/free-solid-svg-icons'
 import { faInstagram, faFacebookF, faTwitter } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
@@ -37,7 +38,7 @@ library.add(
   faChevronRight, faInfoCircle, faCartPlus, faAngleLeft,
   faShoppingCart, faTrashAlt, faPlus, faUser, faArrowUp,
   faUserCircle, faSignInAlt, faSignOutAlt, faFlag, faTimes,
-  faInstagram, faFacebookF, faTwitter
+  faInstagram, faFacebookF, faTwitter, faCheckSquare, faTags
 )
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
