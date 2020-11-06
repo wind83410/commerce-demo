@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import { signs } from '../assets/js/mixins'
+import { signs } from '@/assets/js/mixins'
 
 export default {
   mixins: [signs],

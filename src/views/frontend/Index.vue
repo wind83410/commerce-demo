@@ -3,9 +3,9 @@
     <header class="position-relative">
       <!-- Banner -->
       <ul class="list-unstyled my-slider mb-0">
-        <li><div class="w-100 carousel-img" :style="{background: `url(\'${require('../assets/images/index_banner_carousel_1.jpg')}\') 30% center/cover`}"></div></li>
-        <li><div class="w-100 carousel-img" :style="{background: `url(\'${require('../assets/images/index_banner_carousel_2.jpg')}\') 30% center/cover`}"></div></li>
-        <li><div class="w-100 carousel-img" :style="{background: `url(\'${require('../assets/images/index_banner_carousel_3.jpg')}\') 30% center/cover`}"></div></li>
+        <li><div class="w-100 carousel-img" :style="{background: `url(\'${require('@/assets/images/index_banner_carousel_1.jpg')}\') 30% center/cover`}"></div></li>
+        <li><div class="w-100 carousel-img" :style="{background: `url(\'${require('@/assets/images/index_banner_carousel_2.jpg')}\') 30% center/cover`}"></div></li>
+        <li><div class="w-100 carousel-img" :style="{background: `url(\'${require('@/assets/images/index_banner_carousel_3.jpg')}\') 30% center/cover`}"></div></li>
       </ul>
       <div
         class="slogan container position-absolute d-flex align-items-center"
@@ -159,8 +159,8 @@
 </template>
 
 <script>
-import ProductCard from '../components/ProductCard'
-import { signs } from '../assets/js/mixins'
+import ProductCard from '@/components/ProductCard'
+import { signs } from '@/assets/js/mixins'
 import { tns } from 'tiny-slider/src/tiny-slider'
 import { mapState } from 'vuex'
 
