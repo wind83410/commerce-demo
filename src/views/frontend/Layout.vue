@@ -35,7 +35,6 @@
               <font-awesome-icon icon="user" size="lg" />
             </button>
             <div v-else class="d-flex align-items-center">
-              <font-awesome-icon icon="user-circle" size="lg" />管理員
               <button
                 type="button"
                 class="btn btn-nav btn-nav__icon"
@@ -43,10 +42,14 @@
               >
                 <font-awesome-icon icon="sign-out-alt" size="lg" />
               </button>
+              <font-awesome-icon icon="user-circle" size="lg" />管理員
             </div>
           </div>
         </div>
         <ul class="navbar-nav d-none d-md-flex">
+          <li class="nav-item" v-if="isLogined">
+            <router-link to="/admin" class="nav-link">後台</router-link>
+          </li>
           <li
             class="nav-item"
             v-for="(sign, ind) in signs"
@@ -180,8 +183,7 @@
               v-if="!isLogined"
               type="button"
               class="btn btn-outline-primary btn-login-mobile"
-              data-toggle="modal"
-              data-target="#login-modal"
+              @click="switchToLogin"
             >
               <font-awesome-icon icon="sign-in-alt" size="3x" />
             </button>
@@ -197,7 +199,10 @@
               <div v-if="!isLogined" class="h6 mb-0">
                 歡迎光臨！您還沒有登入喔！
               </div>
-              <div v-else>管理員</div>
+              <div v-else>
+                管理員
+                <a href="#" class="d-block" @click.prevent="moveToAdmin">前往後台</a>
+              </div>
             </div>
           </div>
           <div class="h5 px-3">商品分類</div>
@@ -260,9 +265,9 @@
 
 <script>
 import $ from 'jquery'
-import Alerts from '../components/Alerts'
+import Alerts from '@/components/Alerts'
 import Loading from 'vue-loading-overlay'
-import { signs } from '../assets/js/mixins'
+import { signs } from '@/assets/js/mixins'
 
 export default {
   name: 'index',
@@ -277,7 +282,8 @@ export default {
         username: '',
         password: ''
       },
-      loginAlert: ''
+      loginAlert: '',
+      toAdmin: false
     }
   },
   mixins: [signs],
@@ -337,11 +343,19 @@ export default {
           vm.$store.dispatch('await', false)
         })
     },
+    switchToLogin () {
+      $('#m-nav').modal('hide')
+      $('#login-modal').modal('show')
+    },
     measureScrollbar () {
       return window.innerWidth - document.documentElement.clientWidth
     },
     closeNavSlide () {
       $('#m-nav').modal('hide')
+    },
+    moveToAdmin () {
+      this.toAdmin = true
+      this.closeNavSlide()
     },
     colorSwitch () {
       const navHeight = $('.layout-nav').height()
@@ -414,17 +428,31 @@ export default {
       this.isIndex = false
     }
     $(window).on('scroll', this.bottomHit)
+    $('#login-modal').on('shown.bs.modal', function () {
+      $('body')
+        .addClass('modal-open')
+        .css('padding-right', -vm.measureScrollbar())
+    })
     $('#login-modal').on('hidden.bs.modal', function () {
       vm.loginAlert = ''
-      vm.userData.username = vm.userDate.password = ''
+      vm.userData.username = vm.userData.password = ''
     })
     $('#m-nav').on('show.bs.modal', function () {
       $(this)
         .find('.m-nav--modal-dialog')
         .css('margin-right', -vm.measureScrollbar())
     })
+    $('#m-nav').on('hidden.bs.modal', function () {
+      if (vm.toAdmin) {
+        vm.toAdmin = false
+        vm.$router.push('/admin')
+      }
+    })
     this.$store.dispatch('getProducts')
     this.$store.dispatch('getCart')
+  },
+  beforeDestroy () {
+    $(window).off('scroll')
   },
   watch: {
     $route (to) {
