@@ -58,9 +58,9 @@
 </template>
 
 <script>
-import { signs } from '../assets/js/mixins'
+import { signs } from '@/assets/js/mixins'
 import { mapState } from 'vuex'
-import ProductCard from '../components/ProductCard'
+import ProductCard from '@/components/ProductCard'
 
 export default {
   data () {
@@ -84,6 +84,7 @@ export default {
       const className = this.routeToCategory(vm.$route.params.category)
       return vm.products.filter(function (ele) {
         return (
+          parseInt(ele.is_enabled) &&
           ele.category.class === className &&
           (vm.type === 'all' ? true : ele.category.type === vm.type) &&
           (vm.focusBrand === 'all' ? true : vm.focusBrand === ele.title.brand)
