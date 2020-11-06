@@ -15,8 +15,11 @@ export default new Vuex.Store({
       total: 0
     },
     products: [],
+    additional: [],
     orderIdSent: '',
-    popUpInfo: []
+    popUpInfo: [],
+    bsProducts: [],
+    bsCoupons: []
   },
   actions: {
     getProducts (context) {
@@ -24,7 +27,18 @@ export default new Vuex.Store({
       return new Promise(function (resolve, reject) {
         axios.get(api).then(response => {
           if (response.data.success) {
-            context.commit('PRODUCTS', response.data.products)
+            const mainArr = []
+            const addArr = []
+            for (const key in response.data.products) {
+              const item = response.data.products[key]
+              if (item.isMain === 'main') {
+                mainArr.push(item)
+              } else {
+                addArr.push(item)
+              }
+            }
+            context.commit('PRODUCTS', mainArr)
+            context.commit('ADDITIONAL', addArr)
             resolve()
           } else {
             context.dispatch('addInfo', {
@@ -126,6 +140,28 @@ export default new Vuex.Store({
         })
       })
     },
+    getBsProducts ({ commit, dispatch }) {
+      const api = `${process.env.VUE_APP_API_PATH}/api/${process.env.VUE_APP_CUSTOM_PATH}/admin/products/all`
+      return axios.get(api).then(response => {
+        if (response.data.success) {
+          const arr = []
+          for (const key in response.data.products) {
+            arr.push(response.data.products[key])
+          }
+          commit('BSPRODUCTS', arr)
+        } else {
+          dispatch('addInfo', {
+            msg: response.data.message,
+            status: 'danger'
+          })
+        }
+      }).catch(() => {
+        dispatch('addInfo', {
+          msg: '無法和伺服器連線 (XMLHttpRequest error)',
+          status: 'danger'
+        })
+      })
+    },
     sign ({ commit }, status) {
       commit('ISLOGINED', status)
     },
@@ -149,6 +185,9 @@ export default new Vuex.Store({
     PRODUCTS (state, prodArr) {
       state.products = prodArr
     },
+    ADDITIONAL (state, arr) {
+      state.additional = arr
+    },
     CART_REFRESH (state, LoadedCart) {
       state.cart = LoadedCart
     },
@@ -169,6 +208,12 @@ export default new Vuex.Store({
     },
     INFO_ADD (state, infoObj) {
       state.popUpInfo.push(infoObj)
+    },
+    BSPRODUCTS (state, bsProdArr) {
+      state.bsProducts = bsProdArr
+    },
+    BSCOUPONS (state, bsCouponsArr) {
+      state.bsCoupons = bsCouponsArr
     }
   },
   getters: {
