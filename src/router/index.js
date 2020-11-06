@@ -63,6 +63,18 @@ const routes = [
         ]
       }
     ]
+  },
+  {
+    path: '/admin',
+    name: 'Backstage',
+    component: () => import('../views/backend/BackendLayout.vue'),
+    children: [
+      {
+        path: 'product-list',
+        name: 'Backstage product list',
+        component: () => import('../views/backend/ProductsList.vue')
+      }
+    ]
   }
 ]
 
