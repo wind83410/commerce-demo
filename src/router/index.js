@@ -72,7 +72,20 @@ const routes = [
       {
         path: 'product-list',
         name: 'Backstage product list',
-        component: () => import('../views/backend/ProductsList.vue')
+        component: () => import('../views/backend/ProductsList.vue'),
+        meta: { requireAuth: true }
+      },
+      {
+        path: 'coupons',
+        name: 'Backstage coupon list',
+        component: () => import('@/views/backend/CouponList.vue'),
+        meta: { requireAuth: true }
+      },
+      {
+        path: 'orders',
+        name: 'Backstage order list',
+        component: () => import('@/views/backend/OrderList.vue'),
+        meta: { requireAuth: true }
       }
     ]
   }

@@ -15,11 +15,11 @@ export default new Vuex.Store({
       total: 0
     },
     products: [],
-    additional: [],
     orderIdSent: '',
     popUpInfo: [],
     bsProducts: [],
-    bsCoupons: []
+    bsCoupons: [],
+    bsOrders: []
   },
   actions: {
     getProducts (context) {
@@ -27,18 +27,7 @@ export default new Vuex.Store({
       return new Promise(function (resolve, reject) {
         axios.get(api).then(response => {
           if (response.data.success) {
-            const mainArr = []
-            const addArr = []
-            for (const key in response.data.products) {
-              const item = response.data.products[key]
-              if (item.isMain === 'main') {
-                mainArr.push(item)
-              } else {
-                addArr.push(item)
-              }
-            }
-            context.commit('PRODUCTS', mainArr)
-            context.commit('ADDITIONAL', addArr)
+            context.commit('PRODUCTS', response.data.products)
             resolve()
           } else {
             context.dispatch('addInfo', {
@@ -162,6 +151,54 @@ export default new Vuex.Store({
         })
       })
     },
+    getBsCoupons ({ dispatch, commit }, page) {
+      const api = `${process.env.VUE_APP_API_PATH}/api/${process.env.VUE_APP_CUSTOM_PATH}/admin/coupons?page=${page}`
+      return axios.get(api).then(response => {
+        if (response.data.success) {
+          commit('BSCOUPONS', response.data.coupons)
+          dispatch('addInfo', {
+            msg: '成功取得優惠券',
+            status: 'success'
+          })
+          return {
+            pagination: response.data.pagination
+          }
+        } else {
+          dispatch('addInfo', {
+            msg: response.data.message,
+            status: 'danger'
+          })
+        }
+      }).catch(() => {
+        dispatch('addInfo', {
+          msg: '無法和伺服器連線 (XMLHttpRequest error)',
+          status: 'danger'
+        })
+      })
+    },
+    getBsOrders ({ commit, dispatch }, page = 1) {
+      const api = `${process.env.VUE_APP_API_PATH}/api/${process.env.VUE_APP_CUSTOM_PATH}/admin/orders?page=${page}`
+      return axios.get(api).then(response => {
+        if (response.data.success) {
+          commit('BSORDERS', response.data.orders)
+          dispatch('addInfo', {
+            msg: '成功取得訂單列表',
+            status: 'success'
+          })
+          return response.data.pagination
+        } else {
+          dispatch('addInfo', {
+            msg: response.data.message,
+            status: 'danger'
+          })
+        }
+      }).catch(() => {
+        dispatch('addInfo', {
+          msg: '無法和伺服器連線 (XMLHttpRequest error)',
+          status: 'danger'
+        })
+      })
+    },
     sign ({ commit }, status) {
       commit('ISLOGINED', status)
     },
@@ -184,9 +221,6 @@ export default new Vuex.Store({
   mutations: {
     PRODUCTS (state, prodArr) {
       state.products = prodArr
-    },
-    ADDITIONAL (state, arr) {
-      state.additional = arr
     },
     CART_REFRESH (state, LoadedCart) {
       state.cart = LoadedCart
@@ -214,6 +248,9 @@ export default new Vuex.Store({
     },
     BSCOUPONS (state, bsCouponsArr) {
       state.bsCoupons = bsCouponsArr
+    },
+    BSORDERS (state, bsOrders) {
+      state.bsOrders = bsOrders
     }
   },
   getters: {
