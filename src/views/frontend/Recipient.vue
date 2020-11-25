@@ -9,6 +9,7 @@
         </h4>
         <validation-observer
           tag="form"
+          class="mb-3"
           @reset="clearFields"
           @submit.prevent="sendOrder"
           ref="form"
