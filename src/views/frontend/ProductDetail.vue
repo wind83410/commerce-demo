@@ -9,6 +9,16 @@
             alt=""
           />
           <div class="mt-3">
+            <ul class="list-unstyled d-flex mb-2 p-tags" v-if="product && product.tags">
+              <li
+                v-for="(tag, ind) in product.tags"
+                :key="ind"
+                class="mt-1 badge"
+                :class="`badge-${tag}`"
+              >
+                {{ $t(`tags.${tag}`) }}
+              </li>
+            </ul>
             <div class="p-detail__name">
               <div
                 class="p-detail__name--brand"
@@ -74,8 +84,16 @@
         <div class="d-flex mb-3 justify-content-between align-items-center">
           <div class="h4 mb-0 text-white">類似商品</div>
         </div>
-        <ul id="similar-items" class="list-unstyled row no-gutters" v-if="randSimilarItems.length">
-          <li v-for="prod in randSimilarItems" :key="prod.id" class="col-md-6 col-lg-3">
+        <ul
+          id="similar-items"
+          class="list-unstyled row no-gutters"
+          v-if="randSimilarItems.length"
+        >
+          <li
+            v-for="prod in randSimilarItems"
+            :key="prod.id"
+            class="col-md-6 col-lg-3"
+          >
             <ProductCardMini
               :prod="prod"
               :category-route="categoryToRoute(prod.category.class)"
@@ -171,12 +189,6 @@ export default {
   },
   components: {
     ProductCardMini
-  },
-  mounted () {
-  },
-  watch: {
-    itemId () {
-    }
   }
 }
 </script>
