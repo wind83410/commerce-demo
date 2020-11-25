@@ -59,6 +59,34 @@
             >去逛逛吧！</router-link
           >
         </div>
+        <section class="my-3 p-2 section-additional-items rounded">
+          <div class="d-flex mb-3 justify-content-between align-items-center">
+            <div class="h4 ml-2 mb-0">順便看看</div>
+            <div class="slide-control">
+              <button type="button" class="slide-left btn btn-outline-primary mr-2">
+                <font-awesome-icon :icon="['fas', 'chevron-left']" size="lg" />
+              </button>
+              <button type="button" class="slide-right btn btn-outline-primary">
+                <font-awesome-icon :icon="['fas', 'chevron-right']" size="lg" />
+              </button>
+            </div>
+          </div>
+          <ul
+            id="additional-items"
+            class="list-unstyled d-flex"
+          >
+            <li
+              v-for="prod in randAddItems"
+              :key="prod.id"
+            >
+              <Additional
+                :prod="prod"
+                :category-route="categoryToRoute(prod.category.class)"
+                class="p-2"
+              />
+            </li>
+          </ul>
+        </section>
       </div>
       <div class="col-md-4 col-lg-3">
         <div class="card mb-3">
@@ -124,6 +152,9 @@
 
 <script>
 import $ from 'jquery'
+import { signs } from '@/assets/js/mixins'
+import { tns } from 'tiny-slider/src/tiny-slider'
+import Additional from '@/components/Additional'
 
 export default {
   data () {
@@ -135,9 +166,23 @@ export default {
       }
     }
   },
+  mixins: [signs],
   computed: {
     cart () {
       return this.$store.state.cart
+    },
+    randAddItems () {
+      const copy = this.$store.state.products.filter(function (el) {
+        return el.price <= 150
+      })
+      const addItems = []
+      if (copy.length) {
+        for (let i = 0; i < 4 && copy.length !== 0; i++) {
+          const selInd = Math.floor(Math.random() * copy.length)
+          addItems.push(copy.splice(selInd, 1)[0])
+        }
+      }
+      return addItems
     }
   },
   methods: {
@@ -212,7 +257,53 @@ export default {
           this.tempQty.qty = input.valueAsNumber
           break
       }
+    },
+    categoryToRoute (category) {
+      return this.signs.find((el) => el.category === category).route
     }
+  },
+  watch: {
+    'randAddItems.length' (cur, pre) {
+      if (cur > pre) {
+        this.$nextTick(function () {
+          tns({
+            container: '#additional-items',
+            controlsContainer: '.slide-control',
+            navPosition: 'bottom',
+            responsive: {
+              768: {
+                items: 2
+              },
+              992: {
+                items: 4
+              }
+            }
+          })
+        })
+      }
+    }
+  },
+  mounted () {
+    if (this.randAddItems.length) {
+      this.$nextTick(function () {
+        tns({
+          container: '#additional-items',
+          controlsContainer: '.slide-control',
+          navPosition: 'bottom',
+          responsive: {
+            768: {
+              items: 2
+            },
+            992: {
+              items: 4
+            }
+          }
+        })
+      })
+    }
+  },
+  components: {
+    Additional
   }
 }
 </script>

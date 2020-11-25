@@ -1,0 +1,10 @@
+.p-add__link {
+  overflow: hidden;
+  .p-add__link--img { transition: transform 0.5s; }
+  &:hover .p-add__link--img { transform: scale(1.2) }
+}
+
+.p-add__price {
+  font-size: 1.2rem;
+  text-align: right
+}
