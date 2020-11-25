@@ -1,6 +1,21 @@
 <template>
   <div class="product-card card position-relative border border-primary">
-    <router-link class="product-link" :to="`/products/${categoryRoute}/${prod.id}`">
+    <template v-if="prod.tags">
+      <ul class="list-unstyled product-tags d-flex flex-column">
+        <li
+          v-for="(tag, ind) in prod.tags"
+          :key="ind"
+          class="badge mb-1"
+          :class="`badge-${tag}`"
+        >
+          {{ $t(`tags.${tag}`) }}
+        </li>
+      </ul>
+    </template>
+    <router-link
+      class="product-link"
+      :to="`/products/${categoryRoute}/${prod.id}`"
+    >
       <img
         :src="prod.imageUrl"
         class="card-img-top product-link__img d-block w-75 mx-auto"
@@ -14,11 +29,7 @@
           class="btn p-0 icon-btn text-primary"
           @click="addToCart(prod.id)"
         >
-          <font-awesome-icon
-            class="d-block"
-            icon="cart-plus"
-            size="2x"
-          />
+          <font-awesome-icon class="d-block" icon="cart-plus" size="2x" />
         </button>
       </li>
     </ul>

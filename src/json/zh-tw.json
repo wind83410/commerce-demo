@@ -12,5 +12,10 @@
     "tel": "連絡電話",
     "message": "留言",
     "address": "地址"
+  },
+  "tags": {
+    "bestseller": "熱賣",
+    "picked": "精選",
+    "new": "新品"
   }
 }
