@@ -7,7 +7,9 @@
     >
       <div class="container">
         <div class="d-flex align-items-center">
-          <router-link class="navbar-brand" to="/">喵屋</router-link>
+          <router-link class="layout-nav__title navbar-brand" to="/"
+            >MEOWOO</router-link
+          >
           <div class="position-relative">
             <button
               type="button"
@@ -48,7 +50,9 @@
         </div>
         <ul class="navbar-nav d-none d-md-flex">
           <li class="nav-item" v-if="isLogined">
-            <router-link to="/admin" class="nav-link">後台</router-link>
+            <router-link to="/admin/product-list" class="nav-link"
+              >後台</router-link
+            >
           </li>
           <li
             class="nav-item"
@@ -77,29 +81,67 @@
     </nav>
     <Alerts />
     <router-view class="flex-grow-1" />
-    <footer
-      class="about-us py-4 d-flex justify-content-center bg-dark"
-    >
-      <div class="container d-flex justify-content-between">
-        <div>
-          <h4>喵屋</h4>
-          <ul class="list-unstyled">
-            <li>喵屋股份有限公司</li>
-            <li>(05)223-5978</li>
-            <li>SINCE 2015</li>
-          </ul>
+    <footer class="about-us py-4 d-flex justify-content-center bg-dark">
+      <div class="container">
+        <div class="d-flex justify-content-between">
+          <div>
+            <h4>喵屋 MEOWOO</h4>
+            <ul class="list-unstyled">
+              <li>喵屋股份有限公司</li>
+              <li>(05)223-5978</li>
+              <li>SINCE 2015</li>
+            </ul>
+          </div>
+          <nav class="d-flex">
+            <a href="#" class="about-us__ext-links">
+              <font-awesome-icon :icon="['fab', 'instagram']" size="2x" />
+            </a>
+            <a href="#" class="about-us__ext-links">
+              <font-awesome-icon :icon="['fab', 'facebook-f']" size="2x" />
+            </a>
+            <a href="#" class="about-us__ext-links">
+              <font-awesome-icon :icon="['fab', 'twitter']" size="2x" />
+            </a>
+          </nav>
         </div>
-        <nav class="d-flex">
-          <a href="#" class="about-us__ext-links">
-            <font-awesome-icon :icon="['fab','instagram']" size="2x" />
-          </a>
-          <a href="#" class="about-us__ext-links">
-            <font-awesome-icon :icon="['fab','facebook-f']" size="2x" />
-          </a>
-          <a href="#" class="about-us__ext-links">
-            <font-awesome-icon :icon="['fab','twitter']" size="2x" />
-          </a>
-        </nav>
+        <ul class="list-unstyled">
+          <li>
+            Favicon is based on the icon made by
+            <a href="https://www.flaticon.com/authors/freepik" title="Freepik"
+              >Freepik</a
+            >
+            from
+            <a href="https://www.flaticon.com/" title="Flaticon">
+              www.flaticon.com</a
+            >
+          </li>
+          <li>
+            Photo by
+            <a href="https://unsplash.com/@theluckyneko" title="Photo"
+              >The Lucky Neko</a
+            >,
+            <a href="https://unsplash.com/@miklevasilyev" title="Photo">
+              MIKHAIL VASILYEV </a
+            >,
+            <a href="https://unsplash.com/@yerlinmatu" title="Photo">
+              Yerlin Matu </a
+            >,
+            <a href="https://unsplash.com/@plhnk" title="Photo">
+              Paul Hanaoka </a
+            >,
+            <a href="https://unsplash.com/@flowerchildkimmi" title="Photo">
+              Kim Davies </a
+            >,
+            <a href="https://unsplash.com/@sweetpagesco" title="Photo">
+              Sarah Brown </a
+            >,
+            <a href="https://unsplash.com/@yirage" title="Photo">
+              Andriyko Podilnyk </a
+            >,
+            <a href="https://unsplash.com/@madeyes" title="Photo"> Eric Han </a>
+            on Unsplash
+          </li>
+        </ul>
       </div>
     </footer>
     <button
@@ -168,7 +210,8 @@
                 </tr>
               </tbody>
             </table>
-            <p v-else class="text-center">購物車還沒有東西，去逛逛吧！
+            <p v-else class="text-center">
+              購物車還沒有東西，去逛逛吧！
               <router-link to="/products/staple-food">看看賣場</router-link>
             </p>
           </div>
@@ -177,7 +220,10 @@
     </div>
     <div class="modal fade" id="m-nav">
       <div class="modal-dialog m-nav--modal-dialog">
-        <div class="m-nav bg-white">
+        <div class="m-nav bg-white d-flex flex-column">
+          <button type="button" class="btn align-self-end" data-dismiss="modal">
+            <font-awesome-icon icon="times" size="3x" />
+          </button>
           <div class="member mb-3 px-3 d-flex align-items-center">
             <button
               v-if="!isLogined"
@@ -201,7 +247,9 @@
               </div>
               <div v-else>
                 管理員
-                <a href="#" class="d-block" @click.prevent="moveToAdmin">前往後台</a>
+                <a href="#" class="d-block" @click.prevent="moveToAdmin"
+                  >前往後台</a
+                >
               </div>
             </div>
           </div>
@@ -279,8 +327,8 @@ export default {
     return {
       isIndex: true,
       userData: {
-        username: '',
-        password: ''
+        username: 'wind83410@gmail.com',
+        password: 'cysh810318'
       },
       loginAlert: '',
       toAdmin: false
@@ -448,7 +496,9 @@ export default {
         vm.$router.push('/admin')
       }
     })
-    this.$store.dispatch('getProducts')
+    if (!this.$store.state.products.length) {
+      this.$store.dispatch('getProducts')
+    }
     this.$store.dispatch('getCart')
   },
   beforeDestroy () {
