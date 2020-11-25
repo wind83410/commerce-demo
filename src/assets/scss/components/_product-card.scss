@@ -2,6 +2,32 @@
   box-shadow: 0 6px 5px rgba($dark, 0.5)
 }
 
+.product-tags {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  z-index: 2;
+  font-size: 1.5rem;
+  @include media-breakpoint-up(md) {
+    font-size: 1.2rem;
+  }
+}
+
+.badge-bestseller {
+  background-color: $n-onsale;
+  color: color-yiq($n-onsale);
+}
+
+.badge-picked {
+  background-color: $primary;
+  color: color-yiq($primary);
+}
+
+.badge-new {
+  background-color: darken($success, 5%);
+  color: color-yiq($success);
+}
+
 .product-link {
   overflow: hidden;
   & .product-link__img {
