@@ -162,7 +162,6 @@
 import ProductCard from '@/components/ProductCard'
 import { signs } from '@/assets/js/mixins'
 import { tns } from 'tiny-slider/src/tiny-slider'
-import { mapState } from 'vuex'
 
 export default {
   data () {
@@ -210,7 +209,9 @@ export default {
       return this.signs.find(el => el.category === category).route
     }
   },
-  computed: mapState(['products']),
+  computed: {
+    products () { return this.$store.state.products }
+  },
   watch: {
     products () {
       const arr = [...this.products]
