@@ -2,12 +2,17 @@
  * Navbar
  ****/
  .p-nav {
-  padding-top: 56px;
+  padding-top: 74px;
 }
 
 .layout-nav {
   z-index: $zindex-fixed;
   transition: color 0.5s, background-color 0.5s;
+}
+
+.layout-nav__title {
+  font-family: "Nerko One";
+  font-size: 2rem;
 }
 
 .bg-nav-white {
@@ -19,7 +24,6 @@
   height: 100%;
   max-width: 350px;
   min-width: 320px;
-  padding-top: 60px;
   pointer-events: auto;
 }
 
