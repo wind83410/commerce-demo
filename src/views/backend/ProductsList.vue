@@ -15,13 +15,15 @@
           </button>
           <div class="dropdown-menu" aria-labelledby="check-uncheck">
             <a class="dropdown-item" href="#" @click.prevent="checkAll">全選</a>
-            <a class="dropdown-item" href="#" @click.prevent="uncheckAll">全不選</a>
+            <a class="dropdown-item" href="#" @click.prevent="uncheckAll"
+              >全不選</a
+            >
           </div>
         </div>
         <div class="btn-group" role="group">
           <button
             type="button"
-            class="btn"
+            class="btn dropdown-toggle"
             id="status-change"
             data-toggle="dropdown"
             aria-haspopup="true"
@@ -30,8 +32,12 @@
             <font-awesome-icon icon="tags" />
           </button>
           <div class="dropdown-menu" aria-labelledby="status-change">
-            <a class="dropdown-item" href="#" @click.prevent="enable(true)">啟用</a>
-            <a class="dropdown-item" href="#" @click.prevent="enable(false)">不啟用</a>
+            <a class="dropdown-item" href="#" @click.prevent="enable(true)"
+              >啟用</a
+            >
+            <a class="dropdown-item" href="#" @click.prevent="enable(false)"
+              >不啟用</a
+            >
           </div>
         </div>
       </div>
@@ -260,25 +266,6 @@
                   </div>
                 </div>
                 <div class="form-row">
-                  <div class="col-4"><legend class="col-form-label pt-0">主商品或加購商品</legend></div>
-                  <div class="col-8">
-                    <div class="form-row">
-                      <div class="col-6">
-                        <div class="form-check">
-                          <input type="radio" name="isMain" value="main" id="isMain__main" class="form-check-input" v-model="tempProduct.isMain">
-                          <label for="isMain__main" class="form-check-label">主商品</label>
-                        </div>
-                      </div>
-                      <div class="col-6">
-                        <div class="form-check">
-                          <input type="radio" name="isMain" value="add" id="isMain__add" class="form-check-input" v-model="tempProduct.isMain">
-                          <label for="isMain__add">加購商品</label>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="form-row">
                   <div class="col-4">
                     <legend class="col-form-label pt-0">標籤</legend>
                   </div>
@@ -286,19 +273,40 @@
                     <div class="form-row">
                       <div class="col-4">
                         <div class="form-check">
-                          <input type="checkbox" name="tags" id="tags__bestseller" value="bestseller" class="form-check-input" v-model="tempProduct.tags">
+                          <input
+                            type="checkbox"
+                            name="tags"
+                            id="tags__bestseller"
+                            value="bestseller"
+                            class="form-check-input"
+                            v-model="tempProduct.tags"
+                          />
                           <label for="tags__bestseller">熱賣</label>
                         </div>
                       </div>
                       <div class="col-4">
                         <div class="form-check">
-                          <input type="checkbox" name="tags" id="tags__picked" value="picked" class="form-check-input" v-model="tempProduct.tags">
+                          <input
+                            type="checkbox"
+                            name="tags"
+                            id="tags__picked"
+                            value="picked"
+                            class="form-check-input"
+                            v-model="tempProduct.tags"
+                          />
                           <label for="tags__picked">精選</label>
                         </div>
                       </div>
                       <div class="col-4">
                         <div class="form-check">
-                          <input type="checkbox" name="tags" id="tags__new" value="new" class="form-check-input" v-model="tempProduct.tags">
+                          <input
+                            type="checkbox"
+                            name="tags"
+                            id="tags__new"
+                            value="new"
+                            class="form-check-input"
+                            v-model="tempProduct.tags"
+                          />
                           <label for="tags__new">新品</label>
                         </div>
                       </div>
@@ -382,7 +390,10 @@ export default {
           collection: '',
           type: ''
         },
-        category: '',
+        category: {
+          class: '',
+          type: ''
+        },
         origin_price: 0,
         price: 0,
         unit: '',
@@ -390,8 +401,7 @@ export default {
         content: '',
         is_enabled: '0',
         imageUrl: '',
-        tags: [],
-        isMain: ''
+        tags: []
       },
       isNew: false,
       fileUploading: false,
@@ -421,7 +431,10 @@ export default {
             collection: '',
             type: ''
           },
-          category: '',
+          category: {
+            class: '',
+            type: ''
+          },
           origin_price: 0,
           price: 0,
           unit: '',
@@ -429,8 +442,7 @@ export default {
           content: '',
           is_enabled: '0',
           imageUrl: '',
-          tags: [],
-          isMain: ''
+          tags: []
         }
         this.isNew = true
       }
@@ -529,9 +541,7 @@ export default {
       vm.$store.state.bsProducts.forEach(el => {
         const obj = cloneDeep(el)
         const api = `${process.env.VUE_APP_API_PATH}/api/${process.env.VUE_APP_CUSTOM_PATH}/admin/product/${obj.id}`
-        Object.assign(obj, {
-          tags: []
-        })
+        obj.isMain = []
         promises.push(vm.$http.put(api, { data: obj }).then(response => {
           if (response.data.success) {
             return 'success'
@@ -558,6 +568,22 @@ export default {
     },
     pages () {
       return Math.ceil(Object.keys(this.$store.state.bsProducts).length / 10)
+    },
+    navTree () {
+      const tree = {}
+      this.$store.state.products.forEach(function (el) {
+        const cal = el.category.class
+        const type = el.category.type
+        if (Object.keys(tree).some((el) => el === cal)) {
+          if (!tree[cal].some((el) => el === type)) {
+            tree[cal].push(type)
+          }
+        } else {
+          tree[cal] = []
+          tree[cal].push(type)
+        }
+      })
+      return tree
     }
   },
   mounted () {
