@@ -74,7 +74,7 @@
         </td>
         <td>
           <div class="btn-group btn-group-sm">
-            <button type="button" class="btn btn-outline-primary">刪除</button>
+            <button type="button" class="btn btn-outline-primary" @click="deleteModal(item)">刪除</button>
             <button
               type="button"
               class="btn btn-outline-primary"
@@ -159,7 +159,6 @@
                 <div class="form-group">
                   <label for="customFile">
                     或 上傳圖片
-                    <!-- <i v-if="status.fileUploading" class="fas fa-spinner fa-spin"></i> -->
                   </label>
                   <input
                     type="file"
@@ -244,7 +243,7 @@
                 </div>
 
                 <div class="form-row">
-                  <div class="form-group col-md-6">
+                  <div class="form-group col-md-4">
                     <label for="origin_price">原價</label>
                     <input
                       type="number"
@@ -254,7 +253,7 @@
                       placeholder="請輸入原價"
                     />
                   </div>
-                  <div class="form-group col-md-6">
+                  <div class="form-group col-md-4">
                     <label for="price">售價</label>
                     <input
                       type="number"
@@ -262,6 +261,16 @@
                       id="price"
                       v-model="tempProduct.price"
                       placeholder="請輸入售價"
+                    />
+                  </div>
+                  <div class="form-group col-md-4">
+                    <label for="quantity">數量</label>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="quantity"
+                      v-model="tempProduct.num"
+                      placeholder="請輸入存貨量"
                     />
                   </div>
                 </div>
@@ -373,6 +382,27 @@
       </div>
     </div>
     <!-- End of edit modal -->
+    <!-- Start of delete modal -->
+    <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header bg-danger">
+            <h5 class="modal-title text-white" id="deleteModalLabel">刪除產品</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            確定刪除 <span class="to-delete text-danger"></span>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">還是算了</button>
+            <button type="button" class="btn btn-danger" @click="deleteProduct">刪掉</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End of delete modal -->
   </div>
 </template>
 
@@ -397,6 +427,7 @@ export default {
         origin_price: 0,
         price: 0,
         unit: '',
+        num: 0,
         description: '',
         content: '',
         is_enabled: '0',
@@ -405,7 +436,11 @@ export default {
       },
       isNew: false,
       fileUploading: false,
-      chosenProducts: []
+      chosenProducts: [],
+      filterVars: {
+        class: '',
+        type: ''
+      }
     }
   },
   methods: {
@@ -418,6 +453,34 @@ export default {
       if (this.page + 1 <= this.pages) {
         this.page++
       }
+    },
+    deleteModal (item) {
+      this.tempProduct = Object.assign({}, item) // shallow copy for read-only
+      const title = `${item.title.brand} ${item.title.collection} ${item.title.type}`
+      $('#deleteModal').find('.to-delete').text(title)
+      $('#deleteModal').modal('show')
+    },
+    deleteProduct () {
+      const vm = this
+      const api = `${process.env.VUE_APP_API_PATH}/api/${process.env.VUE_APP_CUSTOM_PATH}/admin/product/${vm.tempProduct.id}`
+      vm.$store.dispatch('await', true)
+      vm.$http.delete(api).then(response => {
+        if (response.data.success) {
+          vm.$store.dispatch('getBsProducts')
+        } else {
+          vm.$store.dispatch('addInfo', {
+            msg: response.data.message,
+            status: 'danger'
+          })
+        }
+        $('#deleteModal').modal('hide')
+        vm.$store.dispatch('await', false)
+      }).catch(() => {
+        vm.$store.dispatch('addInfo', {
+          msg: '無法和伺服器連線 (XMLHttpRequest error)',
+          status: 'danger'
+        })
+      })
     },
     editModal (isNew, item) {
       if (!isNew) {
@@ -568,22 +631,6 @@ export default {
     },
     pages () {
       return Math.ceil(Object.keys(this.$store.state.bsProducts).length / 10)
-    },
-    navTree () {
-      const tree = {}
-      this.$store.state.products.forEach(function (el) {
-        const cal = el.category.class
-        const type = el.category.type
-        if (Object.keys(tree).some((el) => el === cal)) {
-          if (!tree[cal].some((el) => el === type)) {
-            tree[cal].push(type)
-          }
-        } else {
-          tree[cal] = []
-          tree[cal].push(type)
-        }
-      })
-      return tree
     }
   },
   mounted () {
