@@ -56,37 +56,33 @@ new Vue({
 }).$mount('#app')
 
 router.beforeEach((to, from, next) => {
-  if (to.meta.pathFrom) {
-    if (from.path === to.meta.pathFrom) {
-      if (to.meta.requireAuth) {
-        const API = `${process.env.VUE_APP_API_PATH}/api/user/check`
-        axios.post(API).then(response => {
-          if (response.data.success) {
+  if (to.meta.requireAuth) {
+    const API = `${process.env.VUE_APP_API_PATH}/api/user/check`
+    axios.post(API).then(response => {
+      if (response.data.success) {
+        if (to.meta.pathFrom) {
+          if (from.path === to.meta.pathFrom) {
             next()
           } else {
-            next(false)
-            store.dispatch('addInfo', {
-              msg: '驗證失敗，請重新登入',
-              status: 'danger',
-              timeStamp: Math.floor(new Date())
-            })
+            next('/check')
           }
-        }).catch(() => {
-          next(false)
-          store.dispatch('addInfo', {
-            msg: '網路斷線無法驗證，請稍後再試',
-            status: 'danger',
-            timeStamp: Math.floor(new Date())
-          })
-        })
-      } else if (to.meta.orderSentCheck && store.state.orderIdSent) {
-        next()
+        } else {
+          next()
+        }
       } else {
         next(false)
+        store.dispatch('addInfo', {
+          msg: '驗證失敗，請重新登入',
+          status: 'danger'
+        })
       }
-    } else {
-      next('/check')
-    }
+    }).catch(() => {
+      next(false)
+      store.dispatch('addInfo', {
+        msg: '網路斷線無法驗證，請稍後再試',
+        status: 'danger'
+      })
+    })
   } else {
     next()
   }
