@@ -38,7 +38,7 @@
             </tr>
           </tbody>
         </table>
-        <router-link to="/products/treats/all" class="btn btn-primary btn-block"
+        <router-link to="/products/treats" class="btn btn-primary btn-block"
           >回去逛</router-link
         >
       </div>
