@@ -1,5 +1,32 @@
 <template>
-  <div class="product-card card position-relative border border-primary">
+  <div class="position-relative">
+    <router-link
+      tag="div"
+      class="product-card card border border-primary h-100"
+      :to="`/products/${categoryRoute}/${prod.id}`"
+    >
+      <div class="card-img-top overflow-hidden">
+        <img
+          :src="prod.imageUrl"
+          class="product-card__img d-block w-75 mx-auto"
+          alt=""
+        />
+      </div>
+      <div
+        class="card-body px-3 pb-3 pt-1 d-flex flex-column justify-content-between"
+      >
+        <div>
+          <div class="product-info__brand">{{ prod.title.brand }}</div>
+          <div class="product-info__collection mb-0">
+            {{ prod.title.collection }}
+          </div>
+          <div class="product-info__type text-muted">
+            {{ prod.title.type }}
+          </div>
+        </div>
+        <em class="product-info__price">${{ prod.price }}</em>
+      </div>
+    </router-link>
     <template v-if="prod.tags">
       <ul class="list-unstyled product-tags d-flex flex-column">
         <li
@@ -12,16 +39,6 @@
         </li>
       </ul>
     </template>
-    <router-link
-      class="product-link"
-      :to="`/products/${categoryRoute}/${prod.id}`"
-    >
-      <img
-        :src="prod.imageUrl"
-        class="card-img-top product-link__img d-block w-75 mx-auto"
-        alt=""
-      />
-    </router-link>
     <ul class="icons list-unstyled d-flex flex-column">
       <li>
         <button
@@ -33,20 +50,6 @@
         </button>
       </li>
     </ul>
-    <div
-      class="card-body px-3 pb-3 pt-1 d-flex flex-column justify-content-between"
-    >
-      <div>
-        <div class="product-info__brand">{{ prod.title.brand }}</div>
-        <div class="product-info__collection mb-0">
-          {{ prod.title.collection }}
-        </div>
-        <div class="product-info__type text-muted">
-          {{ prod.title.type }}
-        </div>
-      </div>
-      <em class="product-info__price">${{ prod.price }}</em>
-    </div>
   </div>
 </template>
 
