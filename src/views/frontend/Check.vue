@@ -135,14 +135,14 @@
             </div>
           </div>
           <div class="card-footer bg-white border-top-0 pt-0">
-            <button
-              type="button"
-              @click.prevent="toRecipient"
+            <router-link
+              tag="button"
+              to="/check/recipient"
               class="btn btn-primary w-100"
               :disabled="cart.carts.length == 0"
             >
               確定結帳
-            </button>
+            </router-link>
           </div>
         </div>
       </div>
@@ -186,13 +186,13 @@ export default {
     }
   },
   methods: {
-    toRecipient () {
-      if (this.$store.state.isLogined && this.cart.carts.length) {
-        this.$router.push('/check/recipient')
-      } else {
-        $('#login-modal').modal('show')
-      }
-    },
+    // toRecipient () {
+    //   if (this.$store.state.isLogined && this.cart.carts.length) {
+    //     this.$router.push('/check/recipient')
+    //   } else {
+    //     $('#login-modal').modal('show')
+    //   }
+    // },
     applyCoupon () {
       const vm = this
       const COUPON = { code: vm.couponCode }

@@ -60,15 +60,7 @@ router.beforeEach((to, from, next) => {
     const API = `${process.env.VUE_APP_API_PATH}/api/user/check`
     axios.post(API).then(response => {
       if (response.data.success) {
-        if (to.meta.pathFrom) {
-          if (from.path === to.meta.pathFrom) {
-            next()
-          } else {
-            next('/check')
-          }
-        } else {
-          next()
-        }
+        next()
       } else {
         next(false)
         store.dispatch('addInfo', {
@@ -83,6 +75,21 @@ router.beforeEach((to, from, next) => {
         status: 'danger'
       })
     })
+  } else if (to.meta.pathFrom) {
+    console.log(from.path)
+    if (from.path === to.meta.pathFrom) {
+      if (to.meta.orderSentCheck) {
+        if (store.state.orderIdSent !== '') {
+          next()
+        } else {
+          next(false)
+        }
+      } else {
+        next()
+      }
+    } else {
+      next(false)
+    }
   } else {
     next()
   }

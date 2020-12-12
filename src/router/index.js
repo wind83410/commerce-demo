@@ -43,7 +43,6 @@ const routes = [
             name: 'Recipient',
             component: () => import('../views/frontend/Recipient.vue'),
             meta: {
-              requireAuth: true,
               pathFrom: '/check'
             }
           },
