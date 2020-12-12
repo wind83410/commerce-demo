@@ -90,14 +90,9 @@ export default {
       checkedTags: []
     }
   },
-  mixins: [signs],
   methods: {
-    routeToCategory (route) {
-      return this.signs.find((el) => el.route === route).category
-    },
-    categoryToRoute (category) {
-      return this.signs.find((el) => el.category === category).route
-    },
+    routeToCategory: route => signs.find((el) => el.route === route).category,
+    categoryToRoute: category => signs.find((el) => el.category === category).route,
     haveTag (prodTags) {
       if (!this.checkedTags.length) {
         return true // omit the check
