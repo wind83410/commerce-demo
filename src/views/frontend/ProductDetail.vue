@@ -55,7 +55,7 @@
                     -
                   </button>
                 </div>
-                <input type="number" class="form-control" v-model="qty" />
+                <input id="qty" type="number" class="form-control" v-model="qty" />
                 <div class="input-group-append">
                   <button
                     class="btn btn-outline-primary"
