@@ -14,7 +14,6 @@
 import { signs } from '@/assets/js/mixins'
 
 export default {
-  mixins: [signs],
   computed: {
     bannerBg () {
       if (!this.sign) {
@@ -25,12 +24,12 @@ export default {
     },
     sign () {
       const vm = this
-      return vm.signs.find(el => el.route === vm.$route.params.category)
+      return signs.find(el => el.route === vm.$route.params.category)
     }
   },
   mounted () {
     const vm = this
-    const sign = vm.signs.find(el => el.route === vm.$route.params.category)
+    const sign = signs.find(el => el.route === vm.$route.params.category)
     if (!sign) {
       vm.$router.push('/')
       vm.$store.dispatch('addInfo', {

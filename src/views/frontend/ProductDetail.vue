@@ -130,7 +130,6 @@ export default {
       qty: 1
     }
   },
-  mixins: [signs],
   methods: {
     addToCart () {
       const vm = this
@@ -155,9 +154,7 @@ export default {
     mdRender (mdText) {
       return CONVERTER.makeHtml(mdText)
     },
-    categoryToRoute (category) {
-      return this.signs.find((el) => el.category === category).route
-    }
+    categoryToRoute: category => signs.find((el) => el.category === category).route
   },
   computed: {
     product () {

@@ -331,10 +331,10 @@ export default {
         password: 'cysh810318'
       },
       loginAlert: '',
-      toAdmin: false
+      toAdmin: false,
+      signs
     }
   },
-  mixins: [signs],
   filters: {
     round (num, digits = 1) {
       return num.toFixed(digits)

@@ -166,7 +166,6 @@ export default {
       }
     }
   },
-  mixins: [signs],
   computed: {
     cart () {
       return this.$store.state.cart
@@ -258,9 +257,7 @@ export default {
           break
       }
     },
-    categoryToRoute (category) {
-      return this.signs.find((el) => el.category === category).route
-    }
+    categoryToRoute: category => signs.find((el) => el.category === category).route
   },
   watch: {
     'randAddItems.length' (cur, pre) {
