@@ -135,7 +135,7 @@ export default {
     brandList () {
       const brands = []
       const vm = this
-      this.enabledProducts.forEach(function (el) {
+      vm.enabledProducts.forEach(function (el) {
         if (
           (vm.type === 'all' ? true : vm.type === el.category.type) &&
           !(brands.length && brands.some((seen) => seen === el.title.brand))

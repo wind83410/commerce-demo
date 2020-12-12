@@ -171,7 +171,7 @@ export default {
     },
     randSimilarItems () {
       const vm = this
-      const copy = this.$store.state.products.filter((el) => {
+      const copy = vm.$store.state.products.filter((el) => {
         return (
           el.category.class === vm.product.category.class &&
           el.id !== vm.$route.params.itemId

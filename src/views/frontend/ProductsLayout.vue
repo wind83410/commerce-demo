@@ -25,12 +25,12 @@ export default {
     },
     sign () {
       const vm = this
-      return this.signs.find(el => el.route === vm.$route.params.category)
+      return vm.signs.find(el => el.route === vm.$route.params.category)
     }
   },
   mounted () {
     const vm = this
-    const sign = this.signs.find(el => el.route === vm.$route.params.category)
+    const sign = vm.signs.find(el => el.route === vm.$route.params.category)
     if (!sign) {
       vm.$router.push('/')
       vm.$store.dispatch('addInfo', {

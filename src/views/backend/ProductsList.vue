@@ -520,7 +520,7 @@ export default {
         api = `${process.env.VUE_APP_API_PATH}/api/${process.env.VUE_APP_CUSTOM_PATH}/admin/product/${vm.tempProduct.id}`
         command = 'put'
       }
-      this.$http[command](api, { data: vm.tempProduct }).then((response) => {
+      vm.$http[command](api, { data: vm.tempProduct }).then((response) => {
         if (response.data.success) {
           $('#productModal').modal('hide')
           vm.$store.dispatch('await', true)
@@ -541,7 +541,7 @@ export default {
         const formData = new FormData()
         formData.append('file-to-upload', pic)
         vm.fileUploading = true
-        this.$http
+        vm.$http
           .post(api, formData, {
             headers: {
               'Content-Type': 'multipart/form-data'
@@ -635,7 +635,7 @@ export default {
   },
   mounted () {
     const vm = this
-    if (!this.bsProducts.length) {
+    if (!vm.bsProducts.length) {
       vm.$store.dispatch('await', true)
       vm.$store.dispatch('getBsProducts').then(() => {
         vm.$store.dispatch('await', false)

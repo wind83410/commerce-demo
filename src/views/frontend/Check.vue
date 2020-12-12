@@ -229,8 +229,8 @@ export default {
       const vm = this
       vm.$store.dispatch('await', true)
       vm.$store.dispatch('addCartItem', {
-        productId: this.tempQty.productId,
-        qty: this.tempQty.qty
+        productId: vm.tempQty.productId,
+        qty: vm.tempQty.qty
       }).then(() => {
         vm.$store.dispatch('await', false)
         vm.tempQty.qty = 0

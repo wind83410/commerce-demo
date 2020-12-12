@@ -470,12 +470,12 @@ export default {
   },
   mounted () {
     const vm = this
-    if (this.$route.path === '/') {
-      $(window).on('scroll', this.colorSwitch)
+    if (vm.$route.path === '/') {
+      $(window).on('scroll', vm.colorSwitch)
     } else {
-      this.isIndex = false
+      vm.isIndex = false
     }
-    $(window).on('scroll', this.bottomHit)
+    $(window).on('scroll', vm.bottomHit)
     $('#login-modal').on('shown.bs.modal', function () {
       $('body')
         .addClass('modal-open')
@@ -496,10 +496,10 @@ export default {
         vm.$router.push('/admin')
       }
     })
-    if (!this.$store.state.products.length) {
-      this.$store.dispatch('getProducts')
+    if (!vm.$store.state.products.length) {
+      vm.$store.dispatch('getProducts')
     }
-    this.$store.dispatch('getCart')
+    vm.$store.dispatch('getCart')
   },
   beforeDestroy () {
     $(window).off('scroll')
