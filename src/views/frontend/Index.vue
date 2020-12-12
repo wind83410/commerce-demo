@@ -123,7 +123,7 @@
         </ul>
       </div>
     </section>
-    <section class="coupon-evt bg-light">
+    <section class="coupon-evt">
       <div class="container">
         <div class="row">
           <div class="col-md-6">
