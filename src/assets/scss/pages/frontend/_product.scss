@@ -3,7 +3,7 @@
   background-position: center center;
   background-size: cover;
   background-blend-mode: overlay;
-  background-color: rgba($light, 0.7);
+  background-color: rgba($primary, 0.65);
   height: 150px;
   @include media-breakpoint-up(md) { height: 200px; }
   @include media-breakpoint-up(lg) { height: 300px; }
@@ -16,7 +16,7 @@
 }
 
 .p-banner__category, .p-banner__description {
-  color: $dark
+  color: $white;
 }
 
 .p-banner__category {
