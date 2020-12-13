@@ -44,7 +44,7 @@
                 `NT$${product.price} / ${product.unit}`
               }}</strong>
             </div>
-            <div class="form-group mt-2 p-qty">
+            <div class="form-group mt-2 p-qty w-100">
               <label for="qty">數量</label>
               <div class="input-group">
                 <div class="input-group-prepend">
@@ -55,7 +55,7 @@
                     -
                   </button>
                 </div>
-                <input id="qty" type="number" class="form-control" v-model="qty" />
+                <input id="qty" type="number" class="form-control text-center" v-model.number="qty" />
                 <div class="input-group-append">
                   <button
                     class="btn btn-outline-primary"
@@ -66,7 +66,7 @@
                 </div>
               </div>
             </div>
-            <button class="btn btn-primary" @click="addToCart">
+            <button class="btn btn-primary btn-block" @click="addToCart">
               加入購物車
             </button>
           </div>

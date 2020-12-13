@@ -56,6 +56,15 @@
   width: 150px;
 }
 
+/* Remove the spinner attached in input of type number as default in browsers */
+#qty {
+  appearance: none;
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    appearance: none;
+  }
+}
+
 .section-similar-items {
   background-color: darken($primary, 20%)
 }
