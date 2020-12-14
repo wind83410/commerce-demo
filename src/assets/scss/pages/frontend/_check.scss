@@ -61,6 +61,17 @@
 }
 
 /*****
+ * Recipient.vue
+ *****/
+
+.order-btn {
+  flex-grow: 1;
+  @include media-breakpoint-up(lg) {
+    max-width: 150px;
+  }
+}
+
+/*****
  * OrderCode.vue
  *****/
 

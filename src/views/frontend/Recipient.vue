@@ -13,6 +13,7 @@
           class="mb-3"
           @reset="clearFields"
           @submit.prevent="sendOrder"
+          v-slot="{ invalid }"
           ref="form"
         >
           <validation-provider
@@ -103,9 +104,9 @@
             ></textarea>
             <div class="invalid-feedback">{{ errors[0] }}</div>
           </validation-provider>
-          <div class="d-flex d-md-block">
-            <button type="reset" class="btn btn-secondary">取消</button>
-            <button type="submit" class="btn btn-primary">確定</button>
+          <div class="d-flex justify-content-end">
+            <button type="reset" class="btn btn-outline-dark order-btn">取消</button>
+            <button type="submit" class="btn btn-primary ml-2 order-btn" :disabled="invalid">確定</button>
           </div>
         </validation-observer>
       </div>
