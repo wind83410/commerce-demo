@@ -7,6 +7,7 @@
             <font-awesome-icon icon="user" /> </span
           >收件人資料
         </h4>
+        <p>星號（*）部分必填</p>
         <validation-observer
           tag="form"
           class="mb-3"
@@ -21,7 +22,7 @@
             rules="required"
             v-slot="{ classes, errors }"
           >
-            <label for="name">全名</label>
+            <label for="name">全名 <span class="text-danger">*</span></label>
             <input
               v-model="data.user.name"
               type="text"
@@ -39,7 +40,7 @@
             rules="required|email"
             v-slot="{ classes, errors }"
           >
-            <label for="email">電子信箱</label>
+            <label for="email">電子信箱 <span class="text-danger">*</span></label>
             <input
               v-model="data.user.email"
               type="email"
@@ -57,7 +58,7 @@
             rules="required"
             v-slot="{ classes, errors }"
           >
-            <label for="tel">電話</label>
+            <label for="tel">電話 <span class="text-danger">*</span></label>
             <input
               v-model="data.user.tel"
               type="tel"
@@ -75,7 +76,7 @@
             rules="required"
             v-slot="{ classes, errors }"
           >
-            <label for="address">地址</label>
+            <label for="address">地址 <span class="text-danger">*</span></label>
             <input
               v-model="data.user.address"
               type="text"
@@ -92,7 +93,7 @@
             rules="required"
             v-slot="{ classes, errors }"
           >
-            <label for="message">留言</label>
+            <label for="message">留言 <span class="text-danger">*</span></label>
             <textarea
               v-model="data.message"
               type="message"
