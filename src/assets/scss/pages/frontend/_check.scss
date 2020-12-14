@@ -43,16 +43,7 @@
 }
 
 .adjust-qty {
-  width: 60px;
-  .adjust-qty__add {
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-  }
-  .adjust-qty__input { border-radius: 0 }
-  .adjust-qty__subtract {
-    border-top-right-radius: 0;
-    border-top-left-radius: 0;
-  }
+  width: 110px;
 }
 
 .section-additional-items {
@@ -86,7 +77,4 @@
     background: rgba(#fff, 0.8);
     background-clip: padding-box;
   }
-}
-.no-break {
-  white-space: nowrap;
 }

@@ -6,6 +6,10 @@
   './vendors/tiny-slider',
   './vendors/vue-loading';
 
+@import // Base\
+  './base/input-alter',
+  './base/form-alter';
+
 @import // Layout
   './layout/frontend/about-us',
   './layout/frontend/cart',
