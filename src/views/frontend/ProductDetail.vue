@@ -73,6 +73,7 @@
         </div>
         <div class="col-sm-7 col-md-8">
           <div
+            id="markdown"
             class="description mt-3 mt-md-0"
             v-html="mdRender(product.content)"
           ></div>
@@ -112,7 +113,7 @@ import { signs } from '@/assets/js/mixins'
 import ProductCardMini from '@/components/ProductCardMini'
 
 const classMap = {
-  table: 'table'
+  table: 'table table-sm table-hover'
 }
 const bindings = Object.keys(classMap).map((key) => ({
   type: 'output',
