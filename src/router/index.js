@@ -54,6 +54,11 @@ const routes = [
               pathFrom: '/check/customer',
               orderSentCheck: true
             }
+          },
+          {
+            path: 'paid/:orderId',
+            name: 'Check paid',
+            component: () => import('@/views/frontend/CheckPaid.vue')
           }
         ]
       }

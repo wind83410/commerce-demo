@@ -1,5 +1,5 @@
 /*****
- * Register.vue
+ * CheckLayout.vue
  *****/
 
 .bg-order-code {
@@ -52,7 +52,7 @@
 }
 
 /*****
- * Recipient.vue
+ * CheckCustomer.vue
  *****/
 
 .order-btn {
@@ -63,8 +63,13 @@
 }
 
 /*****
- * OrderCode.vue
+ * CheckOrder.vue
  *****/
+
+.order-info-title {
+  background-color: lighten($primary, 40);
+  padding: 10px 0;
+}
 
 .table-transparent {
   max-width: 400px;
@@ -74,7 +79,7 @@
   & thead th {
     border-color: transparent;
     border-width: 3px;
-    background: rgba(#fff, 0.8);
+    background: rgba(#fff, 0.9);
     background-clip: padding-box;
   }
 }
