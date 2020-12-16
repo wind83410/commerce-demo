@@ -150,7 +150,7 @@
           <div class="card-footer bg-white border-top-0 pt-0">
             <router-link
               tag="button"
-              to="/check/recipient"
+              to="/check/customer"
               class="btn btn-primary w-100"
               :disabled="cart.carts.length == 0"
             >

@@ -13,7 +13,7 @@ export default {
     isSwitched () {
       if (this.$route.path === '/check') {
         return false
-      } else if (this.$route.path === '/check/recipient') {
+      } else if (this.$route.path === '/check/customer') {
         return false
       } else {
         return true
@@ -22,7 +22,7 @@ export default {
     progress () {
       if (this.$route.path === '/check') {
         return 33.3
-      } else if (this.$route.path === '/check/recipient') {
+      } else if (this.$route.path === '/check/customer') {
         return 66.7
       } else {
         return 100
