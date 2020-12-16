@@ -176,7 +176,7 @@
                 <th></th>
                 <th>名稱</th>
                 <th>#</th>
-                <th>小計</th>
+                <th class="no-break">小計</th>
               </thead>
               <tbody>
                 <tr v-for="item in cart.carts" :key="item.id">
@@ -191,7 +191,7 @@
                   </td>
                   <td>
                     <div>
-                      <div class="text-muted">
+                      <div class="c-prod__sub-info">
                         {{ item.product.title.brand }}
                       </div>
                       <div>
@@ -200,7 +200,7 @@
                           `${item.coupon.percent} %`
                         }}</span>
                       </div>
-                      <div class="text-muted">
+                      <div class="c-prod__sub-info">
                         {{ item.product.title.type }}
                       </div>
                     </div>
@@ -327,8 +327,8 @@ export default {
     return {
       isIndex: true,
       userData: {
-        username: 'wind83410@gmail.com',
-        password: 'cysh810318'
+        username: '',
+        password: ''
       },
       loginAlert: '',
       toAdmin: false,
