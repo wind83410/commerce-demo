@@ -83,3 +83,18 @@
     background-clip: padding-box;
   }
 }
+
+/*****
+ * CheckPaid.vue
+ *****/
+
+.is-paid-message {
+  background-color: lighten($primary, 40);
+  padding: 15px 0;
+  transition: background-color 0.5s, color 0.5s
+}
+
+.paid {
+  background-color: $success;
+  color: $white
+}
