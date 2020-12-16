@@ -11,9 +11,7 @@
 export default {
   computed: {
     isSwitched () {
-      if (this.$route.path === '/check') {
-        return false
-      } else if (this.$route.path === '/check/recipient') {
+      if (this.$route.path === '/check' || this.$route.path === '/check/customer') {
         return false
       } else {
         return true
@@ -21,9 +19,11 @@ export default {
     },
     progress () {
       if (this.$route.path === '/check') {
-        return 33.3
-      } else if (this.$route.path === '/check/recipient') {
-        return 66.7
+        return 25
+      } else if (this.$route.path === '/check/customer') {
+        return 50
+      } else if (this.$route.path.match(/\/check\/order/)) {
+        return 75
       } else {
         return 100
       }

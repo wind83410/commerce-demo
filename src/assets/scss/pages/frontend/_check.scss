@@ -1,5 +1,5 @@
 /*****
- * Register.vue
+ * CheckLayout.vue
  *****/
 
 .bg-order-code {
@@ -43,27 +43,33 @@
 }
 
 .adjust-qty {
-  width: 60px;
-  .adjust-qty__add {
-    border-bottom-right-radius: 0;
-    border-bottom-left-radius: 0;
-  }
-  .adjust-qty__input { border-radius: 0 }
-  .adjust-qty__subtract {
-    border-top-right-radius: 0;
-    border-top-left-radius: 0;
-  }
+  width: 110px;
 }
 
 .section-additional-items {
   background-color: lighten($dark, 65%);
   color: $dark;
-  box-shadow: 0 6px 6px $gray-500
 }
 
 /*****
- * OrderCode.vue
+ * CheckCustomer.vue
  *****/
+
+.order-btn {
+  flex-grow: 1;
+  @include media-breakpoint-up(lg) {
+    max-width: 150px;
+  }
+}
+
+/*****
+ * CheckOrder.vue
+ *****/
+
+.order-info-title {
+  background-color: lighten($primary, 40);
+  padding: 10px 0;
+}
 
 .table-transparent {
   max-width: 400px;
@@ -73,10 +79,22 @@
   & thead th {
     border-color: transparent;
     border-width: 3px;
-    background: rgba(#fff, 0.8);
+    background: rgba(#fff, 0.9);
     background-clip: padding-box;
   }
 }
-.no-break {
-  white-space: nowrap;
+
+/*****
+ * CheckPaid.vue
+ *****/
+
+.is-paid-message {
+  background-color: lighten($primary, 40);
+  padding: 15px 0;
+  transition: background-color 0.5s, color 0.5s
+}
+
+.paid {
+  background-color: $success;
+  color: $white
 }

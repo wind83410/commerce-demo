@@ -221,8 +221,8 @@ export default {
   methods: {
     getCoupons (page = 1) {
       const vm = this
-      this.$store.dispatch('await', true)
-      this.$store.dispatch('getBsCoupons', page).then(obj => {
+      vm.$store.dispatch('await', true)
+      vm.$store.dispatch('getBsCoupons', page).then(obj => {
         vm.pagination = obj.pagination
         vm.$store.dispatch('await', false)
       })
@@ -230,7 +230,7 @@ export default {
     deleteCoupon () {
       const api = `${process.env.VUE_APP_API_PATH}/api/${process.env.VUE_APP_CUSTOM_PATH}/admin/coupon/${this.tempCoupon.id}`
       const vm = this
-      this.$http.delete(api).then(response => {
+      vm.$http.delete(api).then(response => {
         if (response.data.success) {
           $('#delCouponModal').modal('hide')
           vm.getCoupons()
@@ -251,13 +251,13 @@ export default {
       const vm = this
       let api = `${process.env.VUE_APP_API_PATH}/api/${process.env.VUE_APP_CUSTOM_PATH}/admin/coupon`
       let method = 'post'
-      if (!this.isNew) {
+      if (!vm.isNew) {
         api = `${process.env.VUE_APP_API_PATH}/api/${process.env.VUE_APP_CUSTOM_PATH}/admin/coupon/${vm.tempCoupon.id}`
         method = 'put'
       }
       const couponDate = { ...vm.tempCoupon }
-      couponDate.due_date = this.dateToMs(couponDate.due_date)
-      this.$http[method](api, { data: couponDate }).then(response => {
+      couponDate.due_date = vm.dateToMs(couponDate.due_date)
+      vm.$http[method](api, { data: couponDate }).then(response => {
         if (response.data.success) {
           $('#editCouponModal').modal('hide')
           vm.getCoupons()

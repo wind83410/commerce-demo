@@ -1,0 +1,8 @@
+/* Remove the spinner attached in input of type number as default in browsers */
+input[type="number"] {
+  appearance: none;
+  &::-webkit-outer-spin-button,
+  &::-webkit-inner-spin-button {
+    appearance: none;
+  }
+}

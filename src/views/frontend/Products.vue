@@ -90,14 +90,9 @@ export default {
       checkedTags: []
     }
   },
-  mixins: [signs],
   methods: {
-    routeToCategory (route) {
-      return this.signs.find((el) => el.route === route).category
-    },
-    categoryToRoute (category) {
-      return this.signs.find((el) => el.category === category).route
-    },
+    routeToCategory: route => signs.find((el) => el.route === route).category,
+    categoryToRoute: category => signs.find((el) => el.category === category).route,
     haveTag (prodTags) {
       if (!this.checkedTags.length) {
         return true // omit the check
@@ -135,7 +130,7 @@ export default {
     brandList () {
       const brands = []
       const vm = this
-      this.enabledProducts.forEach(function (el) {
+      vm.enabledProducts.forEach(function (el) {
         if (
           (vm.type === 'all' ? true : vm.type === el.category.type) &&
           !(brands.length && brands.some((seen) => seen === el.title.brand))

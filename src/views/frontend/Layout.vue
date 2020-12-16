@@ -176,7 +176,7 @@
                 <th></th>
                 <th>名稱</th>
                 <th>#</th>
-                <th>小計</th>
+                <th class="no-break">小計</th>
               </thead>
               <tbody>
                 <tr v-for="item in cart.carts" :key="item.id">
@@ -191,7 +191,7 @@
                   </td>
                   <td>
                     <div>
-                      <div class="text-muted">
+                      <div class="c-prod__sub-info">
                         {{ item.product.title.brand }}
                       </div>
                       <div>
@@ -200,7 +200,7 @@
                           `${item.coupon.percent} %`
                         }}</span>
                       </div>
-                      <div class="text-muted">
+                      <div class="c-prod__sub-info">
                         {{ item.product.title.type }}
                       </div>
                     </div>
@@ -327,14 +327,14 @@ export default {
     return {
       isIndex: true,
       userData: {
-        username: 'wind83410@gmail.com',
-        password: 'cysh810318'
+        username: '',
+        password: ''
       },
       loginAlert: '',
-      toAdmin: false
+      toAdmin: false,
+      signs
     }
   },
-  mixins: [signs],
   filters: {
     round (num, digits = 1) {
       return num.toFixed(digits)
@@ -470,12 +470,12 @@ export default {
   },
   mounted () {
     const vm = this
-    if (this.$route.path === '/') {
-      $(window).on('scroll', this.colorSwitch)
+    if (vm.$route.path === '/') {
+      $(window).on('scroll', vm.colorSwitch)
     } else {
-      this.isIndex = false
+      vm.isIndex = false
     }
-    $(window).on('scroll', this.bottomHit)
+    $(window).on('scroll', vm.bottomHit)
     $('#login-modal').on('shown.bs.modal', function () {
       $('body')
         .addClass('modal-open')
@@ -496,10 +496,10 @@ export default {
         vm.$router.push('/admin')
       }
     })
-    if (!this.$store.state.products.length) {
-      this.$store.dispatch('getProducts')
+    if (!vm.$store.state.products.length) {
+      vm.$store.dispatch('getProducts')
     }
-    this.$store.dispatch('getCart')
+    vm.$store.dispatch('getCart')
   },
   beforeDestroy () {
     $(window).off('scroll')

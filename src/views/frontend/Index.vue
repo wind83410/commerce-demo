@@ -123,7 +123,7 @@
         </ul>
       </div>
     </section>
-    <section class="coupon-evt bg-light">
+    <section class="coupon-evt">
       <div class="container">
         <div class="row">
           <div class="col-md-6">
@@ -169,7 +169,6 @@ export default {
       recomProd: []
     }
   },
-  mixins: [signs],
   methods: {
     randomRecom (prodArr) {
       if (prodArr.length > 0) {
@@ -205,9 +204,7 @@ export default {
         })
         .catch(() => vm.$store.dispatch('await', false))
     },
-    categoryToRoute (category) {
-      return this.signs.find(el => el.category === category).route
-    }
+    categoryToRoute: category => signs.find(el => el.category === category).route
   },
   computed: {
     products () { return this.$store.state.products }

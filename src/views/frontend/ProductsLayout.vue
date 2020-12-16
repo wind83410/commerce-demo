@@ -1,6 +1,6 @@
 <template>
   <div class="p-nav">
-    <header class="container py-3 p-banner" :class="bannerBg">
+    <header class="container py-3 my-3 p-banner d-flex flex-column justify-content-center" :class="bannerBg">
       <div class="p-banner__category">{{ sign.category }}</div>
       <div class="p-banner__description">{{ sign.description }}</div>
     </header>
@@ -14,7 +14,6 @@
 import { signs } from '@/assets/js/mixins'
 
 export default {
-  mixins: [signs],
   computed: {
     bannerBg () {
       if (!this.sign) {
@@ -25,12 +24,12 @@ export default {
     },
     sign () {
       const vm = this
-      return this.signs.find(el => el.route === vm.$route.params.category)
+      return signs.find(el => el.route === vm.$route.params.category)
     }
   },
   mounted () {
     const vm = this
-    const sign = this.signs.find(el => el.route === vm.$route.params.category)
+    const sign = signs.find(el => el.route === vm.$route.params.category)
     if (!sign) {
       vm.$router.push('/')
       vm.$store.dispatch('addInfo', {

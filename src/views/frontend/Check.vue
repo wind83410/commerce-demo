@@ -13,8 +13,8 @@
               <th scope="col"></th>
               <th scope="col" class="d-none d-sm-table-cell"></th>
               <th scope="col">名稱</th>
-              <th scope="col" class="d-none d-md-table-cell">單價</th>
-              <th scope="col">#</th>
+              <th scope="col" class="no-break">單價</th>
+              <th scope="col" class="d-none d-md-table-cell">#</th>
               <th scope="col" class="text-right">小計</th>
             </tr>
           </thead>
@@ -39,13 +39,26 @@
                 <span v-if="item.coupon" class="badge badge-discount">{{
                   `${item.coupon.percent} %`
                 }}</span>
+                <div class="input-group adjust-qty d-flex d-md-none mt-2">
+                  <div class="input-group-prepend">
+                    <button type="button" class="btn btn-primary" @click="buffer(item.product.id, '+')">+</button>
+                  </div>
+                  <input type="number" class="form-control" :id="item.product.id" min=1 :value="item.qty" @input="buffer(item.product.id)" @blur="modify">
+                  <div class="input-group-append">
+                    <button type="button" class="btn btn-secondary" @click="buffer(item.product.id, '-')">-</button>
+                  </div>
+                </div>
               </td>
-              <td class="d-none d-md-table-cell">{{ item.product.price }}</td>
-              <td>
-                <div class="adjust-qty d-flex flex-column">
-                  <button type="button" class="adjust-qty__add btn btn-primary" @click="buffer(item.product.id, '+')">+</button>
-                  <input type="number" class="adjust-qty__input form-control" :id="item.product.id" min=1 :value="item.qty" @input="buffer(item.product.id)" @blur="modify">
-                  <button type="button" class="adjust-qty__subtract btn btn-secondary" @click="buffer(item.product.id, '-')">-</button>
+              <td>{{ item.product.price }}</td>
+              <td class="d-none d-md-table-cell">
+                <div class="input-group adjust-qty">
+                  <div class="input-group-prepend">
+                    <button type="button" class="btn btn-primary" @click="buffer(item.product.id, '+')">+</button>
+                  </div>
+                  <input type="number" class="form-control" :id="item.product.id" min=1 :value="item.qty" @input="buffer(item.product.id)" @blur="modify">
+                  <div class="input-group-append">
+                    <button type="button" class="btn btn-secondary" @click="buffer(item.product.id, '-')">-</button>
+                  </div>
                 </div>
               </td>
               <td class="text-right">{{ item.final_total.toFixed(1) }}</td>
@@ -135,14 +148,14 @@
             </div>
           </div>
           <div class="card-footer bg-white border-top-0 pt-0">
-            <button
-              type="button"
-              @click.prevent="toRecipient"
+            <router-link
+              tag="button"
+              to="/check/customer"
               class="btn btn-primary w-100"
               :disabled="cart.carts.length == 0"
             >
               確定結帳
-            </button>
+            </router-link>
           </div>
         </div>
       </div>
@@ -166,7 +179,6 @@ export default {
       }
     }
   },
-  mixins: [signs],
   computed: {
     cart () {
       return this.$store.state.cart
@@ -186,13 +198,13 @@ export default {
     }
   },
   methods: {
-    toRecipient () {
-      if (this.$store.state.isLogined && this.cart.carts.length) {
-        this.$router.push('/check/recipient')
-      } else {
-        $('#login-modal').modal('show')
-      }
-    },
+    // toRecipient () {
+    //   if (this.$store.state.isLogined && this.cart.carts.length) {
+    //     this.$router.push('/check/recipient')
+    //   } else {
+    //     $('#login-modal').modal('show')
+    //   }
+    // },
     applyCoupon () {
       const vm = this
       const COUPON = { code: vm.couponCode }
@@ -229,8 +241,8 @@ export default {
       const vm = this
       vm.$store.dispatch('await', true)
       vm.$store.dispatch('addCartItem', {
-        productId: this.tempQty.productId,
-        qty: this.tempQty.qty
+        productId: vm.tempQty.productId,
+        qty: vm.tempQty.qty
       }).then(() => {
         vm.$store.dispatch('await', false)
         vm.tempQty.qty = 0
@@ -258,9 +270,7 @@ export default {
           break
       }
     },
-    categoryToRoute (category) {
-      return this.signs.find((el) => el.category === category).route
-    }
+    categoryToRoute: category => signs.find((el) => el.category === category).route
   },
   watch: {
     'randAddItems.length' (cur, pre) {

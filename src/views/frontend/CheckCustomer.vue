@@ -7,11 +7,13 @@
             <font-awesome-icon icon="user" /> </span
           >收件人資料
         </h4>
+        <p>星號（*）部分必填</p>
         <validation-observer
           tag="form"
           class="mb-3"
           @reset="clearFields"
           @submit.prevent="sendOrder"
+          v-slot="{ invalid }"
           ref="form"
         >
           <validation-provider
@@ -21,7 +23,7 @@
             rules="required"
             v-slot="{ classes, errors }"
           >
-            <label for="name">全名</label>
+            <label for="name">全名 <span class="text-danger">*</span></label>
             <input
               v-model="data.user.name"
               type="text"
@@ -39,7 +41,7 @@
             rules="required|email"
             v-slot="{ classes, errors }"
           >
-            <label for="email">電子信箱</label>
+            <label for="email">電子信箱 <span class="text-danger">*</span></label>
             <input
               v-model="data.user.email"
               type="email"
@@ -57,7 +59,7 @@
             rules="required"
             v-slot="{ classes, errors }"
           >
-            <label for="tel">電話</label>
+            <label for="tel">電話 <span class="text-danger">*</span></label>
             <input
               v-model="data.user.tel"
               type="tel"
@@ -75,7 +77,7 @@
             rules="required"
             v-slot="{ classes, errors }"
           >
-            <label for="address">地址</label>
+            <label for="address">地址 <span class="text-danger">*</span></label>
             <input
               v-model="data.user.address"
               type="text"
@@ -92,7 +94,7 @@
             rules="required"
             v-slot="{ classes, errors }"
           >
-            <label for="message">留言</label>
+            <label for="message">留言 <span class="text-danger">*</span></label>
             <textarea
               v-model="data.message"
               type="message"
@@ -102,9 +104,9 @@
             ></textarea>
             <div class="invalid-feedback">{{ errors[0] }}</div>
           </validation-provider>
-          <div class="d-flex d-md-block">
-            <button type="reset" class="btn btn-secondary">取消</button>
-            <button type="submit" class="btn btn-primary">確定</button>
+          <div class="d-flex justify-content-end">
+            <button type="reset" class="btn btn-outline-dark order-btn">取消</button>
+            <button type="submit" class="btn btn-primary ml-2 order-btn" :disabled="invalid">確定</button>
           </div>
         </validation-observer>
       </div>

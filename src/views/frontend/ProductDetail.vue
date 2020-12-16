@@ -44,7 +44,7 @@
                 `NT$${product.price} / ${product.unit}`
               }}</strong>
             </div>
-            <div class="form-group mt-2 p-qty">
+            <div class="form-group mt-2 p-qty w-100">
               <label for="qty">數量</label>
               <div class="input-group">
                 <div class="input-group-prepend">
@@ -55,7 +55,7 @@
                     -
                   </button>
                 </div>
-                <input type="number" class="form-control" v-model="qty" />
+                <input id="qty" type="number" class="form-control text-center" v-model.number="qty" />
                 <div class="input-group-append">
                   <button
                     class="btn btn-outline-primary"
@@ -66,13 +66,14 @@
                 </div>
               </div>
             </div>
-            <button class="btn btn-primary" @click="addToCart">
+            <button class="btn btn-primary btn-block" @click="addToCart">
               加入購物車
             </button>
           </div>
         </div>
         <div class="col-sm-7 col-md-8">
           <div
+            id="markdown"
             class="description mt-3 mt-md-0"
             v-html="mdRender(product.content)"
           ></div>
@@ -112,7 +113,7 @@ import { signs } from '@/assets/js/mixins'
 import ProductCardMini from '@/components/ProductCardMini'
 
 const classMap = {
-  table: 'table'
+  table: 'table table-sm table-hover'
 }
 const bindings = Object.keys(classMap).map((key) => ({
   type: 'output',
@@ -130,7 +131,6 @@ export default {
       qty: 1
     }
   },
-  mixins: [signs],
   methods: {
     addToCart () {
       const vm = this
@@ -155,9 +155,7 @@ export default {
     mdRender (mdText) {
       return CONVERTER.makeHtml(mdText)
     },
-    categoryToRoute (category) {
-      return this.signs.find((el) => el.category === category).route
-    }
+    categoryToRoute: category => signs.find((el) => el.category === category).route
   },
   computed: {
     product () {
@@ -171,7 +169,7 @@ export default {
     },
     randSimilarItems () {
       const vm = this
-      const copy = this.$store.state.products.filter((el) => {
+      const copy = vm.$store.state.products.filter((el) => {
         return (
           el.category.class === vm.product.category.class &&
           el.id !== vm.$route.params.itemId
