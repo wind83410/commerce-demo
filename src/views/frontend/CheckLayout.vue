@@ -1,5 +1,5 @@
 <template>
-  <div class="p-nav" :class="{'bg-light': !isSwitched, 'bg-order-code': isSwitched}">
+  <div class="p-nav" :class="{'bg-order-code': isSwitched}">
     <div class="progress progress-thin">
       <div class="progress-bar" role="progressbar" :style="{width: `${progress}%`}" :aria-valuenow="progress" aria-valuemin="0" aria-valuemax="100"></div>
     </div>

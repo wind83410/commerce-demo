@@ -6,7 +6,7 @@
         <div class="p-banner__description">{{ sign.description }}</div>
       </div>
     </header>
-    <section class="bg-light">
+    <section>
       <router-view />
     </section>
   </div>
