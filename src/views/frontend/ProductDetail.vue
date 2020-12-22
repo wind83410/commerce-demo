@@ -83,7 +83,7 @@
     <div class="py-3 section-similar-items">
       <div class="container">
         <div class="d-flex mb-3 justify-content-between align-items-center">
-          <div class="h4 mb-0 text-white">類似商品</div>
+          <div class="h4 mb-0 text-dark">類似商品</div>
         </div>
         <ul
           id="similar-items"
