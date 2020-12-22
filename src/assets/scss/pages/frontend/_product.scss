@@ -3,7 +3,7 @@
   background-position: center center;
   background-size: cover;
   background-blend-mode: overlay;
-  background-color: rgba($primary, 0.65);
+  background-color: rgba($primary, 0.2);
   height: 150px;
   @include media-breakpoint-up(md) { height: 200px; }
   @include media-breakpoint-up(lg) { height: 300px; }
@@ -14,6 +14,8 @@
     background-image:url('./assets/images/products_#{$category}.jpg')
   }
 }
+
+.p-banner__text-wrap { background-color: rgba($dark, 0.6); }
 
 .p-banner__category, .p-banner__description {
   color: $white;

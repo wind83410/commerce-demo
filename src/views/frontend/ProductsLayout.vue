@@ -1,8 +1,10 @@
 <template>
   <div class="p-nav">
-    <header class="container py-3 my-3 p-banner d-flex flex-column justify-content-center" :class="bannerBg">
-      <div class="p-banner__category">{{ sign.category }}</div>
-      <div class="p-banner__description">{{ sign.description }}</div>
+    <header class="container py-3 my-3 p-banner d-flex flex-column justify-content-center align-items-start" :class="bannerBg">
+      <div class="p-banner__text-wrap p-3">
+        <div class="p-banner__category">{{ sign.category }}</div>
+        <div class="p-banner__description">{{ sign.description }}</div>
+      </div>
     </header>
     <section class="bg-light">
       <router-view />
