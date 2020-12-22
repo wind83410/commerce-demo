@@ -91,10 +91,8 @@
           <validation-provider
             tag="div"
             class="form-group"
-            rules="required"
-            v-slot="{ classes, errors }"
           >
-            <label for="message">留言 <span class="text-danger">*</span></label>
+            <label for="message">留言</label>
             <textarea
               v-model="data.message"
               type="message"
@@ -102,7 +100,6 @@
               :class="classes"
               class="form-control"
             ></textarea>
-            <div class="invalid-feedback">{{ errors[0] }}</div>
           </validation-provider>
           <div class="d-flex justify-content-end">
             <button type="reset" class="btn btn-outline-dark order-btn">取消</button>
@@ -201,7 +198,7 @@ export default {
             vm.$store.dispatch('recordOrderId', response.data.orderId)
             vm.$store.dispatch('getCart')
             vm.$store.dispatch('await', false)
-            vm.$router.push({ path: `/check/clinch/${response.data.orderId}` })
+            vm.$router.push({ path: `/check/order/${response.data.orderId}` })
           } else {
             vm.$store.dispatch('await', false)
             vm.$store.dispatch('addInfo', {
