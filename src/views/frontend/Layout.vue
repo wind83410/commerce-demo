@@ -81,7 +81,7 @@
     </nav>
     <Alerts />
     <router-view class="flex-grow-1" />
-    <footer class="about-us py-4 d-flex justify-content-center bg-dark">
+    <footer class="about-us py-4 d-flex justify-content-center">
       <div class="container">
         <div class="d-flex justify-content-between">
           <div>
