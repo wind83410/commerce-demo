@@ -153,7 +153,7 @@
     </button>
     <div class="modal fade" id="cart">
       <div class="modal-dialog cart-list--modal-dialog">
-        <section class="cart-list d-flex flex-column bg-light">
+        <section class="cart-list d-flex flex-column bg-white">
           <div class="d-flex m-1">
             <router-link
               tag="button"
@@ -170,13 +170,13 @@
               <font-awesome-icon icon="angle-left" size="lg" />
             </button>
           </div>
-          <div class="table-wrap">
+          <div class="table-wrap px-2 px-md-3">
             <table class="table table-sm" v-if="cart.carts.length">
               <thead>
                 <th></th>
                 <th>名稱</th>
                 <th>#</th>
-                <th class="no-break">小計</th>
+                <th class="no-break text-right">小計</th>
               </thead>
               <tbody>
                 <tr v-for="item in cart.carts" :key="item.id">
@@ -190,20 +190,12 @@
                     </button>
                   </td>
                   <td>
-                    <div>
-                      <div class="c-prod__sub-info">
-                        {{ item.product.title.brand }}
-                      </div>
-                      <div>
-                        {{ item.product.title.collection }}
-                        <span v-if="item.coupon" class="badge badge-discount">{{
-                          `${item.coupon.percent} %`
-                        }}</span>
-                      </div>
-                      <div class="c-prod__sub-info">
-                        {{ item.product.title.type }}
-                      </div>
-                    </div>
+                    {{
+                      `${item.product.title.brand} - ${item.product.title.collection} ${item.product.title.type}`
+                    }}
+                    <span v-if="item.coupon" class="badge badge-discount">{{
+                      `${item.coupon.percent} %`
+                    }}</span>
                   </td>
                   <td>{{ item.qty }}</td>
                   <td class="text-right">{{ item.final_total | round }}</td>
@@ -353,7 +345,7 @@ export default {
       const api = `${process.env.VUE_APP_API_PATH}/admin/signIn`
       vm.$http
         .post(api, vm.userData)
-        .then((response) => {
+        .then(response => {
           if (response.data.success) {
             vm.$store.dispatch('sign', true)
             vm.userData.account = vm.userData.password = ''
@@ -376,7 +368,7 @@ export default {
       vm.$store.dispatch('await', true)
       vm.$http
         .post(api)
-        .then((response) => {
+        .then(response => {
           if (response.data.success) {
             vm.$store.dispatch('sign', false)
             vm.$store.dispatch('addInfo', {
@@ -428,11 +420,15 @@ export default {
       const vpScrollTop = $(window).scrollTop()
       if (vpHeight + vpScrollTop >= ftTop) {
         $('.js-fade-out').fadeIn(300, function () {
-          $(this).removeClass('js-fade-out').addClass('js-fade-in')
+          $(this)
+            .removeClass('js-fade-out')
+            .addClass('js-fade-in')
         })
       } else {
         $('.back-to-top').fadeOut(300, function () {
-          $(this).removeClass('js-fade-in').addClass('js-fade-out')
+          $(this)
+            .removeClass('js-fade-in')
+            .addClass('js-fade-out')
         })
       }
     },
@@ -447,8 +443,8 @@ export default {
       this.$store.state.products.forEach(function (el) {
         const cal = el.category.class
         const type = el.category.type
-        if (Object.keys(tree).some((el) => el === cal)) {
-          if (!tree[cal].some((el) => el === type)) {
+        if (Object.keys(tree).some(el => el === cal)) {
+          if (!tree[cal].some(el => el === type)) {
             tree[cal].push(type)
           }
         } else {
