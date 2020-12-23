@@ -8,7 +8,7 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import {
   faFish, faCouch, faHome, faChevronLeft,
   faChevronRight, faInfoCircle, faCartPlus, faAngleLeft,
-  faShoppingCart, faTrashAlt, faPlus, faUser, faArrowUp,
+  faShoppingCart, faTrashAlt, faPlus, faMinus, faUser, faArrowUp,
   faUserCircle, faSignInAlt, faSignOutAlt, faFlag, faTimes,
   faCheckSquare, faTags
 } from '@fortawesome/free-solid-svg-icons'
@@ -36,7 +36,7 @@ configure({
 library.add(
   faFish, faCouch, faHome, faChevronLeft,
   faChevronRight, faInfoCircle, faCartPlus, faAngleLeft,
-  faShoppingCart, faTrashAlt, faPlus, faUser, faArrowUp,
+  faShoppingCart, faTrashAlt, faPlus, faMinus, faUser, faArrowUp,
   faUserCircle, faSignInAlt, faSignOutAlt, faFlag, faTimes,
   faInstagram, faFacebookF, faTwitter, faCheckSquare, faTags
 )

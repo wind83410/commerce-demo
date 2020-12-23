@@ -43,7 +43,7 @@
                   <div class="input-group-prepend">
                     <button type="button" class="btn btn-primary" @click="buffer(item.product.id, '+')">+</button>
                   </div>
-                  <input type="number" class="form-control" :id="item.product.id" min=1 :value="item.qty" @input="buffer(item.product.id)" @blur="modify">
+                  <input type="number" class="form-control" :id="item.product.id" min=1 :value="item.qty" @change="buffer(item.product.id)" @blur="modify">
                   <div class="input-group-append">
                     <button type="button" class="btn btn-secondary" @click="buffer(item.product.id, '-')">-</button>
                   </div>
@@ -53,11 +53,15 @@
               <td class="d-none d-md-table-cell">
                 <div class="input-group adjust-qty">
                   <div class="input-group-prepend">
-                    <button type="button" class="btn btn-primary" @click="buffer(item.product.id, '+')">+</button>
+                    <button type="button" class="btn btn-primary" @click="buffer(item.product.id, '+')">
+                      <font-awesome-icon icon="plus" />
+                    </button>
                   </div>
-                  <input type="number" class="form-control" :id="item.product.id" min=1 :value="item.qty" @input="buffer(item.product.id)" @blur="modify">
+                  <input type="number" class="form-control" :id="item.product.id" min=1 :value="item.qty" @change="buffer(item.product.id)" @blur="modify">
                   <div class="input-group-append">
-                    <button type="button" class="btn btn-secondary" @click="buffer(item.product.id, '-')">-</button>
+                    <button type="button" class="btn btn-secondary" @click="buffer(item.product.id, '-')">
+                      <font-awesome-icon icon="minus" />
+                    </button>
                   </div>
                 </div>
               </td>
@@ -255,7 +259,7 @@ export default {
           }
           break
         default:
-          this.tempQty.qty = input.valueAsNumber
+          this.tempQty.qty = input.valueAsNumber <= 0 ? 1 : input.valueAsNumber
           break
       }
     },
