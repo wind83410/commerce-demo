@@ -41,11 +41,31 @@
                 }}</span>
                 <div class="input-group adjust-qty d-flex d-md-none mt-2">
                   <div class="input-group-prepend">
-                    <button type="button" class="btn btn-primary" @click="buffer(item.product.id, '+')">+</button>
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      @click="buffer(item.product.id, '+')"
+                    >
+                      <font-awesome-icon icon="plus" />
+                    </button>
                   </div>
-                  <input type="number" class="form-control" :id="item.product.id" min=1 :value="item.qty" @change="buffer(item.product.id)" @blur="modify">
+                  <input
+                    type="number"
+                    class="form-control"
+                    :class="item.product.id"
+                    min="1"
+                    :value="item.qty"
+                    @input="buffer(item.product.id)"
+                    @blur="modify"
+                  />
                   <div class="input-group-append">
-                    <button type="button" class="btn btn-secondary" @click="buffer(item.product.id, '-')">-</button>
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      @click="buffer(item.product.id, '-')"
+                    >
+                      <font-awesome-icon icon="minus" />
+                    </button>
                   </div>
                 </div>
               </td>
@@ -53,13 +73,29 @@
               <td class="d-none d-md-table-cell">
                 <div class="input-group adjust-qty">
                   <div class="input-group-prepend">
-                    <button type="button" class="btn btn-primary" @click="buffer(item.product.id, '+')">
+                    <button
+                      type="button"
+                      class="btn btn-primary"
+                      @click="buffer(item.product.id, '+')"
+                    >
                       <font-awesome-icon icon="plus" />
                     </button>
                   </div>
-                  <input type="number" class="form-control" :id="item.product.id" min=1 :value="item.qty" @change="buffer(item.product.id)" @blur="modify">
+                  <input
+                    type="number"
+                    class="form-control"
+                    :class="item.product.id"
+                    min="1"
+                    :value="item.qty"
+                    @input="buffer(item.product.id)"
+                    @blur="modify"
+                  />
                   <div class="input-group-append">
-                    <button type="button" class="btn btn-secondary" @click="buffer(item.product.id, '-')">
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      @click="buffer(item.product.id, '-')"
+                    >
                       <font-awesome-icon icon="minus" />
                     </button>
                   </div>
@@ -80,7 +116,10 @@
           <div class="d-flex mb-3 justify-content-between align-items-center">
             <div class="h4 ml-2 mb-0">順便看看</div>
             <div class="slide-control">
-              <button type="button" class="slide-left btn btn-outline-primary mr-2">
+              <button
+                type="button"
+                class="slide-left btn btn-outline-primary mr-2"
+              >
                 <font-awesome-icon :icon="['fas', 'chevron-left']" size="lg" />
               </button>
               <button type="button" class="slide-right btn btn-outline-primary">
@@ -88,14 +127,8 @@
               </button>
             </div>
           </div>
-          <ul
-            id="additional-items"
-            class="list-unstyled d-flex"
-          >
-            <li
-              v-for="prod in randAddItems"
-              :key="prod.id"
-            >
+          <ul id="additional-items" class="list-unstyled d-flex">
+            <li v-for="prod in randAddItems" :key="prod.id">
               <Additional
                 :prod="prod"
                 :category-route="categoryToRoute(prod.category.class)"
@@ -179,7 +212,8 @@ export default {
       couponCode: '',
       tempQty: {
         qty: 0,
-        productId: ''
+        productId: '',
+        inputEl: null
       }
     }
   },
@@ -209,7 +243,7 @@ export default {
       vm.$store.dispatch('await', true)
       vm.$http
         .post(API, { data: COUPON })
-        .then((response) => {
+        .then(response => {
           vm.$store.dispatch('addInfo', {
             msg: response.data.message,
             status: response.data.success ? 'info' : 'danger'
@@ -234,16 +268,18 @@ export default {
     modify () {
       const vm = this
       vm.$store.dispatch('await', true)
-      vm.$store.dispatch('addCartItem', {
-        productId: vm.tempQty.productId,
-        qty: vm.tempQty.qty
-      }).then(() => {
-        vm.tempQty.qty = 0
-        vm.tempQty.productId = ''
-      })
+      vm.$store
+        .dispatch('addCartItem', {
+          productId: vm.tempQty.productId,
+          qty: vm.tempQty.qty
+        })
+        .then(() => {
+          vm.tempQty.qty = 0
+          vm.tempQty.productId = ''
+        })
     },
     buffer (productId, mode) {
-      const input = $(`#${productId}`)[0]
+      const input = $(`.${productId}`).filter(':visible')[0]
       this.tempQty.productId = productId
       switch (mode) {
         case '+':
@@ -263,7 +299,8 @@ export default {
           break
       }
     },
-    categoryToRoute: category => signs.find((el) => el.category === category).route
+    categoryToRoute: category =>
+      signs.find(el => el.category === category).route
   },
   watch: {
     'randAddItems.length' (cur, pre) {
