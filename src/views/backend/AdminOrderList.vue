@@ -49,7 +49,7 @@
       </tbody>
     </table>
     <Pages
-      @change-page="getCoupons($event)"
+      @change-page="getOrders($event)"
       :current-page="pagination.current_page"
       :has-pre="pagination.has_pre"
       :has-next="pagination.has_next"
