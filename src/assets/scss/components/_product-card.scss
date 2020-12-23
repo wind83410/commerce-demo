@@ -18,6 +18,11 @@
   }
 }
 
+.icon-btn {
+  color: $primary;
+  &:hover { color: darken($primary, 10%) }
+}
+
 .badge-bestseller {
   background-color: $n-onsale;
   color: color-yiq($n-onsale);

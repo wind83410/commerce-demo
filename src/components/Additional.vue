@@ -23,7 +23,7 @@
       <li>
         <button
           type="button"
-          class="btn p-0 icon-btn text-primary"
+          class="btn p-0 icon-btn"
           @click="addToCart(prod.id)"
         >
           <font-awesome-icon class="d-block" icon="cart-plus" size="2x" />
