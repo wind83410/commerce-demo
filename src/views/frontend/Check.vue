@@ -198,13 +198,6 @@ export default {
     }
   },
   methods: {
-    // toRecipient () {
-    //   if (this.$store.state.isLogined && this.cart.carts.length) {
-    //     this.$router.push('/check/recipient')
-    //   } else {
-    //     $('#login-modal').modal('show')
-    //   }
-    // },
     applyCoupon () {
       const vm = this
       const COUPON = { code: vm.couponCode }
@@ -221,7 +214,6 @@ export default {
             vm.$store.dispatch('getCart')
             vm.couponCode = ''
           }
-          vm.$store.dispatch('await', false)
         })
         .catch(() => {
           vm.$store.dispatch('addInfo', {
@@ -233,9 +225,7 @@ export default {
     rmCartItem (prodId) {
       const vm = this
       vm.$store.dispatch('await', true)
-      vm.$store.dispatch('rmCartItem', prodId).then(() => {
-        vm.$store.dispatch('await', false)
-      })
+      vm.$store.dispatch('rmCartItem', prodId)
     },
     modify () {
       const vm = this
@@ -244,7 +234,6 @@ export default {
         productId: vm.tempQty.productId,
         qty: vm.tempQty.qty
       }).then(() => {
-        vm.$store.dispatch('await', false)
         vm.tempQty.qty = 0
         vm.tempQty.productId = ''
       })

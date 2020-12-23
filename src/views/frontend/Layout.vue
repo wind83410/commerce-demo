@@ -512,6 +512,12 @@ export default {
       }
       $('#cart').modal('hide')
       $('#m-nav').modal('hide')
+    },
+    cart () {
+      const vm = this
+      vm.$nextTick(function () {
+        vm.$store.dispatch('await', false)
+      })
     }
   }
 }

@@ -63,9 +63,6 @@ export default {
       vm.$store.dispatch('await', true)
       vm.$store
         .dispatch('addCartItem', { productId, qty, acc })
-        .then(() => {
-          vm.$store.dispatch('await', false)
-        })
         .catch(() => vm.$store.dispatch('await', false))
     }
   }

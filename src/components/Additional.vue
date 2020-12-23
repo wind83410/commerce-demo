@@ -52,9 +52,8 @@ export default {
       vm.$store.dispatch('await', true)
       vm.$store
         .dispatch('addCartItem', { productId, qty, acc })
-        .then(() => {
-          vm.$store.dispatch('await', false)
-        })
+        // if successful, the state 'await' will set to false by the signal sent from the
+        // component where this component is used
         .catch(() => vm.$store.dispatch('await', false))
     }
   }
