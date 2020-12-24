@@ -52,7 +52,7 @@
                     class="btn btn-outline-primary"
                     @click="changeQty(qty--)"
                   >
-                    -
+                    <font-awesome-icon icon="minus" />
                   </button>
                 </div>
                 <input id="qty" type="number" class="form-control text-center" v-model.number="qty" />
@@ -61,7 +61,7 @@
                     class="btn btn-outline-primary"
                     @click="changeQty(qty++)"
                   >
-                    +
+                    <font-awesome-icon icon="plus" />
                   </button>
                 </div>
               </div>
