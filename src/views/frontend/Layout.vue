@@ -336,9 +336,9 @@ export default {
     removeItem (productId) {
       const vm = this
       vm.$store.dispatch('await', true)
-      vm.$store
-        .dispatch('rmCartItem', productId)
-        .then(() => vm.$store.dispatch('await', false))
+      // if successful, the state 'await' will set to false after
+      // Vue's DOM update triggered by changes in cart
+      vm.$store.dispatch('rmCartItem', productId)
     },
     login () {
       const vm = this
