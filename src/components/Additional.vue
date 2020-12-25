@@ -52,8 +52,8 @@ export default {
       vm.$store.dispatch('await', true)
       vm.$store
         .dispatch('addCartItem', { productId, qty, acc })
-        // if successful, the state 'await' will set to false by the signal sent from the
-        // component where this component is used
+        // if successful, the state 'await' will set to false after
+        // Vue's DOM update triggered by changes in cart
         .catch(() => vm.$store.dispatch('await', false))
     }
   }
