@@ -212,8 +212,7 @@ export default {
       couponCode: '',
       tempQty: {
         qty: 0,
-        productId: '',
-        inputEl: null
+        productId: ''
       }
     }
   },
@@ -263,6 +262,8 @@ export default {
     rmCartItem (prodId) {
       const vm = this
       vm.$store.dispatch('await', true)
+      // if successful, the state 'await' will set to false after
+      // Vue's DOM update triggered by changes in cart
       vm.$store.dispatch('rmCartItem', prodId)
     },
     modify () {
