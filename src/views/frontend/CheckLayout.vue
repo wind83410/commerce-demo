@@ -1,5 +1,5 @@
 <template>
-  <div class="p-nav" :class="{'bg-order-code': isSwitched}">
+  <div class="p-nav">
     <div class="progress progress-thin">
       <div class="progress-bar" role="progressbar" :style="{width: `${progress}%`}" :aria-valuenow="progress" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
@@ -10,13 +10,6 @@
 <script>
 export default {
   computed: {
-    isSwitched () {
-      if (this.$route.path === '/check' || this.$route.path === '/check/customer') {
-        return false
-      } else {
-        return true
-      }
-    },
     progress () {
       if (this.$route.path === '/check') {
         return 25

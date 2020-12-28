@@ -2,14 +2,22 @@
  * CheckLayout.vue
  *****/
 
-.bg-order-code {
-  background: url("./assets/images/index_banner_carousel_2.jpg") center
-    center/cover;
+.side-image__img {
+  background: none;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: auto;
+  @include media-breakpoint-up(md) {
+    background: url("./assets/images/index_banner_carousel_2.jpg") center
+      center/cover;
+  }
 }
 
 .progress-thin {
   height: 3px;
   position: fixed;
+  z-index: $zindex-fixed;
   top: 74px;
   width: 100%;
 }
@@ -67,20 +75,18 @@
  *****/
 
 .order-info-title {
-  background-color: lighten($primary, 40);
-  padding: 10px 0;
-}
-
-.table-transparent {
-  max-width: 400px;
-  background: transparent;
-  & td,
-  & th,
-  & thead th {
-    border-color: transparent;
-    border-width: 3px;
-    background: rgba(#fff, 0.9);
-    background-clip: padding-box;
+  position: relative;
+  z-index: 2;
+  &::before {
+    content: "";
+    display: block;
+    height: 40%;
+    width: 100%;
+    background-color: rgba($primary, 0.3);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
   }
 }
 
