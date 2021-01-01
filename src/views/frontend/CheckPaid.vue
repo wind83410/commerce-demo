@@ -1,6 +1,6 @@
 <template>
-  <div class="d-flex flex-column justify-content-center h-100">
-    <h3 class="text-center is-paid-message" :class="{ 'paid': isPaid }">
+  <div class="d-flex flex-column justify-content-center align-items-center h-100">
+    <h3 class="text-center mb-3 is-paid-message" :class="{ 'paid': isPaid }">
       <font-awesome-icon icon="flag" class="mr-2" /> {{ text }}
     </h3>
     <router-link to="/products/staple-food" tag="button" class="btn btn-primary align-self-center">回去逛逛</router-link>
