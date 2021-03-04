@@ -1,4 +1,4 @@
-# commerce-cli3
+# commerce-demo
 
 ## Project setup
 ```
